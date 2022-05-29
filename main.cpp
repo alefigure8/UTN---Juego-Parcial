@@ -43,7 +43,7 @@ int main (){
   return 0;
 }
 
-/* Funcion principal del juego */
+/* Funcion del juego */
 int jugar(){
   int resultadoDados[3] = {};
   dados(resultadoDados, 3);
@@ -60,6 +60,7 @@ int jugar(){
 
 }
 
+/* Funcion para determinar quien comienza a jugar */
 void preguntarNombre(){
   cout << "Nombre del jugador 1: ";
   cin >> jugadores[0];
@@ -75,6 +76,13 @@ void quienEmpieza(){
   const int CANT_JUGADORES = 2;
   int dados_jugadores[CANT_DADOS];
   int totalJugadores[CANT_JUGADORES][CANT_DADOS];
+  int sumaMaxima = 0;
+  int jugador;
+  int dadoMaximo = 0;
+  int jugadorDadoMaximo;
+  int totalJugador1= totalJugadores[0][0] + totalJugadores[0][1];
+  int totalJugador2= totalJugadores[1][0] + totalJugadores[1][1];
+
   iniciarMatriz(totalJugadores, CANT_JUGADORES, CANT_DADOS);
 
   char eleccion;
@@ -101,10 +109,6 @@ void quienEmpieza(){
       }
     }
 
-    int sumaMaxima = 0;
-    int jugador;
-    int dadoMaximo = 0;
-    int jugadorDadoMaximo;
     int total = 0;
 
     for (int j = 0; j < CANT_DADOS; j++){
@@ -124,9 +128,6 @@ void quienEmpieza(){
       jugador = i + 1;
     }
 
-    int totalJugador1= totalJugadores[0][0] + totalJugadores[0][1];
-    int totalJugador2= totalJugadores[1][0] + totalJugadores[1][1];
-
     if(totalJugador1 != totalJugador2){
         if (jugador == 1){
         jugadorActual = jugadores[0];
@@ -142,10 +143,12 @@ void quienEmpieza(){
     }
   }
 
-  cout << jugadorActual << endl;
+  cout << "¡COMIENZA EL JUGADOR "  << jugadorActual << "!" << endl;
 
+  jugar();
 }
 
+/* Funcion para inicializar con ceros una matriz*/
 void iniciarMatriz(int matriz[2][2], int filas, int columnas){
   for (int i = 0; i < filas; i++){
     for (int j = 0; j < columnas; j++){
@@ -154,7 +157,7 @@ void iniciarMatriz(int matriz[2][2], int filas, int columnas){
   }
 }
 
-/* Funcion que devuelve numeros random */
+/* Funcion que simula los dados y devuelve numeros random */
 void dados(int *a, int b){
   srand(time(0));
   for (int i = 0; i < b; i++){
@@ -194,7 +197,7 @@ int menuInicial(){
   cout << endl << "\t\t      -----------------------";
   cout << endl << "\t\t      0 - SALIR" << endl << endl << endl << endl;
 
-  SetConsoleTextAttribute(h, 1);
+  SetConsoleTextAttribute(h, 0);
   cin >>  eleccion;
 
   return eleccion;
