@@ -4,44 +4,42 @@
 #include <iomanip>
 #include <string>
 #include "headers/rlutil.h"
+#include "headers/jugadores.h"
 using namespace std;
 
 /* Funciones */
 void menuInicial();
-void nombres(int x);
+Jugadores pedir_nombre(int x);
 void lines();
 void endLines(int x);
 void cerdo(int x, string dialog);
 void cerdo2(int x, string dialog);
 void ResizeConsole(int width, int height);
 void colorTexto (int x);
-void quienEmpieza();
+void quienEmpieza(Jugadores *jugador, string &jugadorActual);
 void dados(int a[], int b);
 void iniciarMatriz(int matriz[2][3], int filas, int columnas);
 void imprimirDados(int num);
 
-/* Variables globales */
-string jugadores[2];
-string jugadorActual;
+enum OPCIONES {
+  SALIR = 0,
+  INICIAR_JUEGO = 1,
+  ESTADISTICAS = 2,
+  CREDITOS = 3
+};
 
 /* Main */
 int main (void){
   setlocale(LC_ALL, "spanish"); // Para que se vea correctamente el texto en la consola
-  ResizeConsole(850,550); // Cambiar tama√±o de consola
+  ResizeConsole(850,550); // Cambiar tamaùo de consola
   menuInicial(); // Menu inicial
 
   return 0;
 }
 
-/* Funcion para el munnu de inicio */
-void menuInicial(){
-
-  char eleccion;
-
-  do{
-    lines();
-
-    colorTexto(15);cout <<endl << endl << R"(
+/* Funcion con el titulo del juego */
+void imprimir_titulo(){
+  cout <<endl << endl << R"(
                    _              _     _                        ___          _
                _  | |            | |   (_)                      / __)        (_)
              _| |_| |__  _____   | |  _ _ ____   ____     ___ _| |__    ____  _  ____  ___
@@ -50,60 +48,81 @@ void menuInicial(){
                \__)_| |_|_____)  |_| \_)_|_| |_|\___ |   \___/ |_|     |  __/|_|\___ (___/
                                                (_____|                 |_|     (_____|
     )" << endl;
+}
 
+/* Funcion para el munnu de inicio */
+void menuInicial(){
+  Jugadores jugadores[2];
+  string jugadorActual;
+  int eleccion;
 
+  do{
+    lines();
+    colorTexto(15);
+    imprimir_titulo();
     endLines(3);
-    colorTexto(10);cout << endl << setw(40 + 11) << "(J) - JUGAR";
-    colorTexto(14); cout << endl << setw(40 + 17)<< "(E) - ESTADISTICA";
-    colorTexto(14); cout << endl << setw(40 + 14)<< "(C) - CERDITOS";
-    cout << endl;
-    colorTexto(12); cout << endl << setw(40 + 11)<< "(S) - SALIR";
+    colorTexto(10); cout << endl << setw(40 + 11) << "(1) - JUGAR";
+    colorTexto(14); cout << endl << setw(40 + 17)<< "(2) - ESTADISTICA";
+    colorTexto(14); cout << endl << setw(40 + 14)<< "(3) - CERDITOS";
+    endLines(1);
+    colorTexto(12); cout << endl << setw(40 + 11)<< "(0) - SALIR";
     endLines(3);
     colorTexto(9); cout << endl << setw(80)<< "V1.0.0";
     endLines(3);
-
     lines();
 
     cin >>  eleccion;
 
     switch (eleccion){
-    case 'J':
-    case 'j': {
+    case OPCIONES::INICIAR_JUEGO: {
       for (int i = 0; i < 2; i++)
       {
-        nombres(i);
+        jugadores[i] = pedir_nombre(i);
       }
-      quienEmpieza();
+      lines();
+      cout << jugadores[0].jugador<< endl;
+      cout << jugadores[1].jugador << endl;
+      lines();
+
+      quienEmpieza(jugadores, jugadorActual);
     }
       break;
     }
-  }while(eleccion != 'S' && eleccion != 's');
+  }while(eleccion != OPCIONES::SALIR);
 
 }
 
-/* Funcion que pide los nombres de los jugadores*/ 
- void nombres(int x){
-  string dialog = "";
+/* Funcion que pide los nombres de los jugadores*/
+ Jugadores pedir_nombre(int x){
 
-  // segun el turno cambia el dialogo
-  if(x == 0){
-    dialog = "\t\tÔøΩCuÔøΩl es tu nombre, cerdo uno?";
-  } else {
-    dialog =  "\t\tTu turno, cerdo dos, ÔøΩcuÔøΩl es tu nombre?";
-  }
+   Jugadores jugadores;
 
-  lines();
-  colorTexto(15); cout << setw(10)<< "THE KING OF PIGS" ;
-  endLines(6);
-  cerdo(x, dialog); // Imprime cerdo
-  endLines(8);
-  lines();
-  colorTexto(15); cin >> jugadores[x]; // Guarda nombre de los jugadores
+    string dialog = "";
+
+    // segun el turno cambia el dialogo
+    if(x == 0){
+      dialog = "øCu·l es tu nombre, cerdo uno?";
+    } else {
+      dialog =  "Tu turno, cerdo dos, øcu·l es tu nombre?";
+    }
+
+    lines();
+    colorTexto(15); cout << "THE KING OF PIGS" ;
+    endLines(6);
+    cerdo(x, dialog); // Imprime cerdo
+    endLines(8);
+    lines();
+
+    colorTexto(15);
+    cin >> jugadores.jugador;
+    jugadores.puntaje = 0;
+
+    return jugadores;
  }
 
 
 
-/* Funcion que aÔøΩade el decorado de lineas a cada pantalla*/
+/* Funcion que aùade el decorado de lineas a cada pantalla*/
  void lines(){
    cout << endl;
      for (int i = 0; i < 98; i++)
@@ -122,6 +141,38 @@ void menuInicial(){
    }
  }
 
+/* Funcion para enmarcar los textos */
+ void enmarcar_texto(string dialogo, int jugador){
+
+    int largo = dialogo.size();
+
+    for (int i = 0; i < 5 ; i++){
+      for (int j = 0; j < largo + 8; j++){
+        if(i == 0 || i == 4){
+          colorTexto(9);  cout << "=";
+          if(j == largo + 7){
+            cout << endl;
+          }
+        } else if(i == 1 || i == 3){
+          if(j == 0 || j == largo + 7){
+            cout << "|";
+            if(j == largo + 7){
+              cout << endl;
+            }
+          } else {
+            cout << " ";
+          }
+        } else if( i == 2){
+          cout << "|   ";
+          colorTexto(12 + (jugador*(-3))); cout  << dialogo;
+          colorTexto(9); cout << "   |" << endl;
+          j = largo + 8;
+        }
+
+      }
+    }
+ }
+
 /* Funcon que dibuja al cerdo*/
  void cerdo(int x, string dialog){
  colorTexto(13); cout << R"(
@@ -130,17 +181,19 @@ void menuInicial(){
           |`.`-.      _____      ,-;,'|
           |  `-.\__,-'     `-.__//'   |
           |     `|               \ ,  |
-          `.  ```  _              ,  .'
-            \_`     `.     ,   ,  `_/)";
-  cout << R"(
-              \    0  `   ,   0 ` /)"; colorTexto(12 + (x*(-3))); cout << dialog;
-  colorTexto(13);  cout << R"(
+          `.  ```                 ,  .'
+            \_`      .         ,  `_/
+              \    -  `   ,   - ` /
                | '  |  ____  | , |
                |     ,'    `.    |
                |    (  O' O  )   |
                `.    \__,.__/   ,'
                  `-._        _,'
                      `------')";
+
+  endLines(2);
+  enmarcar_texto(dialog, x);
+  endLines(3);
  }
 
  /* Funcon que dibuja al cerdo*/
@@ -152,7 +205,7 @@ void menuInicial(){
           |  `-.\__,-'     `-.__//'   |
           |     `|               \ ,  |
           `.  ```  _              ,  .'
-            \_`     `.     ,   ,  `_/)
+            \_`     `.     ,   ,  `_/
               \    0  `   ,   0 ` /
                | '  |  ____  | , |
                |     ,'    `.    |
@@ -160,9 +213,9 @@ void menuInicial(){
                `.    \__,.__/   ,'
                  `-._  \__/   _,'
                      `------')";
-
+  endLines(2);
+  enmarcar_texto(dialog, x);
   endLines(3);
-  colorTexto(12 + (x*(-3))); cout << setw(50)<< dialog;
  }
 
 /* Funcion para darle ancho y largo a la consola*/
@@ -179,14 +232,14 @@ void colorTexto (int x){
 	SetConsoleTextAttribute(h, x);
 }
 
-/* Funcion para determinar cual jugador comienza*/ 
-void quienEmpieza(){
+/* Funcion para determinar cual jugador comienza*/
+void quienEmpieza(Jugadores *jugador, string &jugadorActual){
   int CANT_DADOS = 2;
   int CANT_JUGADORES = 2;
   int dados_jugadores[3];
   int totalJugadores[2][3];
   int sumaMaxima = 0;
-  int jugador;
+  int jugadorSumaMaxima;
   int dadoMaximo = 0;
   int jugadorDadoMaximo;
   int totalJugador1= totalJugadores[0][0] + totalJugadores[0][1];
@@ -202,9 +255,9 @@ void quienEmpieza(){
     lines();
     endLines(8);
     if(i == 0){
-      dialog = "Lanza los dados, " + jugadores[i] +  " ÔøΩEstÔøΩs listos? (S/N)";
+      dialog = "Lanza los dados, " + jugador[i].jugador +  " øEst·s listos? (S/N)";
     } else {
-      dialog = "Ahora es tu turno " + jugadores[i] +  " ÔøΩEstÔøΩs listos? (S/N)";
+      dialog = "Ahora es tu turno " + jugador[i].jugador  +  " øEst·s listos? (S/N)";
     }
 
     cerdo2(i, dialog);
@@ -228,10 +281,10 @@ void quienEmpieza(){
       }
     } else {
       if(i == 0){ // Si no quiere tirar, cede turno
-       jugadorActual = jugadores[1];
+       jugadorActual = jugador[1].jugador ;
        i = 2;
       } else {
-        jugadorActual = jugadores[0];
+        jugadorActual = jugador[0].jugador;
         i = 2;
       }
     }
@@ -254,22 +307,24 @@ void quienEmpieza(){
     lines();
     rlutil::anykey();
 
+    /* Guarda el maximo puntaje */
     if(total > sumaMaxima){
       sumaMaxima = total;
-      jugador = i + 1;
+      jugadorSumaMaxima = i + 1;
     }
 
+    /* Asigna turno dependiendo el puntaje*/
     if(totalJugador1 != totalJugador2){
-        if (jugador == 1){
-        jugadorActual = jugadores[0];
+        if (jugadorSumaMaxima == 1){ // si no hay empate
+        jugadorActual = jugador[0].jugador;
       } else {
-        jugadorActual = jugadores[1];
+        jugadorActual = jugador[1].jugador;
       }
     } else {
-      if (jugadorDadoMaximo == 1){
-        jugadorActual = jugadores[0];
+      if (jugadorDadoMaximo == 1){ // si hay empate
+        jugadorActual = jugador[0].jugador;
       } else {
-        jugadorActual = jugadores[1];
+        jugadorActual = jugador[1].jugador;
       }
     }
   }
@@ -277,14 +332,13 @@ void quienEmpieza(){
   lines();
   endLines(8);
 
-  dialog = "ÔøΩCOMIENZA EL JUGADOR " + jugadorActual + "!";
+  dialog = "°COMIENZA EL JUGADOR " + jugadorActual + "!";
   cerdo2(0, dialog);
 
   endLines(8);
   lines();
 
   rlutil::anykey();
-
 }
 
 /* Funcion para inicializar con ceros una matriz*/
