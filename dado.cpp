@@ -64,3 +64,51 @@ string dibujar_dados(int *num, int cant_dados){
   return dado_dibujado;
  }
 
+/* Funcion que simula los dados y devuelve numeros random */
+void dados(int a[], int b){
+  srand(time(0));
+  for (int i = 0; i < b; i++){
+    a[i] = rand() % 6 + 1;
+  }
+}
+
+/* Funcion para imprimir los dados*/ 
+void imprimirDados(int num){
+  int dado[5][9];
+  for (int i = 0; i < 5; i++){
+    for (int j = 0; j < 9; j++){
+
+      if(i == 0 || i == 4){
+        if(j == 0 || j == 8){
+         cout << "+";
+          if(j == 8){
+            cout << endl;
+          }
+        } else{
+          cout <<"-";
+        }
+      } else {
+        if(j == 0 || j == 8){
+          cout << "|";
+          if(j == 8){
+            cout << endl;
+          }
+        } else{
+         if(num % 2 != 0){
+          if((i == 2 && j == 4) || (((i == 1 && j == 2) || (i == 3 && j == 6)) && num > 1) || (((i == 1 && j == 6) || (i == 3 && j == 2)) && num > 3)){
+            cout << "x";
+            } else {
+              cout <<" ";
+            }
+         } else {
+           if(((i == 1 && j == 2) || (i == 3 && j == 6)) || (((i == 1 && j == 6) || (i == 3 && j == 2)) && num > 2) || (((i == 2 && j == 2) || (i == 2 && j == 6)) && num > 4)){
+            cout << "x";
+          } else {
+            cout <<" ";
+          }
+         }
+        }
+      }
+    }
+  }
+}

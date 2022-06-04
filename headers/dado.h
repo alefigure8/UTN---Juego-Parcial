@@ -10,6 +10,8 @@ using namespace std;
 
 
 string dibujar_dados(int *num, int cant_dados);
+void dados(int a[], int b);
+void imprimirDados(int num);
 
 
 

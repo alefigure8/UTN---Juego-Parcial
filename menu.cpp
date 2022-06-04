@@ -5,21 +5,15 @@
 #include <string>
 #include "headers/rlutil.h"
 #include "headers/jugadores.h"
+#include "headers/dado.h"
+#include "headers/helpers.h"
+#include "headers/graficas.h"
 using namespace std;
 
 /* Funciones */
 void menuInicial();
 Jugadores pedir_nombre(int x);
-void lines();
-void endLines(int x);
-void cerdo(int x, string dialog);
-void cerdo2(int x, string dialog);
-void ResizeConsole(int width, int height);
-void colorTexto (int x);
 void quienEmpieza(Jugadores *jugador, string &jugadorActual);
-void dados(int a[], int b);
-void iniciarMatriz(int matriz[2][3], int filas, int columnas);
-void imprimirDados(int num);
 
 enum OPCIONES {
   SALIR = 0,
@@ -37,19 +31,6 @@ int main (void){
   return 0;
 }
 
-/* Funcion con el titulo del juego */
-void imprimir_titulo(){
-  cout <<endl << endl << R"(
-                   _              _     _                        ___          _
-               _  | |            | |   (_)                      / __)        (_)
-             _| |_| |__  _____   | |  _ _ ____   ____     ___ _| |__    ____  _  ____  ___
-            (_   _)  _ \| ___ |  | |_/ ) |  _ \ / _  |   / _ (_   __)  |  _ \| |/ _  |/___)
-              | |_| | | | ____|  |  _ (| | | | ( (_| |  | |_| || |     | |_| | ( (_| |___ |
-               \__)_| |_|_____)  |_| \_)_|_| |_|\___ |   \___/ |_|     |  __/|_|\___ (___/
-                                               (_____|                 |_|     (_____|
-    )" << endl;
-}
-
 /* Funcion para el munnu de inicio */
 void menuInicial(){
   Jugadores jugadores[2];
@@ -57,7 +38,7 @@ void menuInicial(){
   int eleccion;
 
   do{
-    lines();
+    lines(2);
     colorTexto(15);
     imprimir_titulo();
     endLines(3);
@@ -69,7 +50,7 @@ void menuInicial(){
     endLines(3);
     colorTexto(9); cout << endl << setw(80)<< "V1.0.0";
     endLines(3);
-    lines();
+    lines(2);
 
     cin >>  eleccion;
 
@@ -79,11 +60,6 @@ void menuInicial(){
       {
         jugadores[i] = pedir_nombre(i);
       }
-      lines();
-      cout << jugadores[0].jugador<< endl;
-      cout << jugadores[1].jugador << endl;
-      lines();
-
       quienEmpieza(jugadores, jugadorActual);
     }
       break;
@@ -106,12 +82,11 @@ void menuInicial(){
       dialog =  "Tu turno, cerdo dos, øcu·l es tu nombre?";
     }
 
-    lines();
-    colorTexto(15); cout << "THE KING OF PIGS" ;
+    lines(1);
     endLines(6);
     cerdo(x, dialog); // Imprime cerdo
     endLines(8);
-    lines();
+    lines(2);
 
     colorTexto(15);
     cin >> jugadores.jugador;
@@ -123,114 +98,18 @@ void menuInicial(){
 
 
 /* Funcion que aùade el decorado de lineas a cada pantalla*/
- void lines(){
+ void lines(int x){
    cout << endl;
-     for (int i = 0; i < 98; i++)
-  {
-    colorTexto(2); cout << "#";
-  }
-   cout << endl;
-
- }
-
-/* Funcion para agregar saltos de lineas*/
- void endLines(int x){
-   for (int i = 0; i < x; i++)
-   {
-     cout << endl;
+      for (int i = 0; i < 98; i++)
+    {
+      colorTexto(2); cout << "#";
+    }
+    cout << endl;
+   if(x == 1){
+      colorTexto(15); cout << "THE KING OF PIGS" << endl;
    }
  }
 
-/* Funcion para enmarcar los textos */
- void enmarcar_texto(string dialogo, int jugador){
-
-    int largo = dialogo.size();
-
-    for (int i = 0; i < 5 ; i++){
-      for (int j = 0; j < largo + 8; j++){
-        if(i == 0 || i == 4){
-          colorTexto(9);  cout << "=";
-          if(j == largo + 7){
-            cout << endl;
-          }
-        } else if(i == 1 || i == 3){
-          if(j == 0 || j == largo + 7){
-            cout << "|";
-            if(j == largo + 7){
-              cout << endl;
-            }
-          } else {
-            cout << " ";
-          }
-        } else if( i == 2){
-          cout << "|   ";
-          colorTexto(12 + (jugador*(-3))); cout  << dialogo;
-          colorTexto(9); cout << "   |" << endl;
-          j = largo + 8;
-        }
-
-      }
-    }
- }
-
-/* Funcon que dibuja al cerdo*/
- void cerdo(int x, string dialog){
- colorTexto(13); cout << R"(
-          _                           _
-          ;`.                       ,'/
-          |`.`-.      _____      ,-;,'|
-          |  `-.\__,-'     `-.__//'   |
-          |     `|               \ ,  |
-          `.  ```                 ,  .'
-            \_`      .         ,  `_/
-              \    -  `   ,   - ` /
-               | '  |  ____  | , |
-               |     ,'    `.    |
-               |    (  O' O  )   |
-               `.    \__,.__/   ,'
-                 `-._        _,'
-                     `------')";
-
-  endLines(2);
-  enmarcar_texto(dialog, x);
-  endLines(3);
- }
-
- /* Funcon que dibuja al cerdo*/
- void cerdo2(int x, string dialog){
-  colorTexto(13); cout << R"(
-          _                           _
-          ;`.                       ,'/
-          |`.`-.      _____      ,-;,'|
-          |  `-.\__,-'     `-.__//'   |
-          |     `|               \ ,  |
-          `.  ```  _              ,  .'
-            \_`     `.     ,   ,  `_/
-              \    0  `   ,   0 ` /
-               | '  |  ____  | , |
-               |     ,'    `.    |
-               |    (  O' O  )   |
-               `.    \__,.__/   ,'
-                 `-._  \__/   _,'
-                     `------')";
-  endLines(2);
-  enmarcar_texto(dialog, x);
-  endLines(3);
- }
-
-/* Funcion para darle ancho y largo a la consola*/
-void ResizeConsole(int width, int height){
-	HWND console = GetConsoleWindow();
-	RECT r;
-	GetWindowRect(console, &r);
-	MoveWindow(console, r.left, r.top, width, height, TRUE);
-}
-
-/* Funcoin para modificar colores de los textos */
-void colorTexto (int x){
-	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(h, x);
-}
 
 /* Funcion para determinar cual jugador comienza*/
 void quienEmpieza(Jugadores *jugador, string &jugadorActual){
@@ -252,7 +131,7 @@ void quienEmpieza(Jugadores *jugador, string &jugadorActual){
 
   for (int i = 0; i < CANT_JUGADORES; i++){
     /* Pantalla 1*/
-    lines();
+    lines(1);
     endLines(8);
     if(i == 0){
       dialog = "Lanza los dados, " + jugador[i].jugador +  " øEst·s listos? (S/N)";
@@ -263,12 +142,12 @@ void quienEmpieza(Jugadores *jugador, string &jugadorActual){
     cerdo2(i, dialog);
 
     endLines(8);
-    lines();
+    lines(2);
 
     cin >> eleccion;
 
     /* Pantalla 2*/
-    lines();
+    lines(1);
     endLines(8);
   
     if(eleccion == 'S'){
@@ -304,7 +183,7 @@ void quienEmpieza(Jugadores *jugador, string &jugadorActual){
     colorTexto(15);cout << setw(50) <<"Has sumado " + strTotal + "!";
 
     endLines(8);
-    lines();
+    lines(2);
     rlutil::anykey();
 
     /* Guarda el maximo puntaje */
@@ -329,71 +208,15 @@ void quienEmpieza(Jugadores *jugador, string &jugadorActual){
     }
   }
 
-  lines();
+  lines(1);
   endLines(8);
 
   dialog = "°COMIENZA EL JUGADOR " + jugadorActual + "!";
   cerdo2(0, dialog);
 
   endLines(8);
-  lines();
+  lines(2);
 
   rlutil::anykey();
 }
 
-/* Funcion para inicializar con ceros una matriz*/
-void iniciarMatriz(int matriz[2][3], int filas, int columnas){
-  for (int i = 0; i < filas; i++){
-    for (int j = 0; j < columnas; j++){
-      matriz[i][j] = 0;
-    }
-  }
-}
-
-/* Funcion que simula los dados y devuelve numeros random */
-void dados(int a[], int b){
-  srand(time(0));
-  for (int i = 0; i < b; i++){
-    a[i] = rand() % 6 + 1;
-  }
-}
-
-void imprimirDados(int num){
-  int dado[5][9];
-  for (int i = 0; i < 5; i++){
-    for (int j = 0; j < 9; j++){
-
-      if(i == 0 || i == 4){
-        if(j == 0 || j == 8){
-         cout << "+";
-          if(j == 8){
-            cout << endl;
-          }
-        } else{
-          cout <<"-";
-        }
-      } else {
-        if(j == 0 || j == 8){
-          cout << "|";
-          if(j == 8){
-            cout << endl;
-          }
-        } else{
-         if(num % 2 != 0){
-          if((i == 2 && j == 4) || (((i == 1 && j == 2) || (i == 3 && j == 6)) && num > 1) || (((i == 1 && j == 6) || (i == 3 && j == 2)) && num > 3)){
-            cout << "x";
-            } else {
-              cout <<" ";
-            }
-         } else {
-           if(((i == 1 && j == 2) || (i == 3 && j == 6)) || (((i == 1 && j == 6) || (i == 3 && j == 2)) && num > 2) || (((i == 2 && j == 2) || (i == 2 && j == 6)) && num > 4)){
-            cout << "x";
-          } else {
-            cout <<" ";
-          }
-         }
-        }
-      }
-    }
-  }
-}
