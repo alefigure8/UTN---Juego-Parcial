@@ -26,12 +26,9 @@ string jugadorActual;
 
 /* Main */
 int main (void){
-  setlocale(LC_ALL, "spanish");
-  ResizeConsole(850,550);
-  menuInicial();
-
-
-
+  setlocale(LC_ALL, "spanish"); // Para que se vea correctamente el texto en la consola
+  ResizeConsole(850,550); // Cambiar tamaño de consola
+  menuInicial(); // Menu inicial
 
   return 0;
 }

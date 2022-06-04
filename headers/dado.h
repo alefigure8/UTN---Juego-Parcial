@@ -9,7 +9,7 @@
 using namespace std;
 
 
-void dibujar_dados(int *num, int cant_dados);
+string dibujar_dados(int *num, int cant_dados);
 
 
 

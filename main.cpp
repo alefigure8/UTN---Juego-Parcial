@@ -1,15 +1,17 @@
 #include <iostream>
 #include <Windows.h>
 #include <string>
-#include "headers/dado.h"
 using namespace std;
+struct Jugadores{
+  string jugador[2];
+  int puntaje[2];
+  string jugadorActual;
+} datos;
 
 
 int main (){
 
-  int dados[3] = {3,4,5};
-  dibujar_dados(dados, 3);
+  struct Jugadores jugadores;
+
   return 0;
 }
-
-

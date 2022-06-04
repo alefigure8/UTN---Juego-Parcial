@@ -1,11 +1,11 @@
 #include <Windows.h>
-#include <iostream> 
-#include <string> 
+#include <iostream>
+#include <string>
 using namespace std;
 
 #include "headers/dado.h"
 
-  void dibujar_dados(int *num, int cant_dados){
+string dibujar_dados(int *num, int cant_dados){
 
   int dado_1 = num[0];
   int dado_2 = num[1];
@@ -61,6 +61,6 @@ using namespace std;
      }
   }
 
-  cout << dado_dibujado;
+  return dado_dibujado;
  }
 
