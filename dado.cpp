@@ -1,22 +1,17 @@
-#include <iostream>
+#include <Windows.h>
+#include <iostream> 
+#include <string> 
 using namespace std;
 
-void dados(int *num, int cant_dados);
+#include "headers/dado.h"
 
-int main (void){
-
-  int dado[3] = {5, 6, 2};
-
-  dados(dado, 3);
-
-  return 0;
-}
-
-void dados(int *num, int cant_dados){
+  void dibujar_dados(int *num, int cant_dados){
 
   int dado_1 = num[0];
   int dado_2 = num[1];
   int dado_3 = num[2];
+
+  string dado_dibujado;
 
   for (int i = 0; i < 5; i++){
     for (int j = 0; j < ((cant_dados - 1)*10 + 9); j++){
@@ -30,15 +25,15 @@ void dados(int *num, int cant_dados){
           n1 = 0 + (h*10);
           n2 = 8 + (h*10);
           if(j == n1 || j == n2){
-            cout << "+";
+            dado_dibujado += "+";
             if(j == ((cant_dados - 1) * 10) + 8){
-                cout << endl;
+                dado_dibujado += "\n";
               }
           } else if(j==((h * 10) + 9)){
-            cout << " ";
+            dado_dibujado += " ";
           } else {
             if(h == cant_dados - 1 && j != 0 && j!=8 && j!=9 && j!= 10 && j!=18 && j!=19 && j!=20 && j!=28){
-              cout << "-";
+             dado_dibujado += "-";
             }
           }
         }
@@ -50,19 +45,22 @@ void dados(int *num, int cant_dados){
           n3 = 0 + (h*10);
           n4 = 8 + (h*10);
           if(j == n3 || j == n4){
-            cout << "|";
+           dado_dibujado += "|";
             if(j == ((cant_dados - 1) * 10) + 8){
-                cout << endl;
+               dado_dibujado += "\n";
               }
           } else if(j==((h * 10) + 9)){
-            cout << " ";
+           dado_dibujado += " ";
           } else {
             if(h == cant_dados - 1 && j != 0 && j!=8 && j!=9 && j!= 10 && j!=18 && j!=19 && j!=20 && j!=28){
-              cout << " ";
+             dado_dibujado += " ";
             }
           }
         }
       }
      }
   }
+
+  cout << dado_dibujado;
  }
+

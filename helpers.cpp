@@ -4,6 +4,7 @@
 //Comentarios:
 
 #include <iostream>
+#include "headers/rlutil.h"
 using namespace std;
 
 /* Funciones */

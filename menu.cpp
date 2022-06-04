@@ -1,13 +1,13 @@
 #include <Windows.h>
 #include <iostream>
-#include <fstream>
 #include<locale>
 #include <iomanip>
 #include <string>
+#include "headers/rlutil.h"
 using namespace std;
 
 /* Funciones */
-char menuInicial();
+void menuInicial();
 void nombres(int x);
 void lines();
 void endLines(int x);
@@ -16,7 +16,7 @@ void cerdo2(int x, string dialog);
 void ResizeConsole(int width, int height);
 void colorTexto (int x);
 void quienEmpieza();
-void dados(int *a, int b);
+void dados(int a[], int b);
 void iniciarMatriz(int matriz[2][3], int filas, int columnas);
 void imprimirDados(int num);
 
@@ -28,60 +28,60 @@ string jugadorActual;
 int main (void){
   setlocale(LC_ALL, "spanish");
   ResizeConsole(850,550);
-  int eleccion;
-  eleccion = menuInicial();
+  menuInicial();
 
-  switch (eleccion)
-  {
-  case 'J':
-  case 'j': {
-    for (int i = 0; i < 2; i++)
-    {
-      nombres(i);
-    }
-    quienEmpieza();
-  }
-    break;
-  }
+
 
 
   return 0;
 }
 
 /* Funcion para el munnu de inicio */
-char menuInicial(){
+void menuInicial(){
 
   char eleccion;
 
-  lines();
+  do{
+    lines();
 
-  colorTexto(15);cout <<endl << endl << R"(
+    colorTexto(15);cout <<endl << endl << R"(
+                   _              _     _                        ___          _
+               _  | |            | |   (_)                      / __)        (_)
+             _| |_| |__  _____   | |  _ _ ____   ____     ___ _| |__    ____  _  ____  ___
+            (_   _)  _ \| ___ |  | |_/ ) |  _ \ / _  |   / _ (_   __)  |  _ \| |/ _  |/___)
+              | |_| | | | ____|  |  _ (| | | | ( (_| |  | |_| || |     | |_| | ( (_| |___ |
+               \__)_| |_|_____)  |_| \_)_|_| |_|\___ |   \___/ |_|     |  __/|_|\___ (___/
+                                               (_____|                 |_|     (_____|
+    )" << endl;
 
-                  _              _     _                        ___          _            
-              _  | |            | |   (_)                      / __)        (_)           
-            _| |_| |__  _____   | |  _ _ ____   ____     ___ _| |__    ____  _  ____  ___ 
-           (_   _)  _ \| ___ |  | |_/ ) |  _ \ / _  |   / _ (_   __)  |  _ \| |/ _  |/___)
-             | |_| | | | ____|  |  _ (| | | | ( (_| |  | |_| || |     | |_| | ( (_| |___ |
-              \__)_| |_|_____)  |_| \_)_|_| |_|\___ |   \___/ |_|     |  __/|_|\___ (___/ 
-                                              (_____|                 |_|     (_____| 
-  )" << endl;
 
+    endLines(3);
+    colorTexto(10);cout << endl << setw(40 + 11) << "(J) - JUGAR";
+    colorTexto(14); cout << endl << setw(40 + 17)<< "(E) - ESTADISTICA";
+    colorTexto(14); cout << endl << setw(40 + 14)<< "(C) - CERDITOS";
+    cout << endl;
+    colorTexto(12); cout << endl << setw(40 + 11)<< "(S) - SALIR";
+    endLines(3);
+    colorTexto(9); cout << endl << setw(80)<< "V1.0.0";
+    endLines(3);
 
-  endLines(3);
-  colorTexto(10);cout << endl << setw(40 + 11) << "(J) - JUGAR";
-  colorTexto(14); cout << endl << setw(40 + 17)<< "(E) - ESTADISTICA";
-  colorTexto(14); cout << endl << setw(40 + 14)<< "(C) - CERDITOS";
-  cout << endl;
-  colorTexto(12); cout << endl << setw(40 + 11)<< "(S) - SALIR";
-  endLines(3);
-  colorTexto(9); cout << endl << setw(80)<< "V1.0.0";
-  endLines(3);
+    lines();
 
-  lines();
+    cin >>  eleccion;
 
- cin >>  eleccion;
+    switch (eleccion){
+    case 'J':
+    case 'j': {
+      for (int i = 0; i < 2; i++)
+      {
+        nombres(i);
+      }
+      quienEmpieza();
+    }
+      break;
+    }
+  }while(eleccion != 'S' && eleccion != 's');
 
-  return eleccion;
 }
 
 /* Funcion que pide los nombres de los jugadores*/ 
@@ -90,9 +90,9 @@ char menuInicial(){
 
   // segun el turno cambia el dialogo
   if(x == 0){
-    dialog = "\t\t¿Cuál es tu nombre, cerdo uno?";
+    dialog = "\t\tï¿½Cuï¿½l es tu nombre, cerdo uno?";
   } else {
-    dialog =  "\t\tTu turno, cerdo dos, ¿cuál es tu nombre?";
+    dialog =  "\t\tTu turno, cerdo dos, ï¿½cuï¿½l es tu nombre?";
   }
 
   lines();
@@ -101,13 +101,12 @@ char menuInicial(){
   cerdo(x, dialog); // Imprime cerdo
   endLines(8);
   lines();
-  endLines(2);
   colorTexto(15); cin >> jugadores[x]; // Guarda nombre de los jugadores
  }
 
 
 
-/* Funcion que añade el decorado de lineas a cada pantalla*/
+/* Funcion que aï¿½ade el decorado de lineas a cada pantalla*/
  void lines(){
    cout << endl;
      for (int i = 0; i < 98; i++)
@@ -128,7 +127,7 @@ char menuInicial(){
 
 /* Funcon que dibuja al cerdo*/
  void cerdo(int x, string dialog){
-  colorTexto(13); cout << R"(
+ colorTexto(13); cout << R"(
           _                           _
           ;`.                       ,'/
           |`.`-.      _____      ,-;,'|
@@ -206,9 +205,9 @@ void quienEmpieza(){
     lines();
     endLines(8);
     if(i == 0){
-      dialog = "Lanza los dados, " + jugadores[i] +  " ¿Estás listos? (S/N)";
+      dialog = "Lanza los dados, " + jugadores[i] +  " ï¿½Estï¿½s listos? (S/N)";
     } else {
-      dialog = "Ahora es tu turno " + jugadores[i] +  " ¿Estás listos? (S/N)";
+      dialog = "Ahora es tu turno " + jugadores[i] +  " ï¿½Estï¿½s listos? (S/N)";
     }
 
     cerdo2(i, dialog);
@@ -256,6 +255,7 @@ void quienEmpieza(){
 
     endLines(8);
     lines();
+    rlutil::anykey();
 
     if(total > sumaMaxima){
       sumaMaxima = total;
@@ -280,11 +280,13 @@ void quienEmpieza(){
   lines();
   endLines(8);
 
-  dialog = "¡COMIENZA EL JUGADOR " + jugadorActual + "!";
+  dialog = "ï¿½COMIENZA EL JUGADOR " + jugadorActual + "!";
   cerdo2(0, dialog);
 
   endLines(8);
   lines();
+
+  rlutil::anykey();
 
 }
 
@@ -298,7 +300,7 @@ void iniciarMatriz(int matriz[2][3], int filas, int columnas){
 }
 
 /* Funcion que simula los dados y devuelve numeros random */
-void dados(int *a, int b){
+void dados(int a[], int b){
   srand(time(0));
   for (int i = 0; i < b; i++){
     a[i] = rand() % 6 + 1;
@@ -312,7 +314,7 @@ void imprimirDados(int num){
 
       if(i == 0 || i == 4){
         if(j == 0 || j == 8){
-          cout << "+";
+         cout << "+";
           if(j == 8){
             cout << endl;
           }
