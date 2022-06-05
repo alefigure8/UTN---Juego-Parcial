@@ -1,6 +1,7 @@
 #include <Windows.h>
 #include <iostream>
 #include <string>
+#include "headers/jugadores.h"
 using namespace std;
 
 /* Funcion para darle ancho y largo a la consola*/
@@ -31,5 +32,21 @@ void iniciarMatriz(int matriz[2][3], int filas, int columnas){
     for (int j = 0; j < columnas; j++){
       matriz[i][j] = 0;
     }
+  }
+}
+
+/* Funcion para sumar los dados*/
+int sumar_dados(int vec[3], int CANT_DADOS){
+  int total = 0;
+   for (int j = 0; j < CANT_DADOS; j++){
+      total += vec[j];
+    }
+  return total;
+}
+
+void obtener_maximo(int total, int &maximo, int i, int &jugadorMaximo){
+  if(total > maximo){
+    maximo = total;
+    jugadorMaximo = i + 1;
   }
 }

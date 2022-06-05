@@ -25,7 +25,7 @@ enum OPCIONES {
 /* Main */
 int main (void){
   setlocale(LC_ALL, "spanish"); // Para que se vea correctamente el texto en la consola
-  ResizeConsole(850,550); // Cambiar tamaùo de consola
+  ResizeConsole(850,550); // Cambiar tamano de consola
   menuInicial(); // Menu inicial
 
   return 0;
@@ -33,15 +33,19 @@ int main (void){
 
 /* Funcion para el munnu de inicio */
 void menuInicial(){
-  Jugadores jugadores[2];
+  Jugadores jugadores[2]; // Inicializar Struct de Jugadores
   string jugadorActual;
   int eleccion;
 
   do{
+
+    // TODO PASAR ESTO A UNA PANTALLA
+    system("cls"); // Limpiar pantalla
     lines(2);
     colorTexto(15);
     imprimir_titulo();
     endLines(3);
+
     colorTexto(10); cout << endl << setw(40 + 11) << "(1) - JUGAR";
     colorTexto(14); cout << endl << setw(40 + 17)<< "(2) - ESTADISTICA";
     colorTexto(14); cout << endl << setw(40 + 14)<< "(3) - CERDITOS";
@@ -49,6 +53,7 @@ void menuInicial(){
     colorTexto(12); cout << endl << setw(40 + 11)<< "(0) - SALIR";
     endLines(3);
     colorTexto(9); cout << endl << setw(80)<< "V1.0.0";
+
     endLines(3);
     lines(2);
 
@@ -68,133 +73,57 @@ void menuInicial(){
 
 }
 
-/* Funcion que pide los nombres de los jugadores*/
- Jugadores pedir_nombre(int x){
-
-   Jugadores jugadores;
-
-    string dialog = "";
-
-    // segun el turno cambia el dialogo
-    if(x == 0){
-      dialog = "øCu·l es tu nombre, cerdo uno?";
-    } else {
-      dialog =  "Tu turno, cerdo dos, øcu·l es tu nombre?";
-    }
-
-    lines(1);
-    endLines(6);
-    cerdo(x, dialog); // Imprime cerdo
-    endLines(8);
-    lines(2);
-
-    colorTexto(15);
-    cin >> jugadores.jugador;
-    jugadores.puntaje = 0;
-
-    return jugadores;
- }
-
-
-
-/* Funcion que aùade el decorado de lineas a cada pantalla*/
- void lines(int x){
-   cout << endl;
-      for (int i = 0; i < 98; i++)
-    {
-      colorTexto(2); cout << "#";
-    }
-    cout << endl;
-   if(x == 1){
-      colorTexto(15); cout << "THE KING OF PIGS" << endl;
-   }
- }
-
-
 /* Funcion para determinar cual jugador comienza*/
 void quienEmpieza(Jugadores *jugador, string &jugadorActual){
   int CANT_DADOS = 2;
   int CANT_JUGADORES = 2;
-  int dados_jugadores[3];
-  int totalJugadores[2][3];
+
   int sumaMaxima = 0;
   int jugadorSumaMaxima;
   int dadoMaximo = 0;
   int jugadorDadoMaximo;
-  int totalJugador1= totalJugadores[0][0] + totalJugadores[0][1];
-  int totalJugador2= totalJugadores[1][0] + totalJugadores[1][1];
+
   string dialog;
 
-  iniciarMatriz(totalJugadores, CANT_JUGADORES, CANT_DADOS);
-
-  char eleccion;
-
   for (int i = 0; i < CANT_JUGADORES; i++){
-    /* Pantalla 1*/
-    lines(1);
-    endLines(8);
     if(i == 0){
-      dialog = "Lanza los dados, " + jugador[i].jugador +  " øEst·s listos? (S/N)";
+      dialog = "Lanza los dados, " + jugador[i].jugador +  " ÔøΩEstÔøΩs listos?";
     } else {
-      dialog = "Ahora es tu turno " + jugador[i].jugador  +  " øEst·s listos? (S/N)";
+      dialog = "Ahora es tu turno " + jugador[i].jugador  +  " ÔøΩEstÔøΩs listos?";
     }
+    /* Pantalla 1*/
+    pantalla_generica(i, 2, dialog);
 
-    cerdo2(i, dialog);
 
-    endLines(8);
-    lines(2);
-
-    cin >> eleccion;
-
+    // TODO hacer una pantalla generica para los dados
     /* Pantalla 2*/
+    system("cls"); // Limpiar pantalla
     lines(1);
     endLines(8);
   
-    if(eleccion == 'S'){
-
-      dados(dados_jugadores, 2);
-
-      for (int j = 0; j < CANT_DADOS; j++){
-        totalJugadores[i][j] += dados_jugadores[j];
-        imprimirDados(dados_jugadores[j]);
-      }
-    } else {
-      if(i == 0){ // Si no quiere tirar, cede turno
-       jugadorActual = jugador[1].jugador ;
-       i = 2;
-      } else {
-        jugadorActual = jugador[0].jugador;
-        i = 2;
-      }
-    }
-
-    int total = 0;
+    dados(jugador[i].dados_jugadores, CANT_DADOS); // generamos numeros random
+    jugador[i].suma_dados = sumar_dados(jugador[i].dados_jugadores, CANT_DADOS); // summamos los dados
 
     for (int j = 0; j < CANT_DADOS; j++){
-      total += totalJugadores[i][j];
-
-      if(totalJugadores[i][j] > dadoMaximo){
-        dadoMaximo = totalJugadores[i][j];
-        jugadorDadoMaximo = i + 1;
-      }
+      imprimirDados(jugador[i].dados_jugadores[j]); // imprimimos los dados
     }
 
-    string strTotal = to_string(total);
-    colorTexto(15);cout << setw(50) <<"Has sumado " + strTotal + "!";
+    for (int j = 0; j < CANT_DADOS; j++){ // buscamos el dado con mayor valor
+      obtener_maximo(jugador[i].dados_jugadores[j], dadoMaximo, i, jugadorDadoMaximo);
+    }
+
+    string strTotal = to_string(jugador[i].suma_dados); // convertimos a string
+    colorTexto(15); cout << setw(50) <<"Has sumado " + strTotal + "!"; // imprimimos la suma
 
     endLines(8);
     lines(2);
     rlutil::anykey();
 
-    /* Guarda el maximo puntaje */
-    if(total > sumaMaxima){
-      sumaMaxima = total;
-      jugadorSumaMaxima = i + 1;
-    }
+    obtener_maximo(jugador[i].suma_dados, sumaMaxima, i, jugadorSumaMaxima); // buscamos el jugador con mayor suma
 
-    /* Asigna turno dependiendo el puntaje*/
-    if(totalJugador1 != totalJugador2){
-        if (jugadorSumaMaxima == 1){ // si no hay empate
+    //TODO pasar esto a una funcion
+    if(jugador[0].suma_dados != jugador[1].suma_dados){ // si no hay empate
+        if (jugadorSumaMaxima == 1){
         jugadorActual = jugador[0].jugador;
       } else {
         jugadorActual = jugador[1].jugador;
@@ -208,15 +137,8 @@ void quienEmpieza(Jugadores *jugador, string &jugadorActual){
     }
   }
 
-  lines(1);
-  endLines(8);
-
-  dialog = "°COMIENZA EL JUGADOR " + jugadorActual + "!";
-  cerdo2(0, dialog);
-
-  endLines(8);
-  lines(2);
-
-  rlutil::anykey();
+  dialog = "ÔøΩCOMIENZA EL JUGADOR " + jugadorActual + "!" ;
+  /* Pantalla 3*/
+  pantalla_generica(0, 1, dialog);
 }
 

@@ -69,7 +69,6 @@ void imprimir_titulo(){
 
   endLines(2);
   enmarcar_texto(dialog, x);
-  endLines(3);
  }
 
   void cerdo2(int x, string dialog){
@@ -90,5 +89,41 @@ void imprimir_titulo(){
                      `------')";
   endLines(2);
   enmarcar_texto(dialog, x);
-  endLines(3);
+ }
+
+ /* Funcion que a�ade el decorado de lineas a cada pantalla*/
+ void lines(int x){
+   cout << endl;
+      for (int i = 0; i < 98; i++)
+    {
+      colorTexto(2); cout << "#";
+    }
+    cout << endl;
+   if(x == 1){
+      colorTexto(15); cout << "THE KING OF PIGS" << endl;
+   }
+ }
+
+ void pantalla_generica(int i, int pantalla_cerdo, string dialogo){
+    system("cls"); // Limpiar pantalla
+    lines(1);
+    endLines(2);
+
+    if(pantalla_cerdo == 1){
+      cerdo(i, dialogo);
+    } else if(pantalla_cerdo == 2){
+      cerdo2(i, dialogo);
+    }
+    endLines(2);
+
+    if(pantalla_cerdo == 2){
+      cout << "Presiona cualquier tecla para continuar...";
+    }
+
+    endLines(1);
+    lines(2);
+
+    if(pantalla_cerdo == 2){
+      rlutil::anykey();
+    }
  }
