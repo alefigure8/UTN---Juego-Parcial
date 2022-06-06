@@ -96,9 +96,7 @@ void quienEmpieza(Jugadores *jugador, int &jugadorActual){
 
     // Imprimimos los dados
     string resultado_imprimir_dado;
-    for (int j = 0; j < CANT_DADOS; j++){
-      resultado_imprimir_dado += imprimirDados(jugador[i].dados_jugadores[j]);
-    }
+    resultado_imprimir_dado = dibujar_dados(jugador[i].dados_jugadores, CANT_DADOS);
 
     // buscamos el dado con mayor valor
     for (int j = 0; j < CANT_DADOS; j++){ 

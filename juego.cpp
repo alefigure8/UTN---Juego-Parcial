@@ -46,14 +46,13 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
       cout << "| LANZAMIENTO #" << lanzamientos - 1 <<  "          |" << endl;
       cout << "+=========================+" << endl;
       cout << endl << "LANZAMIENTO #" << lanzamientos << endl << endl;
-      /* Suma el resultado de los dados */
 
+      /* Suma el resultado de los dados */
       jugador[jugadorActual].suma_dados = 0;
       jugador[jugadorActual].suma_dados += sumar_dados( jugador[jugadorActual].dados_jugadores, CANT_DADOS);
 
-      for (int j = 0; j < CANT_DADOS; j++){
-        dibujo_dados += imprimirDados(jugador[jugadorActual].dados_jugadores[j]);
-      }
+      /* Imprime los dados en pantalla*/
+      dibujo_dados =dibujar_dados(jugador[jugadorActual].dados_jugadores, CANT_DADOS);;
 
       cout << dibujo_dados << endl;
       dibujo_dados = ""; //limpia el string dibujo_dados
@@ -69,6 +68,13 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
         } else {
           jugador[0].puntaje += jugador[jugadorActual].puntaje;
         }
+
+        // Reiniciamos el contador de puntajes general
+        jugador[jugadorActual].puntaje = 0;
+        totalRonda = 0;
+
+        // Reiniciamos el contador de puntaje de la ronda
+        jugador[jugadorActual].suma_dados = 0;
 
         // Cede el turno al otro jugador
         if(jugadorActual == 0){
@@ -88,19 +94,19 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
           CANT_DADOS++;
         }
 
+       // Reiniciamos el contador de puntajes general
+        jugador[jugadorActual].puntaje = 0;
+        totalRonda = 0;
+
+        // Reiniciamos el contador de puntaje de la ronda
+        jugador[jugadorActual].suma_dados = 0;
+
         // Cedemos el turno
         if(jugadorActual == 0){
           jugadorActual = 1;
         } else {
           jugadorActual = 0;
         }
-
-        // Reiniciamos el contador de puntajes general
-        jugador[jugadorActual].puntaje = 0;
-        totalRonda = 0;
-
-        // Reiniciamos el contador de puntaje de la ronda
-        jugador[jugadorActual].suma_dados = 0;
 
         // Mensaje
         cout << "TE HUNDISTE EN EL BARRO";
@@ -177,18 +183,21 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
       // Sumar los puntos de la ronda al jugador al terminar
       jugador[JugadorActualLanzando].puntaje += totalRonda;
 
-    }
+      // Contador de rondas
+      if(JugadorActualLanzando == 1){
+        contadorRondas++;
+      }
 
-    // Contador de rondas
-    if(JugadorActualLanzando == 1){
-      contadorRondas++;
     }
 
 
   // Mostrar el puntaje final
   cout << endl <<"===========================" << endl;
-  cout << endl << jugador[0].jugador << " HIZO UN TOTAL DE " << jugador[0].puntaje;
-  cout << endl << jugador[1].jugador  << " HIZO UN TOTAL DE " << jugador[1].puntaje;
+  cout << "HITO" << "\t" <<  jugador[0].jugador  << "\t" <<jugador[1].jugador<<endl;
+  cout << endl <<"===========================" << endl;
+  cout << endl << "TRUFAS " << "\t" << jugador[0].puntaje << "\t " << jugador[1].puntaje;
+  cout << endl << "TRUFAS " << "\t" << jugador[0].oink << "\t " << jugador[1].oink;
+  cout << endl << "TRUFAS " << "\t" << jugador[0].total_lanzamientos << "\t " << jugador[1].total_lanzamientos;
   cout << endl <<"===========================" << endl;
   rlutil::anykey();
 }
