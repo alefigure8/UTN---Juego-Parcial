@@ -1,7 +1,12 @@
 #include <Windows.h>
 #include <iostream>
+#include <iomanip>
 #include <string>
+#include "headers/rlutil.h"
 #include "headers/jugadores.h"
+#include "headers/dado.h"
+#include "headers/helpers.h"
+#include "headers/graficas.h"
 using namespace std;
 
 /* Funcion para darle ancho y largo a la consola*/
@@ -27,11 +32,9 @@ void colorTexto (int x){
  }
 
  /* Funcion para inicializar con ceros una matriz*/
-void iniciarMatriz(int matriz[2][3], int filas, int columnas){
+void iniciarMatriz(int vector[2], int filas, int columnas){
   for (int i = 0; i < filas; i++){
-    for (int j = 0; j < columnas; j++){
-      matriz[i][j] = 0;
-    }
+      vector[i] = 0;
   }
 }
 
@@ -50,3 +53,4 @@ void obtener_maximo(int total, int &maximo, int i, int &jugadorMaximo){
     jugadorMaximo = i + 1;
   }
 }
+

@@ -11,8 +11,9 @@ using namespace std;
 
 string dibujar_dados(int *num, int cant_dados);
 void dados(int a[], int b);
-void imprimirDados(int num);
-
+string imprimirDados(int num);
+bool dados_iguales (int * dados, int cantidad);
+int dado_lado_uno(int * dados, int cantidad);
 
 
 #endif // DADO_H

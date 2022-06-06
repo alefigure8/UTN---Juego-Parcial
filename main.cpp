@@ -1,19 +1,21 @@
-#include <iostream>
 #include <Windows.h>
+#include <iostream>
+#include<locale>
+#include <iomanip>
 #include <string>
-#include <locale.h>
 #include "headers/rlutil.h"
+#include "headers/jugadores.h"
+#include "headers/dado.h"
+#include "headers/helpers.h"
+#include "headers/graficas.h"
+#include "headers/menu.h"
 using namespace std;
-struct Jugadores{
-  string jugador[2];
-  int puntaje[2];
-  string jugadorActual;
-} datos;
 
-int main (){
-  setlocale(LC_ALL, "Spanish");
-
-  struct Jugadores jugadores;
+/* Main */
+int main (void){
+  setlocale(LC_ALL, "spanish"); // Para que se vea correctamente el texto en la consola
+  ResizeConsole(850,550); // Cambiar tamano de consola
+  menuInicial(); // Menu inicial
 
   return 0;
 }

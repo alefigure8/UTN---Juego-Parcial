@@ -30,7 +30,7 @@ struct Jugadores{
       dialog =  "Tu turno, cerdo dos, ¿cuál es tu nombre?";
     }
 
-    pantalla_generica(x, 1, dialog);
+    pantalla_generica(x, 1, dialog, "");
 
     cin >> jugadores.jugador;
 

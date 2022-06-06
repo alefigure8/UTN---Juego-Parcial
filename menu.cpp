@@ -8,12 +8,12 @@
 #include "headers/dado.h"
 #include "headers/helpers.h"
 #include "headers/graficas.h"
+#include "headers/juego.h"
+#include "headers/menu.h"
 using namespace std;
 
-/* Funciones */
-void menuInicial();
-Jugadores pedir_nombre(int x);
-void quienEmpieza(Jugadores *jugador, string &jugadorActual);
+void quienEmpieza(Jugadores *jugador, int &jugadorActual);
+void obtener_quien_empieza(Jugadores *jugador, int &jugadorActual, int &jugadorDadoMaximo, int &jugadorSumaMaxima);
 
 enum OPCIONES {
   SALIR = 0,
@@ -22,19 +22,11 @@ enum OPCIONES {
   CREDITOS = 3
 };
 
-/* Main */
-int main (void){
-  setlocale(LC_ALL, "spanish"); // Para que se vea correctamente el texto en la consola
-  ResizeConsole(850,550); // Cambiar tamano de consola
-  menuInicial(); // Menu inicial
-
-  return 0;
-}
 
 /* Funcion para el munnu de inicio */
 void menuInicial(){
   Jugadores jugadores[2]; // Inicializar Struct de Jugadores
-  string jugadorActual;
+  int jugadorActual;
   int eleccion;
 
   do{
@@ -66,6 +58,7 @@ void menuInicial(){
         jugadores[i] = pedir_nombre(i);
       }
       quienEmpieza(jugadores, jugadorActual);
+      comenzar_juego(jugadores, jugadorActual);
     }
       break;
     }
@@ -73,8 +66,9 @@ void menuInicial(){
 
 }
 
+// TODO averiguar como hacer para pasar por parametro una estructura
 /* Funcion para determinar cual jugador comienza*/
-void quienEmpieza(Jugadores *jugador, string &jugadorActual){
+void quienEmpieza(Jugadores *jugador, int &jugadorActual){
   int CANT_DADOS = 2;
   int CANT_JUGADORES = 2;
 
@@ -86,59 +80,63 @@ void quienEmpieza(Jugadores *jugador, string &jugadorActual){
   string dialog;
 
   for (int i = 0; i < CANT_JUGADORES; i++){
+
     if(i == 0){
-      dialog = "Lanza los dados, " + jugador[i].jugador +  " �Est�s listos?";
+      dialog = "Lanza los dados, ";
     } else {
-      dialog = "Ahora es tu turno " + jugador[i].jugador  +  " �Est�s listos?";
+      dialog = "Ahora es tu turno ";
     }
-    /* Pantalla 1*/
-    pantalla_generica(i, 2, dialog);
 
+    // Pantalla 1
+    pantalla_generica(i, 2, dialog, jugador[i].jugador); 
 
-    // TODO hacer una pantalla generica para los dados
-    /* Pantalla 2*/
-    system("cls"); // Limpiar pantalla
-    lines(1);
-    endLines(8);
-  
-    dados(jugador[i].dados_jugadores, CANT_DADOS); // generamos numeros random
-    jugador[i].suma_dados = sumar_dados(jugador[i].dados_jugadores, CANT_DADOS); // summamos los dados
+    // generamos numeros random
+    dados(jugador[i].dados_jugadores, CANT_DADOS);
+    jugador[i].suma_dados = sumar_dados(jugador[i].dados_jugadores, CANT_DADOS);
 
+    // Imprimimos los dados
+    string resultado_imprimir_dado;
     for (int j = 0; j < CANT_DADOS; j++){
-      imprimirDados(jugador[i].dados_jugadores[j]); // imprimimos los dados
+      resultado_imprimir_dado += imprimirDados(jugador[i].dados_jugadores[j]);
     }
 
-    for (int j = 0; j < CANT_DADOS; j++){ // buscamos el dado con mayor valor
+    // buscamos el dado con mayor valor
+    for (int j = 0; j < CANT_DADOS; j++){ 
       obtener_maximo(jugador[i].dados_jugadores[j], dadoMaximo, i, jugadorDadoMaximo);
     }
 
-    string strTotal = to_string(jugador[i].suma_dados); // convertimos a string
-    colorTexto(15); cout << setw(50) <<"Has sumado " + strTotal + "!"; // imprimimos la suma
+    // convertimos a string
+    string strTotal = to_string(jugador[i].suma_dados);
+    dialog = "Has sumado " + strTotal + ", " + jugador[i].jugador + "!";
 
-    endLines(8);
-    lines(2);
-    rlutil::anykey();
+    // Pantalla 2
+    pantalla_generica_2(i, resultado_imprimir_dado, dialog, jugador[0].jugador, jugador[1].jugador ,jugador[0].suma_dados, jugador[1].suma_dados); 
 
-    obtener_maximo(jugador[i].suma_dados, sumaMaxima, i, jugadorSumaMaxima); // buscamos el jugador con mayor suma
+    // buscamos el jugador con mayor suma
+    obtener_maximo(jugador[i].suma_dados, sumaMaxima, i, jugadorSumaMaxima); 
 
-    //TODO pasar esto a una funcion
-    if(jugador[0].suma_dados != jugador[1].suma_dados){ // si no hay empate
+    // buscamos el jugador con mayor suma o dado
+    obtener_quien_empieza(jugador, jugadorActual, jugadorDadoMaximo, jugadorSumaMaxima); 
+  }
+
+  dialog = "COMIENZA A JUGAR " ;
+  pantalla_generica(0, 2, dialog, jugador[jugadorActual].jugador); // Pantalla 3
+}
+
+// TODO averiguar como hacer para pasar por parametro una estructura
+/* Funcion que determina cual jugador empieza */
+void obtener_quien_empieza(Jugadores *jugador, int &jugadorActual, int &jugadorDadoMaximo, int &jugadorSumaMaxima){
+   if(jugador[0].suma_dados != jugador[1].suma_dados){ // si no hay empate
         if (jugadorSumaMaxima == 1){
-        jugadorActual = jugador[0].jugador;
+        jugadorActual = 0;
       } else {
-        jugadorActual = jugador[1].jugador;
+        jugadorActual = 1;
       }
     } else {
       if (jugadorDadoMaximo == 1){ // si hay empate
-        jugadorActual = jugador[0].jugador;
+        jugadorActual = 0;
       } else {
-        jugadorActual = jugador[1].jugador;
+        jugadorActual = 1;
       }
     }
-  }
-
-  dialog = "�COMIENZA EL JUGADOR " + jugadorActual + "!" ;
-  /* Pantalla 3*/
-  pantalla_generica(0, 1, dialog);
-}
-
+} 
