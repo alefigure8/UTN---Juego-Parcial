@@ -19,14 +19,19 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
   char eleccion;
   string dibujo_dados;
 
+  // Si las rondas son menores o iguales a 5, se puede seguir jugando
   while(contadorRondas <= RONDAS){
     int totalRonda = 0;
     int lanzamientos = 1;
-    cout << endl << "LANZA LOS DADOS EL JUGADOR " << jugador[jugadorActual].jugador << "\nPRESIONA CUALQUIER TECLA PARA LANZAR" <<  endl << endl;
+    string dialogo;
+    dialogo = "LANZA LOS DADOS EL JUGADOR ";
     rlutil::anykey();
+
+    pantalla_generica(1, 2, dialogo, jugador[jugadorActual].jugador );
 
     JugadorActualLanzando = jugadorActual;
 
+    // si el jugador actual  decide continuar lanzando los dados
     while(jugadorActual == JugadorActualLanzando){
       int resultadoDados[CANT_JUGADORES][3];
       bool sonIguales = 0;
@@ -195,9 +200,10 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
   cout << endl <<"===========================" << endl;
   cout << "HITO" << "\t" <<  jugador[0].jugador  << "\t" <<jugador[1].jugador<<endl;
   cout << endl <<"===========================" << endl;
-  cout << endl << "TRUFAS " << "\t" << jugador[0].puntaje << "\t " << jugador[1].puntaje;
-  cout << endl << "TRUFAS " << "\t" << jugador[0].oink << "\t " << jugador[1].oink;
-  cout << endl << "TRUFAS " << "\t" << jugador[0].total_lanzamientos << "\t " << jugador[1].total_lanzamientos;
+  cout << endl << "Más trufas en total " << "\t" << jugador[0].puntaje << "\t " << jugador[1].puntaje;
+  cout << endl << "Cada 50 Trufas " << "\t" << jugador[0].puntaje << "\t " << jugador[1].puntaje;
+  cout << endl << "Oinks " << "\t" << jugador[0].oink << "\t " << jugador[1].oink;
+  cout << endl << "Cerdo codicioso " << "\t" << jugador[0].total_lanzamientos << "\t " << jugador[1].total_lanzamientos;
   cout << endl <<"===========================" << endl;
   rlutil::anykey();
 }

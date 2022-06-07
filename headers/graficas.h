@@ -18,5 +18,6 @@ void lines(int x);
 void puntaje(string nombre_1, string nombre_2, int jugador_1, int jugador_2);
 void pantalla_generica(int i, int pantalla_cerdo, string dialogo, string nombre);
 void pantalla_generica_2(int i, string texto, string dialogo, string nombre_1, string nombre_2, int jugador_1, int jugador_2);
+int flecha_del_menu();
 
 #endif // GRAFICAS_H

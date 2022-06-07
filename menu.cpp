@@ -30,27 +30,23 @@ void menuInicial(){
   int eleccion;
 
   do{
+    // Pantalla de inicio
+    system("cls");
+    lines(2); // Lineas de separacion con titulo
+    endLines(1); // salto de linea
+    colorTexto(15); imprimir_titulo();
+    colorTexto(10); rlutil::locate(40, 17); cout << "(1) - JUGAR" << endl;
+    colorTexto(14); rlutil::locate(40, 18); cout << "(2) - ESTADISTICA" << endl;
+    colorTexto(14); rlutil::locate(40, 19); cout << "(3) - CERDITOS" << endl;
+    colorTexto(12); rlutil::locate(40, 20); cout << "(0) - SALIR" << endl;
+    colorTexto(9);  rlutil::locate(80, 22); cout << "V1.0.0" << endl;
+    colorTexto(15); rlutil::locate(38, 17); cout << (char)187 << endl;
+    endLines(8);
+    lines(2); // Lineas de separacion
 
-    // TODO PASAR ESTO A UNA PANTALLA
-    system("cls"); // Limpiar pantalla
-    lines(2);
-    colorTexto(15);
-    imprimir_titulo();
-    endLines(3);
+    int eleccion = flecha_del_menu(); // Obtener la eleccion del usuario
 
-    colorTexto(10); cout << endl << setw(40 + 11) << "(1) - JUGAR";
-    colorTexto(14); cout << endl << setw(40 + 17)<< "(2) - ESTADISTICA";
-    colorTexto(14); cout << endl << setw(40 + 14)<< "(3) - CERDITOS";
-    endLines(1);
-    colorTexto(12); cout << endl << setw(40 + 11)<< "(0) - SALIR";
-    endLines(3);
-    colorTexto(9); cout << endl << setw(80)<< "V1.0.0";
-
-    endLines(3);
-    lines(2);
-
-    cin >>  eleccion;
-
+    // Eleccion de opcion
     switch (eleccion){
     case OPCIONES::INICIAR_JUEGO: {
       for (int i = 0; i < 2; i++)

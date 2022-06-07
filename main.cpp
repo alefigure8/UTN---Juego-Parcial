@@ -13,8 +13,8 @@ using namespace std;
 
 /* Main */
 int main (void){
-  setlocale(LC_ALL, "spanish"); // Para que se vea correctamente el texto en la consola
-  ResizeConsole(850,550); // Cambiar tamano de consola
+  setlocale(LC_CTYPE, "Spanish"); // Para que se vea correctamente el texto en la consola
+  ResizeConsole(850,550); // Cambiar0 tamano de consola
   menuInicial(); // Menu inicial
 
   return 0;

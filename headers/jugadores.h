@@ -25,9 +25,9 @@ struct Jugadores{
 
     // segun el turno cambia el dialogo
     if(x == 0){
-      dialog = "Â¿CuÃ¡l es tu nombre, cerdo uno?";
+      dialog = "¿Cuál es tu nombre, cerdo uno?";
     } else {
-      dialog =  "Tu turno, cerdo dos, Â¿cuÃ¡l es tu nombre?";
+      dialog =  "Tu turno, cerdo dos, ¿Cuál es tu nombre?";
     }
 
     pantalla_generica(x, 1, dialog, "");

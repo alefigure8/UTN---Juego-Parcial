@@ -96,7 +96,6 @@ void imprimir_titulo(){
 
  /* Funcion que a�ade el decorado de lineas a cada pantalla*/
  void lines(int x){
-   cout << endl;
       for (int i = 0; i < 98; i++)
     {
       colorTexto(2); cout << "#";
@@ -169,4 +168,38 @@ char pantalla_juego (string jugadorActual, int contadorRondas, int totalRonda, i
   lines(2);
 
   return eleccion;
+}
+
+/* Funcion que muestra la flecha en la pantalla inicial*/
+int flecha_del_menu(){
+    int key ;
+    int eleccion;
+    int posicion_actual = 17;
+    int posicion_inicial = 17;
+    int posicion_final = 20;
+     do
+    {
+      key = rlutil::getkey();
+      switch(key){
+        case 15: // Flecha arriba
+          if(posicion_actual < posicion_final){
+            posicion_actual = posicion_actual + 1;
+            colorTexto(15); rlutil::locate(38, posicion_actual); cout << (char)187 << endl;
+            rlutil::locate(38, posicion_actual - 1); cout << " " << endl;
+          }
+          break;
+        case 14: // Flecha abajo
+          if(posicion_actual > posicion_inicial){
+            posicion_actual = posicion_actual - 1;
+            colorTexto(15); rlutil::locate(38, posicion_actual); cout << (char)187 << endl;
+            rlutil::locate(38, posicion_actual + 1); cout << " " << endl;
+          }
+          break;
+        case 1: // Enter
+          eleccion = posicion_actual - 16;
+          break;
+      }
+    } while (eleccion != 1 && key != 2 && key != 3 && key != 0);
+
+    return eleccion;
 }
