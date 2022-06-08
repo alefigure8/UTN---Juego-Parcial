@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <Windows.h>
+#include <algorithm>
 #include "graficas.h"
 using namespace std;
 
@@ -18,22 +19,27 @@ struct Jugadores{
 
 /* Funcion que pide los nombres de los jugadores*/
  Jugadores pedir_nombre(int x){
-
+   // Inicia la estructura de jugadores
    Jugadores jugadores;
 
-    string dialog = "";
-
     // segun el turno cambia el dialogo
+    string dialog = "";
     if(x == 0){
-      dialog = "¿Cuál es tu nombre, cerdo uno?";
+      dialog = "¿CUAL ES TU NOMBRE, CERDO UNO?";
     } else {
-      dialog =  "Tu turno, cerdo dos, ¿Cuál es tu nombre?";
+      dialog =  "TU TURNO,  CERDO DOS. ¿CUAL ES TU NOMBRE?";
     }
 
+    // Imprime pantalla
     pantalla_generica(x, 1, dialog, "");
 
+    rlutil::locate(1, 28); cout << ">> ";
     cin >> jugadores.jugador;
 
+    // Pasa los nombres a mayusculas
+    transform(jugadores.jugador.begin(), jugadores.jugador.end(), jugadores.jugador.begin(), ::toupper);
+
+    // Inicializamos los valores del jugador
     jugadores.puntaje = 0;
     jugadores.oink = 0;
     jugadores.total_lanzamientos = 0;

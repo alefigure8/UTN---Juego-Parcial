@@ -17,18 +17,18 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
   int RONDAS = 5;
   int contadorRondas = 1;
   char eleccion;
-  string dibujo_dados;
 
   // Si las rondas son menores o iguales a 5, se puede seguir jugando
   while(contadorRondas <= RONDAS){
     int totalRonda = 0;
     int lanzamientos = 1;
     string dialogo;
-    dialogo = "LANZA LOS DADOS EL JUGADOR ";
-    rlutil::anykey();
 
-    pantalla_generica(1, 2, dialogo, jugador[jugadorActual].jugador );
+    // pantalla de inicio de ronda
+    dialogo = "LANZA TUS DADOS";
+    pantalla_generica(jugadorActual, 2, dialogo, jugador[jugadorActual].jugador );
 
+    // corte de control de rondas
     JugadorActualLanzando = jugadorActual;
 
     // si el jugador actual  decide continuar lanzando los dados
@@ -39,17 +39,12 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
 
       iniciarMatriz(jugador[jugadorActual].dados_jugadores, CANT_JUGADORES, CANT_DADOS);
       dados(jugador[jugadorActual].dados_jugadores, CANT_DADOS);
-      cout << endl << endl << "GRAN CERDO" << endl;
-      cout << " ----------------------------------------------------------------------- " << endl;
 
-      cout << endl << jugador[0].jugador << ": " << jugador[0].puntaje << " trufas acumuladas             ";
-      cout << jugador[1].jugador << ": " << jugador[1].puntaje << " trufas acumuladas" << endl;
-      cout << endl << "TURNO DE "<< jugador[jugadorActual].jugador << endl;
-      cout << "+=========================+" << endl;
-      cout << "| RONDA #" << contadorRondas << "                |"<< endl ;
-      cout << "| TRUFAS DE LA RONDA : " << totalRonda << "  |" << endl;
-      cout << "| LANZAMIENTO #" << lanzamientos - 1 <<  "          |" << endl;
-      cout << "+=========================+" << endl;
+      system("cls");
+      lines();
+      puntaje_rondas(jugador[0].jugador, jugador[1].jugador, jugador[0].puntaje, jugador[1].puntaje, "TRUFAS ACUMULADAS");
+      cout << "TUTRNO DE: " << jugador[jugadorActual].jugador << endl;
+      pantalla_juego(contadorRondas, totalRonda, lanzamientos);
       cout << endl << "LANZAMIENTO #" << lanzamientos << endl << endl;
 
       /* Suma el resultado de los dados */
@@ -57,14 +52,15 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
       jugador[jugadorActual].suma_dados += sumar_dados( jugador[jugadorActual].dados_jugadores, CANT_DADOS);
 
       /* Imprime los dados en pantalla*/
-      dibujo_dados =dibujar_dados(jugador[jugadorActual].dados_jugadores, CANT_DADOS);;
+      dibujar_dados(jugador[jugadorActual].dados_jugadores, CANT_DADOS);;
 
-      cout << dibujo_dados << endl;
-      dibujo_dados = ""; //limpia el string dibujo_dados
-
+      /* buscamos si los dados son iguales */
       sonIguales = dados_iguales(jugador[jugadorActual].dados_jugadores, CANT_DADOS);
-      buscarUno = dado_lado_uno(jugador[jugadorActual].dados_jugadores, CANT_DADOS);
 
+      /* buscamos si hay ases */
+      buscarUno = dado_lado_uno(jugador[jugadorActual].dados_jugadores, CANT_DADOS);
+      
+      /* Analisis lanzamiento de dados */
       if(buscarUno == 3){
 
         // Sumamos los puntos del juego al otro jugador
@@ -89,9 +85,10 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
         }
 
         // Mensaje
-        cout << "TE HUNDISTE EN EL BARRO" << endl;
-        cout << "TODOS TUS PUNTOS AHORA SON DEL OTRO CERDO" << endl;
-        cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR" << endl;
+        colorTexto(COLOR::MENSAJE); cout <<endl << "TE HUNDISTE EN EL BARRO" << endl;
+        colorTexto(COLOR::TEXTO); cout << "TODOS TUS PUNTOS AHORA SON DEL OTRO CERDO" << endl;
+        colorTexto(COLOR::CONTINUAR); rlutil::locate(1, 28); cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR" << endl;
+
         rlutil::anykey();
       } else if(buscarUno == 2){
         // Sumamos un dado mas
@@ -114,9 +111,9 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
         }
 
         // Mensaje
-        cout << "TE HUNDISTE EN EL BARRO";
-        cout << endl << "PIERDE LO ACUMULADO EN TODO EL JUEGO Y CEDES TU TURNO" << endl;
-        cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR" << endl;
+        colorTexto(COLOR::MENSAJE); cout << "TE HUNDISTE EN EL BARRO";
+        colorTexto(COLOR::TEXTO); cout << endl << "PIERDE LO ACUMULADO EN TODO EL JUEGO Y CEDES TU TURNO" << endl;
+        colorTexto(COLOR::CONTINUAR); rlutil::locate(1, 28); cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR" << endl;
         rlutil::anykey();
 
       } else if (buscarUno == 1){ // HAY UN LADO CON UNO
@@ -133,8 +130,8 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
         }
 
         // Mensaje
-        cout << endl << "PIERDES TODO LO ACUMULADO EN LA RONDA Y CEDES TU TURNO" << endl;
-        cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR" << endl;
+        colorTexto(COLOR::MENSAJE); cout << endl << "PIERDES TODO LO ACUMULADO EN LA RONDA Y CEDES TU TURNO" << endl;
+        colorTexto(COLOR::CONTINUAR); rlutil::locate(1, 28); cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR..." << endl;
         rlutil::anykey();
 
       } else if (sonIguales == 1){ // OINK
@@ -144,22 +141,21 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
         jugador[jugadorActual].oink++;
 
         // Mensaje
-        cout << endl << "OINK" << endl;
-        cout << "ESTAS OBLIGADO A TIRAR LOS DADOS DE NUEVO" << endl;
+        colorTexto(COLOR::MENSAJE); cout << endl << "OINK" << endl;
+        colorTexto(COLOR::TEXTO); cout << "ESTAS OBLIGADO A TIRAR LOS DADOS DE NUEVO" << endl;
         // Mensaje del lanzamiento
-        cout << endl << endl << "SUMASTE  " << jugador[jugadorActual].suma_dados * 2 << " TRUFAS!" << endl;
-
-        cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR" << endl;
+        colorTexto(COLOR::TEXTO); cout << endl << endl << "SUMASTE  " << jugador[jugadorActual].suma_dados * 2 << " TRUFAS!" << endl;
+        colorTexto(COLOR::CONTINUAR);rlutil::locate(1, 28); cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR" << endl;
         rlutil::anykey();
 
       } else { // SUMA NORMAL
         totalRonda += jugador[jugadorActual].suma_dados;
         // Mensaje del lanzamiento
-        cout << endl << endl << "SUMASTE  " << totalRonda << " TRUFAS!" << endl;
+        colorTexto(COLOR::TEXTO); cout << endl << endl << "SUMASTE  " << totalRonda << " TRUFAS!" << endl;
 
          /* Preguntar si se desea continuar */
         if(jugadorActual == JugadorActualLanzando){
-          cout << endl << jugador[jugadorActual].jugador << " CONTINUAR LANZANDO LOS DADOS. " <<  " (S/N): "<<  endl << endl;
+          colorTexto(COLOR::TEXTO); cout << endl << jugador[jugadorActual].jugador << " CONTINUAR LANZANDO LOS DADOS. " <<  " (S/N): "<<  endl << endl;
           cin >> eleccion;
 
           if(eleccion == 'N' || eleccion == 'n'){

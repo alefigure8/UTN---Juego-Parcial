@@ -25,26 +25,27 @@ enum OPCIONES {
 
 /* Funcion para el munnu de inicio */
 void menuInicial(){
+  rlutil::hidecursor(); // Ocultar cursor
   Jugadores jugadores[2]; // Inicializar Struct de Jugadores
-  int jugadorActual;
-  int eleccion;
+  int jugadorActual, eleccion;
 
   do{
     // Pantalla de inicio
     system("cls");
-    lines(2); // Lineas de separacion con titulo
+    lines(); // Lineas de separacion con titulo
     endLines(1); // salto de linea
     colorTexto(15); imprimir_titulo();
-    colorTexto(10); rlutil::locate(40, 17); cout << "(1) - JUGAR" << endl;
-    colorTexto(14); rlutil::locate(40, 18); cout << "(2) - ESTADISTICA" << endl;
-    colorTexto(14); rlutil::locate(40, 19); cout << "(3) - CERDITOS" << endl;
-    colorTexto(12); rlutil::locate(40, 20); cout << "(0) - SALIR" << endl;
+    colorTexto(12); rlutil::locate(40, 17); cout << "JUGAR" << endl;
+    colorTexto(10); rlutil::locate(40, 18); cout << "ESTADISTICA" << endl;
+    colorTexto(10); rlutil::locate(40, 19); cout << "CERDITOS" << endl;
+    colorTexto(10); rlutil::locate(40, 20); cout << "SALIR" << endl;
     colorTexto(9);  rlutil::locate(80, 22); cout << "V1.0.0" << endl;
     colorTexto(15); rlutil::locate(38, 17); cout << (char)187 << endl;
-    endLines(8);
-    lines(2); // Lineas de separacion
+    colorTexto(7); rlutil::locate(30, 26); cout << "PRESIONE 'ENTER' PARA SELECCIONAR" << endl;
+    endLines(4);
 
-    int eleccion = flecha_del_menu(); // Obtener la eleccion del usuario
+    // Obtener la eleccion del usuario
+    eleccion = flecha_del_menu();
 
     // Eleccion de opcion
     switch (eleccion){
@@ -57,8 +58,23 @@ void menuInicial(){
       comenzar_juego(jugadores, jugadorActual);
     }
       break;
+    case OPCIONES::ESTADISTICAS: {
+      // TODO: Estadisticas
+    }
+      break;
+    case OPCIONES::CREDITOS: {
+      // TODO: Creditos
+    }
+      break;
+    default:
+      break;
     }
   }while(eleccion != OPCIONES::SALIR);
+
+  rlutil::cls();
+  cout << "Saliendo del juego..." << endl;
+  Sleep(1000);
+  rlutil::cls();
 
 }
 
@@ -73,38 +89,36 @@ void quienEmpieza(Jugadores *jugador, int &jugadorActual){
   int dadoMaximo = 0;
   int jugadorDadoMaximo;
 
-  string dialog;
+  string dialogo;
 
   for (int i = 0; i < CANT_JUGADORES; i++){
 
-    if(i == 0){
-      dialog = "Lanza los dados, ";
-    } else {
-      dialog = "Ahora es tu turno ";
-    }
-
     // Pantalla 1
-    pantalla_generica(i, 2, dialog, jugador[i].jugador); 
+    if(i == 0){
+      dialogo = ", ES TU TURNO PARA LANAZAR LOS DADOS.";
+    } else {
+      dialogo = ", AHORA ES TU TURNO PARA LANZAR LOS DADOS.";
+    }
+    pantalla_generica(i, 2, dialogo, jugador[i].jugador);
 
     // generamos numeros random
     dados(jugador[i].dados_jugadores, CANT_DADOS);
     jugador[i].suma_dados = sumar_dados(jugador[i].dados_jugadores, CANT_DADOS);
-
-    // Imprimimos los dados
-    string resultado_imprimir_dado;
-    resultado_imprimir_dado = dibujar_dados(jugador[i].dados_jugadores, CANT_DADOS);
 
     // buscamos el dado con mayor valor
     for (int j = 0; j < CANT_DADOS; j++){ 
       obtener_maximo(jugador[i].dados_jugadores[j], dadoMaximo, i, jugadorDadoMaximo);
     }
 
-    // convertimos a string
-    string strTotal = to_string(jugador[i].suma_dados);
-    dialog = "Has sumado " + strTotal + ", " + jugador[i].jugador + "!";
-
     // Pantalla 2
-    pantalla_generica_2(i, resultado_imprimir_dado, dialog, jugador[0].jugador, jugador[1].jugador ,jugador[0].suma_dados, jugador[1].suma_dados); 
+    dialogo = "Has sumado " + to_string(jugador[i].suma_dados) + ", " + jugador[i].jugador + "!";
+    rlutil::cls();; // Limpiar pantalla
+    lines();
+    puntaje(jugador[0].jugador, jugador[1].jugador, jugador[0].dados_jugadores, jugador[1].dados_jugadores, "PUNTOS");
+    endLines(6);
+    dibujar_dados(jugador[i].dados_jugadores, CANT_DADOS);// Texto principal
+    rlutil::locate(35, 24); cout << dialogo << endl; // Instruccion
+    rlutil::anykey();
 
     // buscamos el jugador con mayor suma
     obtener_maximo(jugador[i].suma_dados, sumaMaxima, i, jugadorSumaMaxima); 
@@ -113,8 +127,9 @@ void quienEmpieza(Jugadores *jugador, int &jugadorActual){
     obtener_quien_empieza(jugador, jugadorActual, jugadorDadoMaximo, jugadorSumaMaxima); 
   }
 
-  dialog = "COMIENZA A JUGAR " ;
-  pantalla_generica(0, 2, dialog, jugador[jugadorActual].jugador); // Pantalla 3
+  // Pantalla 3
+  dialogo = "HAS GANADO. ¡COMIENZA A JUGAR!" ;
+  pantalla_generica(0, 2, dialogo, jugador[jugadorActual].jugador); 
 }
 
 // TODO averiguar como hacer para pasar por parametro una estructura
