@@ -19,6 +19,7 @@ void puntaje(string nombre_jugador_1, string nombre_jugador_2, int *dados_1, int
 void puntaje_rondas(string nombre_jugador_1, string nombre_jugador_2, int puntos_jugador_1, int puntos_jugador_2,  string texto);
 void pantalla_generica(int i, int pantalla_cerdo, string dialogo, string nombre);
 void pantalla_generica_2(int i, string texto, string dialogo, string nombre_1, string nombre_2, int jugador_1, int jugador_2);
+void imprimir_datos_ronda (int contadorRondas, int totalRonda, int lanzamientos);
 int flecha_del_menu();
 
 #endif // GRAFICAS_H

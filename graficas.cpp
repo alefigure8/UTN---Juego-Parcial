@@ -6,9 +6,13 @@
 #include "headers/graficas.h"
 using namespace std;
 
+
+/* Colores */
 enum COLOR {
   JUGADOR_1 = 159,
   JUGADOR_2 = 207,
+  TURNO_JUGADOR_1 = 9,
+  TURNO_JUGADOR_2 = 12,
   CERDO = 13,
   TITULO = 15,
   LINEAS = 192,
@@ -16,8 +20,11 @@ enum COLOR {
   RECUADRO = 252,
   MENSAJE = 12,
   CONTINUAR = 10,
+  EXITO = 10,
 };
 
+
+/* Funcion que imprimi el titulo del jeugo */
 void imprimir_titulo(){
  colorTexto(COLOR::TITULO); rlutil::locate(20, 3); cout << R"(
                    _              _     _                        ___          _
@@ -30,12 +37,14 @@ void imprimir_titulo(){
     )" << endl;
 }
 
+
 /* Funcion para enmarcar los textos */
  void enmarcar_texto(int jugador, string nombre, string dialogo){
 
-   string texto = nombre + " " + dialogo;
-
+   int columna = 30;
    int color;
+   string texto = nombre + " " + dialogo;
+   int largo = texto.length();
 
    if(jugador == 0){
      color = COLOR::JUGADOR_1;
@@ -43,16 +52,14 @@ void imprimir_titulo(){
      color = COLOR::JUGADOR_2;
    }
 
-    int largo = texto.length();
-
     for (int i = 0; i < 5 ; i++){
       for (int j = 0; j < largo + 8; j++){
         if(i == 0 || i == 4){
 
           if(j == 0 && i == 0){
-            colorTexto(color); rlutil::locate(20, 21); cout << " ";
+            colorTexto(color); rlutil::locate(columna, 21); cout << " ";
           } else if (j == 0 && i == 4) {
-            colorTexto(color); rlutil::locate(20, 25); cout << " ";
+            colorTexto(color); rlutil::locate(columna, 25); cout << " ";
           } else {
              colorTexto(color); cout << " ";
           }
@@ -63,9 +70,9 @@ void imprimir_titulo(){
         } else if(i == 1 || i == 3){
           if(j == 0 || j == largo + 7){
             if(j == 0 && i == 1){
-              colorTexto(color); rlutil::locate(20, 22); cout << " ";
+              colorTexto(color); rlutil::locate(columna, 22); cout << " ";
             } else if (j == 0 && i == 3) {
-              colorTexto(color); rlutil::locate(20, 24); cout << " ";
+              colorTexto(color); rlutil::locate(columna, 24); cout << " ";
             } else {
               colorTexto(color); cout << " ";
             }
@@ -77,7 +84,7 @@ void imprimir_titulo(){
             cout << " ";
           }
         } else if( i == 2){
-          rlutil::locate(20, 23); cout << "    ";
+          rlutil::locate(columna, 23); cout << "    ";
           cout  << dialogo << " "<< nombre;
           colorTexto(color); cout << "    " << endl;
           j = largo + 8;
@@ -88,48 +95,51 @@ void imprimir_titulo(){
     colorTexto(COLOR::TEXTO);
  }
 
- /* Funcon que dibuja al cerdo*/
+
+ /* Funcon que dibuja al cerdo 1*/
  void cerdo(int x, string dialogo, string nombre){
  colorTexto(COLOR::CERDO); rlutil::locate(30, 4) ;cout << R"(
-                             _                           _
-                             ;`.                       ,'/
-                             |`.`-.      _____      ,-;,'|
-                             |  `-.\__,-'     `-.__//'   |
-                             |     `|               \ ,  |
-                             `.  ```                 ,  .'
-                               \_`      .         ,  `_/
-                                 \    -  `   ,   - ` /
-                                  | '  |  ____  | , |
-                                  |     ,'    `.    |
-                                  |    (  O' O  )   |
-                                  `.    \__,.__/   ,'
-                                    `-._        _,'
-                                        `------')";
+                                   _                           _
+                                   ;`.                       ,'/
+                                   |`.`-.      _____      ,-;,'|
+                                   |  `-.\__,-'     `-.__//'   |
+                                   |     `|               \ ,  |
+                                   `.  ```                 ,  .'
+                                     \_`      .         ,  `_/
+                                       \    -  `   ,   - ` /
+                                        | '  |  ____  | , |
+                                        |     ,'    `.    |
+                                        |    (  O' O  )   |
+                                        `.    \__,.__/   ,'
+                                          `-._        _,'
+                                              `------')";
 
   endLines(3);
   enmarcar_texto(x, dialogo, nombre);
  }
 
+  /* Funcion que dibuja al cerdp 2*/
   void cerdo2(int x, string dialogo, string nombre){
   colorTexto(COLOR::CERDO); rlutil::locate(30, 4); cout << R"(
-                            _                           _
-                            ;`.                       ,'/
-                            |`.`-.      _____      ,-;,'|
-                            |  `-.\__,-'     `-.__//'   |
-                            |     `|               \ ,  |
-                            `.  ```  _              ,  .'
-                              \_`     `.     ,   ,  `_/
-                                \    0  `   ,   0 ` /
-                                 | '  |  ____  | , |
-                                 |     ,'    `.    |
-                                 |    (  O' O  )   |
-                                 `.    \__,.__/   ,'
-                                   `-._  \__/   _,'
-                                       `------')";
+                                  _                           _
+                                  ;`.                       ,'/
+                                  |`.`-.      _____      ,-;,'|
+                                  |  `-.\__,-'     `-.__//'   |
+                                  |     `|               \ ,  |
+                                  `.  ```  _              ,  .'
+                                    \_`     `.     ,   ,  `_/
+                                      \    0  `   ,   0 ` /
+                                       | '  |  ____  | , |
+                                       |     ,'    `.    |
+                                       |    (  O' O  )   |
+                                       `.    \__,.__/   ,'
+                                         `-._  \__/   _,'
+                                             `------')";
   
   endLines(3);
   enmarcar_texto(x, dialogo, nombre);
  }
+
 
  /* Funcion que a�ade el decorado de lineas a cada pantalla*/
  void lines(){
@@ -148,6 +158,7 @@ void imprimir_titulo(){
     colorTexto(COLOR::TEXTO);
  }
  
+
  /* Funcion que imprime puntaje de jugadores */
  void puntaje(string nombre_jugador_1, string nombre_jugador_2, int *dados_1, int *dados_2,  string texto){
     int dado_1_total = sumar_dados(dados_1, 2);
@@ -157,12 +168,16 @@ void imprimir_titulo(){
     rlutil::locate(9, 7); cout << "-------------------------------------------------------------------------------" << endl;
  }
 
+
   /* Funcion que imprime puntaje de jugadores */
  void puntaje_rondas(string nombre_jugador_1, string nombre_jugador_2, int puntos_jugador_1, int puntos_jugador_2,  string texto){
-    rlutil::locate(5, 5); cout << "\t" << nombre_jugador_1 << ": " << puntos_jugador_1 <<  " " << texto;
+   int COLUMNA = 5;
+   int FILA = 4;
+    rlutil::locate(COLUMNA, FILA); cout << "\t" << nombre_jugador_1 << ": " << puntos_jugador_1 <<  " " << texto;
     cout << "\t\t\t" << nombre_jugador_2 << ": " << puntos_jugador_2 << " " << texto  << endl;
-    rlutil::locate(5, 6);cout << "     ------------------------------------------------------------------------" << endl;
+    rlutil::locate(COLUMNA, FILA + 1);cout << "     ------------------------------------------------------------------------" << endl;
  }
+
 
  /* Funcion que imprime la pantalla de cerdo 1 o 2*/
  void pantalla_generica(int i, int pantalla_cerdo, string dialogo, string nombre){
@@ -188,21 +203,24 @@ void imprimir_titulo(){
     }
  }
 
-  /* Funcion que imprime una pantalla generica*/
-  void pantalla_generica_2(int i, string texto, string dialogo, string nombre_jugador_1, string nombre_jugador_2, int puntos_jugador_1, int puntos_jugador_2){
-    system("cls"); // Limpiar pantalla
-    lines();
-    endLines(2);
-    //puntaje(nombre_jugador_1, nombre_jugador_2, puntos_jugador_1, puntos_jugador_2, "PUNTOS");
-    endLines(2);
-    cout << texto << endl; // Texto principal
-    endLines(4);
-    cout << dialogo << endl; // Instruccion
-    endLines(4);
-    rlutil::anykey();
- }
 
-void pantalla_juego (int contadorRondas, int totalRonda, int lanzamientos){
+/* Funcion que imprime una pantalla generica*/
+void pantalla_generica_2(int i, string texto, string dialogo, string nombre_jugador_1, string nombre_jugador_2, int puntos_jugador_1, int puntos_jugador_2){
+  system("cls"); // Limpiar pantalla
+  lines();
+  endLines(2);
+  //puntaje(nombre_jugador_1, nombre_jugador_2, puntos_jugador_1, puntos_jugador_2, "PUNTOS");
+  endLines(2);
+  cout << texto << endl; // Texto principal
+  endLines(4);
+  cout << dialogo << endl; // Instruccion
+  endLines(4);
+  rlutil::anykey();
+}
+
+/* Pantalla que marca rondas, lanzamientos, y puntos */
+void imprimir_datos_ronda (int contadorRondas, int totalRonda, int lanzamientos){
+  int COLUMNA = 3;
   string ronda_texto = "  RONDA # " + to_string (contadorRondas);
   string trufas_texto = "  TRUFAS DE LA RONDA: " + to_string (totalRonda);
   string lanzamientos_texto = "  LANZAMIENTO # " + to_string (lanzamientos);
@@ -215,31 +233,31 @@ void pantalla_juego (int contadorRondas, int totalRonda, int lanzamientos){
     {
       if(i == 0 || i == 4){
         if(i == 0){
-          rlutil::locate(3 + j, 9);
+          rlutil::locate(COLUMNA + j, 9);
         } else {
-          rlutil::locate(3  + j, 13);
+          rlutil::locate(COLUMNA  + j, 13);
         }
         cout << " ";
       } else if( i == 1){
         int cantidad = ronda_texto.length();
         if(j < cantidad){
-          rlutil::locate(3 + j, 10); cout << ronda_texto[j];
+          rlutil::locate(COLUMNA + j, 10); cout << ronda_texto[j];
         } else {
-         rlutil::locate(3 + j, 10); cout << " ";
+         rlutil::locate(COLUMNA + j, 10); cout << " ";
         }
       } else if( i == 2){
         int cantidad = trufas_texto.length();
         if(j < cantidad){
-         rlutil::locate(3 + j, 11); cout << trufas_texto[j];
+         rlutil::locate(COLUMNA + j, 11); cout << trufas_texto[j];
         } else {
-          rlutil::locate(3 + j, 11);cout << " ";
+          rlutil::locate(COLUMNA + j, 11);cout << " ";
         }
       } else if( i == 3){
         int cantidad = lanzamientos_texto.length();
         if(j < cantidad){
-          rlutil::locate(3 + j, 12); cout << lanzamientos_texto[j];
+          rlutil::locate(COLUMNA + j, 12); cout << lanzamientos_texto[j];
         } else {
-          rlutil::locate(3 + j, 12); cout << " ";
+          rlutil::locate(COLUMNA + j, 12); cout << " ";
         }
       }
 
@@ -287,4 +305,38 @@ int flecha_del_menu(){
     } while (eleccion != 1 && eleccion != 2 && eleccion != 3 && eleccion != 0);
 
     return eleccion;
+}
+
+void mostrar_reglas(){
+  system("cls");
+  lines();
+
+  rlutil::locate(1, 28);
+  colorTexto(COLOR::CONTINUAR);
+  cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR" << endl;
+
+  rlutil::locate(1, 4);
+  colorTexto(COLOR::TEXTO);
+  cout << "REGLAS DEL JUEGO" << endl;
+
+  endLines(2);
+  cout << "1. El juego consiste en una serie de rondas, cada ronda tiene una cantidad de lanzamientos." << endl;
+  rlutil::anykey();
+
+  endLines(1);
+  cout << "2. Cada lanzamiento tiene una cantidad de trufas, cada trufa es una cantidad de puntos." << endl;
+  rlutil::anykey();
+
+  endLines(1);
+  cout << "3. El jugador que obtenga la mayor cantidad de puntos en todas las rondas gana el juego." << endl;
+  rlutil::anykey();
+
+  endLines(1);
+  cout << "4. El jugador que obtenga la mayor cantidad de puntos en una ronda gana la ronda." << endl;
+  rlutil::anykey();
+
+  endLines(1);
+  cout << "5. El jugador que obtenga la mayor cantidad de puntos en un lanzamiento gana el lanzamiento." << endl;
+  rlutil::anykey();
+
 }

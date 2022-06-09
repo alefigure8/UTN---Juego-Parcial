@@ -111,13 +111,14 @@ void quienEmpieza(Jugadores *jugador, int &jugadorActual){
     }
 
     // Pantalla 2
-    dialogo = "Has sumado " + to_string(jugador[i].suma_dados) + ", " + jugador[i].jugador + "!";
+    dialogo = "HAS SUMADO " + to_string(jugador[i].suma_dados) + ", " + jugador[i].jugador + "!";
     rlutil::cls();; // Limpiar pantalla
     lines();
     puntaje(jugador[0].jugador, jugador[1].jugador, jugador[0].dados_jugadores, jugador[1].dados_jugadores, "PUNTOS");
     endLines(6);
     dibujar_dados(jugador[i].dados_jugadores, CANT_DADOS);// Texto principal
     rlutil::locate(35, 24); cout << dialogo << endl; // Instruccion
+    rlutil::locate(1, 28); colorTexto(COLOR::CONTINUAR); cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR..." << endl;
     rlutil::anykey();
 
     // buscamos el jugador con mayor suma

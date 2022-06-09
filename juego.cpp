@@ -35,7 +35,14 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
     while(jugadorActual == JugadorActualLanzando){
       int resultadoDados[CANT_JUGADORES][3];
       bool sonIguales = 0;
-      int buscarUno;
+      int buscarUno, TURNO;
+
+      // color del jugador actual
+      if(jugadorActual == 0){ 
+        TURNO = COLOR::TURNO_JUGADOR_1;
+      } else {
+        TURNO = COLOR::TURNO_JUGADOR_2;
+        }
 
       iniciarMatriz(jugador[jugadorActual].dados_jugadores, CANT_JUGADORES, CANT_DADOS);
       dados(jugador[jugadorActual].dados_jugadores, CANT_DADOS);
@@ -43,9 +50,9 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
       system("cls");
       lines();
       puntaje_rondas(jugador[0].jugador, jugador[1].jugador, jugador[0].puntaje, jugador[1].puntaje, "TRUFAS ACUMULADAS");
-      cout << "TUTRNO DE: " << jugador[jugadorActual].jugador << endl;
-      pantalla_juego(contadorRondas, totalRonda, lanzamientos);
-      cout << endl << "LANZAMIENTO #" << lanzamientos << endl << endl;
+      rlutil::locate(3, 7); colorTexto(TURNO); cout << "TUTRNO DE: " << jugador[jugadorActual].jugador << endl;
+      imprimir_datos_ronda(contadorRondas, totalRonda, lanzamientos);
+      rlutil::locate(3, 15);cout << "LANZAMIENTO #" << lanzamientos << endl;
 
       /* Suma el resultado de los dados */
       jugador[jugadorActual].suma_dados = 0;
@@ -85,15 +92,16 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
         }
 
         // Mensaje
-        colorTexto(COLOR::MENSAJE); cout <<endl << "TE HUNDISTE EN EL BARRO" << endl;
-        colorTexto(COLOR::TEXTO); cout << "TODOS TUS PUNTOS AHORA SON DEL OTRO CERDO" << endl;
-        colorTexto(COLOR::CONTINUAR); rlutil::locate(1, 28); cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR" << endl;
+        rlutil::locate(30, 23); colorTexto(COLOR::MENSAJE); cout << "TE HUNDISTE EN EL BARRO" << endl;
+        rlutil::locate(20, 25); colorTexto(COLOR::TEXTO); cout << "TODOS TUS PUNTOS AHORA SON DEL OTRO CERDO" << endl;
+        rlutil::locate(1, 28); colorTexto(COLOR::CONTINUAR); rlutil::locate(1, 28); cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR" << endl;
 
         rlutil::anykey();
       } else if(buscarUno == 2){
         // Sumamos un dado mas
         if( CANT_DADOS == 2 ){
           CANT_DADOS++;
+          rlutil::locate(30, 26); colorTexto(COLOR::TEXTO); cout << "AHORA JUGAMOS CON TRES DADOS";
         }
 
        // Reiniciamos el contador de puntajes general
@@ -111,9 +119,9 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
         }
 
         // Mensaje
-        colorTexto(COLOR::MENSAJE); cout << "TE HUNDISTE EN EL BARRO";
-        colorTexto(COLOR::TEXTO); cout << endl << "PIERDE LO ACUMULADO EN TODO EL JUEGO Y CEDES TU TURNO" << endl;
-        colorTexto(COLOR::CONTINUAR); rlutil::locate(1, 28); cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR" << endl;
+        rlutil::locate(30, 23); colorTexto(COLOR::MENSAJE); cout << "TE HUNDISTE EN EL BARRO";
+        rlutil::locate(20, 25); colorTexto(COLOR::TEXTO); cout << "PIERDE LO ACUMULADO EN TODO EL JUEGO Y CEDES TU TURNO" << endl;
+        rlutil::locate(1, 28); colorTexto(COLOR::CONTINUAR); cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR" << endl;
         rlutil::anykey();
 
       } else if (buscarUno == 1){ // HAY UN LADO CON UNO
@@ -130,8 +138,9 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
         }
 
         // Mensaje
-        colorTexto(COLOR::MENSAJE); cout << endl << "PIERDES TODO LO ACUMULADO EN LA RONDA Y CEDES TU TURNO" << endl;
-        colorTexto(COLOR::CONTINUAR); rlutil::locate(1, 28); cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR..." << endl;
+        rlutil::locate(40, 23); colorTexto(COLOR::TEXTO); cout << "SALIO " << buscarUno << " AS" << endl;
+        rlutil::locate(20, 25); colorTexto(COLOR::MENSAJE); cout << "PIERDES TODO LO ACUMULADO EN LA RONDA Y CEDES TU TURNO" << endl;
+        rlutil::locate(1, 28); colorTexto(COLOR::CONTINUAR); cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR..." << endl;
         rlutil::anykey();
 
       } else if (sonIguales == 1){ // OINK
@@ -141,21 +150,21 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
         jugador[jugadorActual].oink++;
 
         // Mensaje
-        colorTexto(COLOR::MENSAJE); cout << endl << "OINK" << endl;
-        colorTexto(COLOR::TEXTO); cout << "ESTAS OBLIGADO A TIRAR LOS DADOS DE NUEVO" << endl;
+        rlutil::locate(40, 23); colorTexto(COLOR::MENSAJE); cout << "OINK" << endl;
+        rlutil::locate(20, 24); colorTexto(COLOR::TEXTO); cout << "ESTAS OBLIGADO A TIRAR LOS DADOS DE NUEVO" << endl;
         // Mensaje del lanzamiento
-        colorTexto(COLOR::TEXTO); cout << endl << endl << "SUMASTE  " << jugador[jugadorActual].suma_dados * 2 << " TRUFAS!" << endl;
-        colorTexto(COLOR::CONTINUAR);rlutil::locate(1, 28); cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR" << endl;
+        rlutil::locate(30, 26); colorTexto(COLOR::EXITO); cout << "SUMASTE  " << jugador[jugadorActual].suma_dados * 2 << " TRUFAS!" << endl;
+        rlutil::locate(1, 28); colorTexto(COLOR::CONTINUAR); cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR" << endl;
         rlutil::anykey();
 
       } else { // SUMA NORMAL
         totalRonda += jugador[jugadorActual].suma_dados;
         // Mensaje del lanzamiento
-        colorTexto(COLOR::TEXTO); cout << endl << endl << "SUMASTE  " << totalRonda << " TRUFAS!" << endl;
+        rlutil::locate(30, 23); colorTexto(COLOR::EXITO); cout << "SUMASTE  " << jugador[jugadorActual].suma_dados << " TRUFAS!" << endl;
 
          /* Preguntar si se desea continuar */
         if(jugadorActual == JugadorActualLanzando){
-          colorTexto(COLOR::TEXTO); cout << endl << jugador[jugadorActual].jugador << " CONTINUAR LANZANDO LOS DADOS. " <<  " (S/N): "<<  endl << endl;
+          rlutil::locate(1, 26); colorTexto(COLOR::TEXTO); cout << jugador[jugadorActual].jugador << " CONTINUAR LANZANDO LOS DADOS. " <<  " (S/N): "<<  endl << endl;
           cin >> eleccion;
 
           if(eleccion == 'N' || eleccion == 'n'){
@@ -171,6 +180,7 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
         // Si superamos los 50 puntos, sumamos un dado más
         if(jugador[jugadorActual].puntaje + totalRonda > 50 && CANT_DADOS == 2){
         CANT_DADOS++;
+        rlutil::locate(30, 26); colorTexto(COLOR::TEXTO); cout << "AHORA JUGAMOS CON TRES DADOS";
         }
 
         lanzamientos++;
@@ -179,6 +189,7 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
         if(jugador[jugadorActual].total_lanzamientos > lanzamientos){
           jugador[jugadorActual].total_lanzamientos = lanzamientos;
         }
+
       }
 
       // Sumar los puntos de la ronda al jugador al terminar
