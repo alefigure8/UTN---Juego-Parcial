@@ -10,9 +10,10 @@
 #include "headers/graficas.h"
 #include "headers/juego.h"
 #include "headers/menu.h"
+#include "headers/estadisticas.h"
 using namespace std;
 
-void quienEmpieza(Jugadores *jugador, int &jugadorActual);
+void quien_empieza(Jugadores *jugador, int &jugadorActual);
 void obtener_quien_empieza(Jugadores *jugador, int &jugadorActual, int &jugadorDadoMaximo, int &jugadorSumaMaxima);
 
 enum OPCIONES {
@@ -25,12 +26,26 @@ enum OPCIONES {
 
 /* Funcion para el munnu de inicio */
 void menuInicial(){
-  rlutil::hidecursor(); // Ocultar cursor
-  Jugadores jugadores[2]; // Inicializar Struct de Jugadores
   int jugadorActual, eleccion;
 
+  // Ocultar cursor
+  rlutil::hidecursor();
+
+  // Inicializar Struct de Jugadores
+  Jugadores jugadores[2];
+
+  if(jugadores[0].iniicializado != true){
+    for (int i = 0; i < 2; i++){
+      jugadores[i] = inicializar_estructura(); // FALSE inicializa juego
+    }
+  } else {
+    for (int i = 0; i < 2; i++){
+      jugadores[i] = continuar_jugando(); // TRUE inicializa puntaje
+    }
+  }
+
+  // Pantalla de inicio
   do{
-    // Pantalla de inicio
     system("cls");
     lines(); // Lineas de separacion con titulo
     endLines(1); // salto de linea
@@ -50,16 +65,25 @@ void menuInicial(){
     // Eleccion de opcion
     switch (eleccion){
     case OPCIONES::INICIAR_JUEGO: {
-      for (int i = 0; i < 2; i++)
-      {
-        jugadores[i] = pedir_nombre(i);
+
+      // pide nombre la primera vez que se juega
+      if(jugadores[0].iniicializado != true){
+        for (int i = 0; i < 2; i++)
+        {
+          jugadores[i] = pedir_nombre(i);
+        }
       }
-      quienEmpieza(jugadores, jugadorActual);
+
+      // determina quien empieza a jugar
+      quien_empieza(jugadores, jugadorActual);
+
+      // juego
       comenzar_juego(jugadores, jugadorActual);
     }
       break;
     case OPCIONES::ESTADISTICAS: {
-      // TODO: Estadisticas
+      //Estadisticas del juego
+      pantalla_puntaje(jugadores);
     }
       break;
     case OPCIONES::CREDITOS: {
@@ -67,6 +91,7 @@ void menuInicial(){
     }
       break;
     default:
+      rlutil::locate(1, 28); colorTexto(COLOR::MENSAJE); cout << "OPCION NO VALIDA";
       break;
     }
   }while(eleccion != OPCIONES::SALIR);
@@ -78,9 +103,9 @@ void menuInicial(){
 
 }
 
-// TODO averiguar como hacer para pasar por parametro una estructura
+
 /* Funcion para determinar cual jugador comienza*/
-void quienEmpieza(Jugadores *jugador, int &jugadorActual){
+void quien_empieza(Jugadores *jugador, int &jugadorActual){
   int CANT_DADOS = 2;
   int CANT_JUGADORES = 2;
 
@@ -100,6 +125,7 @@ void quienEmpieza(Jugadores *jugador, int &jugadorActual){
       dialogo = ", AHORA ES TU TURNO PARA LANZAR LOS DADOS.";
     }
     pantalla_generica(i, 2, dialogo, jugador[i].jugador);
+    // fin pantalla 1
 
     // generamos numeros random
     dados(jugador[i].dados_jugadores, CANT_DADOS);
@@ -120,6 +146,7 @@ void quienEmpieza(Jugadores *jugador, int &jugadorActual){
     rlutil::locate(35, 24); cout << dialogo << endl; // Instruccion
     rlutil::locate(1, 28); colorTexto(COLOR::CONTINUAR); cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR..." << endl;
     rlutil::anykey();
+    // fin pantalla 2
 
     // buscamos el jugador con mayor suma
     obtener_maximo(jugador[i].suma_dados, sumaMaxima, i, jugadorSumaMaxima); 
@@ -130,10 +157,10 @@ void quienEmpieza(Jugadores *jugador, int &jugadorActual){
 
   // Pantalla 3
   dialogo = "HAS GANADO. ¡COMIENZA A JUGAR!" ;
-  pantalla_generica(0, 2, dialogo, jugador[jugadorActual].jugador); 
+  pantalla_generica(jugadorActual, 2, dialogo, jugador[jugadorActual].jugador); 
 }
 
-// TODO averiguar como hacer para pasar por parametro una estructura
+
 /* Funcion que determina cual jugador empieza */
 void obtener_quien_empieza(Jugadores *jugador, int &jugadorActual, int &jugadorDadoMaximo, int &jugadorSumaMaxima){
    if(jugador[0].suma_dados != jugador[1].suma_dados){ // si no hay empate
