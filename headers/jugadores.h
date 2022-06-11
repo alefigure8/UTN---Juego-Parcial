@@ -38,9 +38,7 @@ Jugadores inicializar_estructura(){
 
 
 // Funcion que pide los nombres de los jugadores
- Jugadores pedir_nombre(int x){
-   // Inicia la estructura de jugadores
-   Jugadores jugadores;
+ void pedir_nombre(Jugadores &jugadores, int x){
 
     // segun el turno cambia el dialogo
     string dialog = "";
@@ -60,16 +58,8 @@ Jugadores inicializar_estructura(){
 
     // Inicializa la estructura
     jugadores.iniicializado = true;
-    jugadores.puntaje = 0;
-    jugadores.oink = 0;
-    jugadores.total_lanzamientos = 0;
-    jugadores.maximo_lanzamientos_en_ronda = 0;
-    jugadores.suma_dados = 0;
-    jugadores.juego_ganado = 0;
-    iniciar_vector(jugadores.dados_jugadores, 3);
-    
-    return jugadores;
  }
+
 
 // Si se quiere seguir jugando, reinicia valores menos nombre y partidas ganadas
  void continuar_jugando(Jugadores &jugadores){

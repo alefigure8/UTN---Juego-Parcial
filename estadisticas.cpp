@@ -39,9 +39,9 @@ void pantalla_puntaje(Jugadores *jugador){
 
   int total_jugador_1 = pdv_trufas_jugador_1 + pdv_oinks_jugador_1 + pdv_lanzamientos_jugador_1 + pdv_50_trufas_jugador_1;
   int total_jugador_2 = pdv_trufas_jugador_2 + pdv_oinks_jugador_2 + pdv_lanzamientos_jugador_2 + pdv_50_trufas_jugador_2;
-  
+
   sumar_punto_historico(total_jugador_1, total_jugador_2, jugador[0].juego_ganado, jugador[1].juego_ganado);
-  
+
   do{
     system("cls");
     lines();

@@ -34,6 +34,9 @@ void menuInicial(){
   // Inicializar Struct de Jugadores
   Jugadores jugadores[2];
 
+  // Pantalla de inicio
+  do{
+
   if(jugadores[0].iniicializado != true){
     for (int i = 0; i < 2; i++){
       jugadores[i] = inicializar_estructura(); // Empezamos una partida nueva
@@ -44,8 +47,6 @@ void menuInicial(){
     }
   }
 
-  // Pantalla de inicio
-  do{
     system("cls");
     lines(); // Lineas de separacion con titulo
     endLines(1); // salto de linea
@@ -70,7 +71,7 @@ void menuInicial(){
       if(jugadores[0].iniicializado != true){
         for (int i = 0; i < 2; i++)
         {
-          jugadores[i] = pedir_nombre(i);
+          pedir_nombre(jugadores[i], i);
         }
       }
 
