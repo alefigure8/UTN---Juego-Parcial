@@ -32,7 +32,7 @@ void colorTexto (int x){
  }
 
  /* Funcion para inicializar con ceros una matriz*/
-void iniciarMatriz(int vector[2], int filas, int columnas){
+void iniciar_vector(int *vector, int filas){
   for (int i = 0; i < filas; i++){
       vector[i] = 0;
   }

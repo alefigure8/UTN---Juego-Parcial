@@ -31,10 +31,7 @@ Jugadores inicializar_estructura(){
   jugador.suma_dados = 0;
   jugador.juego_ganado = 0;
   jugador.iniicializado = false;
-
-  for (int i = 0; i < 3; i++){
-    jugador.dados_jugadores[i] = 0;
-  }
+  iniciar_vector(jugador.dados_jugadores, 3);
 
   return jugador;
 }
@@ -55,33 +52,27 @@ Jugadores inicializar_estructura(){
 
     // Imprime pantalla
     pantalla_generica(x, 1, dialog, "");
-
     rlutil::locate(1, 28); cout << ">> ";
     rlutil::locate(5, 28); cin >> jugadores.jugador;
 
     // Pasa los nombres a mayusculas
     transform(jugadores.jugador.begin(), jugadores.jugador.end(), jugadores.jugador.begin(), ::toupper);
 
-    // Inicializamos los valores del jugador
+    // Inicializa la estructura
+    jugadores.iniicializado = true;
     jugadores.puntaje = 0;
     jugadores.oink = 0;
     jugadores.total_lanzamientos = 0;
     jugadores.maximo_lanzamientos_en_ronda = 0;
     jugadores.suma_dados = 0;
     jugadores.juego_ganado = 0;
-    jugadores.iniicializado = true;
-    for (int i = 0; i < 3; i++)
-    {
-      jugadores.dados_jugadores[i] = 0;
-    }
-
+    iniciar_vector(jugadores.dados_jugadores, 3);
+    
     return jugadores;
  }
 
 // Si se quiere seguir jugando, reinicia valores menos nombre y partidas ganadas
- Jugadores continuar_jugando(){
-
-    Jugadores jugadores;
+ void continuar_jugando(Jugadores &jugadores){
 
     jugadores.puntaje = 0;
     jugadores.oink = 0;
@@ -93,6 +84,4 @@ Jugadores inicializar_estructura(){
     {
       jugadores.dados_jugadores[i] = 0;
     }
-
-    return jugadores;
  }

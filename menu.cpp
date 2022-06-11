@@ -36,11 +36,11 @@ void menuInicial(){
 
   if(jugadores[0].iniicializado != true){
     for (int i = 0; i < 2; i++){
-      jugadores[i] = inicializar_estructura(); // FALSE inicializa juego
+      jugadores[i] = inicializar_estructura(); // Empezamos una partida nueva
     }
   } else {
     for (int i = 0; i < 2; i++){
-      jugadores[i] = continuar_jugando(); // TRUE inicializa puntaje
+      continuar_jugando(jugadores[i]); // continuamos una partida con los mismos jugadores
     }
   }
 
@@ -109,6 +109,11 @@ void quien_empieza(Jugadores *jugador, int &jugadorActual){
   int CANT_DADOS = 2;
   int CANT_JUGADORES = 2;
 
+  // inicializar dado
+  for (int i = 0; i < 2; i++){
+    iniciar_vector(jugador[i].dados_jugadores, CANT_DADOS);
+  }
+
   int sumaMaxima = 0;
   int jugadorSumaMaxima;
   int dadoMaximo = 0;
@@ -149,15 +154,20 @@ void quien_empieza(Jugadores *jugador, int &jugadorActual){
     // fin pantalla 2
 
     // buscamos el jugador con mayor suma
-    obtener_maximo(jugador[i].suma_dados, sumaMaxima, i, jugadorSumaMaxima); 
-
-    // buscamos el jugador con mayor suma o dado
-    obtener_quien_empieza(jugador, jugadorActual, jugadorDadoMaximo, jugadorSumaMaxima); 
+    obtener_maximo(jugador[i].suma_dados, sumaMaxima, i, jugadorSumaMaxima);
   }
 
   // Pantalla 3
-  dialogo = "HAS GANADO. ¡COMIENZA A JUGAR!" ;
-  pantalla_generica(jugadorActual, 2, dialogo, jugador[jugadorActual].jugador); 
+  if(dados_coinciden(jugador[0].dados_jugadores, jugador[1].dados_jugadores)){
+    dialogo = "HAN EMPATADO EN LOS DADOS";
+    pantalla_generica(jugadorActual, 2, dialogo, jugador[jugadorActual].jugador);
+    quien_empieza(jugador, jugadorActual);
+  } else {
+    // buscamos el jugador con mayor suma o el lado del dado mas alto
+    obtener_quien_empieza(jugador, jugadorActual, jugadorDadoMaximo, jugadorSumaMaxima);
+    dialogo = "HAS GANADO. ¡COMIENZA A JUGAR!" ;
+    pantalla_generica(jugadorActual, 2, dialogo, jugador[jugadorActual].jugador);
+  }
 }
 
 
@@ -170,7 +180,7 @@ void obtener_quien_empieza(Jugadores *jugador, int &jugadorActual, int &jugadorD
         jugadorActual = 1;
       }
     } else {
-      if (jugadorDadoMaximo == 1){ // si hay empate
+      if (jugadorDadoMaximo == 1){ // si hay empate, gana el dado maximo
         jugadorActual = 0;
       } else {
         jugadorActual = 1;

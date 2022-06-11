@@ -55,7 +55,7 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
         }
 
       // Iniciamos matriz de dados
-      iniciarMatriz(jugador[jugadorActual].dados_jugadores, CANT_JUGADORES, CANT_DADOS);
+      iniciar_vector(jugador[jugadorActual].dados_jugadores, CANT_DADOS);
 
       // lanzamiento de dados
       dados(jugador[jugadorActual].dados_jugadores, CANT_DADOS);
