@@ -86,12 +86,13 @@ void menuInicial(){
     }
       break;
     case OPCIONES::ESTADISTICAS: {
-      //Estadisticas del juego
+      // pantalla de stadisticas del juego
      pantalla_estadistica( jugadores );
     }
       break;
     case OPCIONES::CREDITOS: {
-      // TODO: Creditos
+      // pantalla de creditos
+      pantalla_creditos();
     }
       break;
     default:
@@ -146,9 +147,8 @@ void quien_empieza(Jugadores *jugador, int &jugadorActual){
     dialogo = "HAS SUMADO " + to_string(jugador[i].suma_dados) + ", " + jugador[i].jugador + "!";
     rlutil::cls();; // Limpiar pantalla
     lines();
-    puntaje(jugador[0].jugador, jugador[1].jugador, jugador[0].dados_jugadores, jugador[1].dados_jugadores, "PUNTOS");
-    endLines(6);
-    dibujar_dados(jugador[i].dados_jugadores, CANT_DADOS);// Texto principal
+    puntaje(jugador[0].jugador, jugador[1].jugador, jugador[0].dados_jugadores, jugador[1].dados_jugadores, "PUNTOS"); // mostrar puntaje
+    dibujar_dados(jugador[i].dados_jugadores, CANT_DADOS, 1); // Dibujar dados
     rlutil::locate(35, 24); cout << dialogo << endl; // Instruccion
     rlutil::locate(1, 28); colorTexto(COLOR::CONTINUAR); cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR..." << endl;
     rlutil::anykey();

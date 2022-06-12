@@ -9,7 +9,7 @@
 using namespace std;
 
 
-void dibujar_dados(int *num, int cant_dados);
+void dibujar_dados(int *num, int cant_dados, int pantalla);
 void dados(int a[], int b);
 bool dados_iguales (int * dados, int cantidad);
 int dado_lado_uno(int * dados, int cantidad);

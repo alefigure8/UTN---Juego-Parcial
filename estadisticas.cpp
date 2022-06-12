@@ -7,8 +7,8 @@
 #include "headers/graficas.h"
 #include "headers/menu.h"
 using namespace std;
-// Mostrar el puntaje final
 
+// Funciones
 void pantalla_puntaje( Jugadores *jugador );
 void pdv_lanzamientos(int a, int b, int & lanzamientos_jugador_1, int & lanzamientos_jugador_2);
 void pdv_oink(int a, int b, int & oinks_jugador_1, int & oinks_jugador_2);
@@ -17,6 +17,7 @@ void pdv_trufas_total(int a, int b, int &a_1, int &b_2);
 void sumar_punto_historico(int total_jugador_1, int total_jugador_2, int & historico_jugador_1, int & historico_jugador_2);
 
 
+// Funcion que muestra la pantalla con el puntaje final
 void pantalla_puntaje(Jugadores *jugador){
   string eleccion, opcion = "salir";
 
@@ -111,6 +112,8 @@ void pantalla_puntaje(Jugadores *jugador){
 
 }
 
+
+// Funcion que muestra el puntaje de cada jugador en caso de que continuen jugando
 void pantalla_estadistica(Jugadores *jugadores){
 
   int COLUMNA_JUGADOR_1 = 30;
@@ -120,7 +123,7 @@ void pantalla_estadistica(Jugadores *jugadores){
   string JUGADOR_1 = (jugadores[0].jugador == "" ? "JUGADOR 1" : jugadores[0].jugador);
   string JUGADOR_2 = (jugadores[1].jugador == "" ? "JUGADOR 2" : jugadores[1].jugador);
   string TITULO = "ESTADISTICAS";
-  
+
   rlutil::cls();
   lines();
   colorTexto(COLOR::MENSAJE); rlutil::locate(41, 5); cout << TITULO << endl;

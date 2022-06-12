@@ -10,22 +10,28 @@ enum COLOR_DADO {
   NEGRO = 1,
 };
 
-void dibujar_dados(int *num, int cant_dados){
+void dibujar_dados(int *num, int cant_dados, int pantalla){
 
   int dado_1 = num[0];
   int dado_2 = num[1];
   int dado_3 = num[2];
   int COLUMNA;
-  int FILA = 17;
+  int FILA;
 
   if(cant_dados == 2){
-    COLUMNA = 30;
+    COLUMNA = 35;
   } else {
-    COLUMNA = 25;
+    COLUMNA = 30;
+  }
+
+  if(pantalla == 1){
+    FILA = 15;
+  } else {
+    FILA = 17;
   }
 
   HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-	
+
   for (int i = 0; i < 5; i++){
     for (int j = 0; j < ((cant_dados - 1)*10 + 9); j++){
 
@@ -175,7 +181,7 @@ bool dados_coinciden(int *vec_1, int *vec_2){
     vec_1[0] = vec_1[1];
     vec_1[1] = aux;
   }
-  
+
   if(vec_2[0] > vec_2[1]){
     int aux = vec_2[0];
     vec_2[0] = vec_2[1];

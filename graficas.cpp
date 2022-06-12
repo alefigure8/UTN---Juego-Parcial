@@ -1,6 +1,7 @@
 #include <Windows.h>
 #include <iostream> 
 #include <string>
+#include <map>
 #include "headers/rlutil.h"
 #include "headers/helpers.h"
 #include "headers/graficas.h"
@@ -23,7 +24,6 @@ enum COLOR {
   EXITO = 10,
 };
 
-
 /* Funcion que imprimi el titulo del jeugo */
 void imprimir_titulo(){
  colorTexto(COLOR::TITULO); rlutil::locate(20, 3); cout << R"(
@@ -41,10 +41,10 @@ void imprimir_titulo(){
 /* Funcion para enmarcar los textos */
  void enmarcar_texto(int jugador, string nombre, string dialogo){
 
-   int columna = 30;
    int color;
    string texto = nombre + " " + dialogo;
    int largo = texto.length();
+   int columna = 45 - (largo / 2);
 
    if(jugador == 0){
      color = COLOR::JUGADOR_1;
@@ -98,7 +98,7 @@ void imprimir_titulo(){
 
  /* Funcon que dibuja al cerdo 1*/
  void cerdo(int x, string dialogo, string nombre){
- colorTexto(COLOR::CERDO); rlutil::locate(30, 4) ;cout << R"(
+ colorTexto(COLOR::CERDO); rlutil::locate(30, 3); cout << R"(
                                    _                           _
                                    ;`.                       ,'/
                                    |`.`-.      _____      ,-;,'|
@@ -120,7 +120,7 @@ void imprimir_titulo(){
 
   /* Funcion que dibuja al cerdp 2*/
   void cerdo2(int x, string dialogo, string nombre){
-  colorTexto(COLOR::CERDO); rlutil::locate(30, 4); cout << R"(
+  colorTexto(COLOR::CERDO); rlutil::locate(30, 3); cout << R"(
                                   _                           _
                                   ;`.                       ,'/
                                   |`.`-.      _____      ,-;,'|
@@ -174,7 +174,6 @@ void separador(int COLUMNA, int FILA, int CANTIDAD){
     rlutil::locate(10, 6); cout << nombre_jugador_1 << ": " << dado_1_total <<  " " << texto << " ( " << dados_1[0] << ", " << dados_1[1] << " )";
     cout << "\t\t\t\t" << nombre_jugador_2 << ": " << dado_2_total << " " << texto << " ( " << dados_2[0] << ", " << dados_2[1] << " )" << endl;
     separador(9, 7, 70);
-
  }
 
 
@@ -217,9 +216,7 @@ void separador(int COLUMNA, int FILA, int CANTIDAD){
 void pantalla_generica_2(int i, string texto, string dialogo, string nombre_jugador_1, string nombre_jugador_2, int puntos_jugador_1, int puntos_jugador_2){
   system("cls"); // Limpiar pantalla
   lines();
-  endLines(2);
-  //puntaje(nombre_jugador_1, nombre_jugador_2, puntos_jugador_1, puntos_jugador_2, "PUNTOS");
-  endLines(2);
+  endLines(4);
   cout << texto << endl; // Texto principal
   endLines(4);
   cout << dialogo << endl; // Instruccion
@@ -316,6 +313,7 @@ int flecha_del_menu(){
     return eleccion;
 }
 
+// Funcion que muestra las reglas del juego
 void mostrar_reglas(){
   system("cls");
   lines();
@@ -350,6 +348,7 @@ void mostrar_reglas(){
 
 }
 
+// Funcion que muestra la pantalla de salida del juego
 void pantalla_salida(){
   system("cls");
   lines();
@@ -363,3 +362,28 @@ void pantalla_salida(){
   system("cls");
 
 }
+
+void pantalla_creditos(){
+  int COLUMNA_1 = 20;
+  int COLUMNA_2 = 42;
+  int COLUMNA_3 = 62;
+  int FILA_DESCRIPCION = 8;
+  int FILA_INTEGRANTE = 10;
+  string TITULO = "CREDITOS";
+
+  rlutil::cls();
+  lines();
+  colorTexto(COLOR::MENSAJE); rlutil::locate(41, 5); cout << TITULO << endl;
+  separador(10, 7, 80);
+  colorTexto(COLOR::TEXTO); rlutil::locate(COLUMNA_1, FILA_DESCRIPCION); cout << "LEGAJO";
+  colorTexto(COLOR::TEXTO); rlutil::locate(COLUMNA_2, FILA_DESCRIPCION); cout << "NOMBRE";
+  colorTexto(COLOR::TEXTO); rlutil::locate(COLUMNA_3, FILA_DESCRIPCION); cout << "APELLIDO";
+  separador(10, 9, 80);
+  colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_1, FILA_INTEGRANTE); cout << "27017";
+  colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_2, FILA_INTEGRANTE); cout << "ALEJANDRO";
+  colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_3, FILA_INTEGRANTE); cout << "GOMEZ NIETO";
+  colorTexto(COLOR::CONTINUAR); rlutil::locate(1, 28); cout << "PRESIONA CUALQUIER TECLA PARA REGRESAL AL MENÚ" << endl;
+  rlutil::anykey();
+}
+
+// TODO hacer pantalla de inicio en el que pregunte si se quiere leer las reglas
