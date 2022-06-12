@@ -15,10 +15,10 @@ void pdv_oink(int a, int b, int & oinks_jugador_1, int & oinks_jugador_2);
 int pdv_cada_50_trufas(int a);
 void pdv_trufas_total(int a, int b, int &a_1, int &b_2);
 void sumar_punto_historico(int total_jugador_1, int total_jugador_2, int & historico_jugador_1, int & historico_jugador_2);
-void separador(int COLUMNA, int FILA);
+
 
 void pantalla_puntaje(Jugadores *jugador){
-  string eleccion, opcion = "m";
+  string eleccion, opcion = "salir";
 
   int pdv_trufas_jugador_1 = 0;
   int pdv_trufas_jugador_2 = 0;
@@ -51,7 +51,7 @@ void pantalla_puntaje(Jugadores *jugador){
     colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_JUGADOR_1, 7); cout << jugador[0].jugador;
     colorTexto(COLOR::TURNO_JUGADOR_2); rlutil::locate(COLUMNA_JUGADOR_2, 7) ; cout << jugador[1].jugador;
 
-    separador(COLUMNA, 8);
+    separador(COLUMNA, 8, 85);
 
     // // mas trufas en total
     colorTexto(COLOR::TEXTO); rlutil::locate(COLUMNA, 10); cout << "Más trufas en total";
@@ -73,7 +73,7 @@ void pantalla_puntaje(Jugadores *jugador){
     colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_JUGADOR_1, 16); cout << pdv_lanzamientos_jugador_1 << " PDV ("<< jugador[0].total_lanzamientos << " Lanzamientos) ";
     colorTexto(COLOR::TURNO_JUGADOR_2); rlutil::locate(COLUMNA_JUGADOR_2, 16); cout << pdv_lanzamientos_jugador_2 << " PDV ("<< jugador[1].total_lanzamientos << " Lanzamientos) ";
 
-    separador(COLUMNA, 17);
+    separador(COLUMNA, 17, 85);
 
     // Suma total de puntos de vida
     colorTexto(COLOR::TEXTO);  rlutil::locate(COLUMNA, 19); cout << "TOTAL";
@@ -85,16 +85,12 @@ void pantalla_puntaje(Jugadores *jugador){
     colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_JUGADOR_1, 22); cout << jugador[0].juego_ganado;
     colorTexto(COLOR::TURNO_JUGADOR_2); rlutil::locate(COLUMNA_JUGADOR_2, 22); cout << jugador[1].juego_ganado;
 
-    // Preguta si quiere volver a jugar
-    if(jugador[0].iniicializado == false && jugador[1].iniicializado == false){
-      colorTexto(COLOR::CONTINUAR); rlutil::locate(COLUMNA, 26); cout << "Para regresar al menu ingrese 'M': " << endl;
-    } else {
-      colorTexto(COLOR::TEXTO); rlutil::locate(COLUMNA, 26); cout << "Ingrese ";
-      colorTexto(COLOR::CONTINUAR);cout << "'OINK'";
-      colorTexto(COLOR::TEXTO);cout << " jugar la revancha o ingrese ";
-      colorTexto(COLOR::MENSAJE);cout << "'N'";
-      colorTexto(COLOR::TEXTO);cout << " para terminar el juego: ";
-    }
+    // Pregunta si desea volver a jugar
+    colorTexto(COLOR::TEXTO); rlutil::locate(COLUMNA, 26); cout << "Ingrese ";
+    colorTexto(COLOR::CONTINUAR);cout << "'OINK'";
+    colorTexto(COLOR::TEXTO);cout << " para jugar la revancha o ingrese ";
+    colorTexto(COLOR::MENSAJE);cout << "'SALIR'";
+    colorTexto(COLOR::TEXTO);cout << " para terminar el juego: ";
 
     rlutil::locate(COLUMNA, 27); cout << ">> ";
     colorTexto(COLOR::TEXTO); rlutil::locate(COLUMNA + 4, 27); cin >> eleccion;
@@ -102,15 +98,12 @@ void pantalla_puntaje(Jugadores *jugador){
     // Pasa la eleccion a minuscula
     transform(eleccion.begin(), eleccion.end(), eleccion.begin(), ::tolower);
 
-    // si se acaba una partida se pregunta si se quiere revancha o no
-    if(jugador[1].iniicializado == true){
-      if(eleccion == "oink"){
-        eleccion = opcion;
-      } else if(eleccion == "n"){
-        for (int i = 0; i < 2; i++){
-          jugador[i].iniicializado = false;
-        }
-        eleccion = opcion;
+    // si se quiere revancha, no se inicializa jugadores; si no se quiere revancha, se reinicializa jugadores
+    if(eleccion == "oink"){
+      eleccion = opcion;
+    } else if(eleccion == "salir"){
+      for (int i = 0; i < 2; i++){
+        jugador[i].iniicializado = false;
       }
     }
 
@@ -118,13 +111,30 @@ void pantalla_puntaje(Jugadores *jugador){
 
 }
 
-// separador de texto
+void pantalla_estadistica(Jugadores *jugadores){
 
-void separador(int COLUMNA, int FILA){
-  for (int i = 0; i < 100; i++){
-   colorTexto(COLOR::TEXTO); rlutil::locate(COLUMNA + i, FILA); cout << "-";
-  }
+  int COLUMNA_JUGADOR_1 = 30;
+  int COLUMNA_JUGADOR_2 = 55;
+  int FILA_JUGADORES = 8;
+  int FILA_PUNTOS = 11;
+  string JUGADOR_1 = (jugadores[0].jugador == "" ? "JUGADOR 1" : jugadores[0].jugador);
+  string JUGADOR_2 = (jugadores[1].jugador == "" ? "JUGADOR 2" : jugadores[1].jugador);
+  string TITULO = "ESTADISTICAS";
+  
+  rlutil::cls();
+  lines();
+  colorTexto(COLOR::MENSAJE); rlutil::locate(41, 5); cout << TITULO << endl;
+  separador(10, 7, 80);
+  colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_JUGADOR_1, FILA_JUGADORES); cout << JUGADOR_1;
+  colorTexto(COLOR::TURNO_JUGADOR_2); rlutil::locate(COLUMNA_JUGADOR_2, FILA_JUGADORES); cout << JUGADOR_2;
+  separador(10, 9, 80);
+  colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_JUGADOR_1 + 4, FILA_PUNTOS); cout << jugadores[0].juego_ganado;
+  colorTexto(COLOR::TURNO_JUGADOR_2); rlutil::locate(COLUMNA_JUGADOR_2 + 4, FILA_PUNTOS); cout << jugadores[1].juego_ganado;
+  colorTexto(COLOR::CONTINUAR); rlutil::locate(1, 28); cout << "PRESIONA CUALQUIER TECLA PARA REGRESAL AL MENÚ" << endl;
+  rlutil::anykey();
+
 }
+
 
 // Funcion otorga puntos de vida a partir de la cantidad de lanzamientos que realiza el jugador
 void pdv_lanzamientos(int a, int b, int & lanzamientos_jugador_1, int & lanzamientos_jugador_2){

@@ -7,6 +7,7 @@
 #include "../estadisticas.cpp"
 
 void pantalla_puntaje( Jugadores *jugador );
+void pantalla_estadistica(Jugadores *jugadores);
 void pdv_lanzamientos(int a, int b, int & lanzamientos_jugador_1, int & lanzamientos_jugador_2);
 void pdv_oink(int a, int b, int & oinks_jugador_1, int & oinks_jugador_2);
 int pdv_cada_50_trufas(int a);

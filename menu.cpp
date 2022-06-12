@@ -71,20 +71,23 @@ void menuInicial(){
       if(jugadores[0].iniicializado != true){
         for (int i = 0; i < 2; i++)
         {
-          pedir_nombre(jugadores[i], i);
+          pedir_nombre( jugadores[i], i );
         }
       }
 
       // determina quien empieza a jugar
-      quien_empieza(jugadores, jugadorActual);
+      quien_empieza( jugadores, jugadorActual );
 
       // juego
-      comenzar_juego(jugadores, jugadorActual);
+      comenzar_juego( jugadores, jugadorActual );
+
+      // Mostrar puntaje final
+      pantalla_puntaje( jugadores );
     }
       break;
     case OPCIONES::ESTADISTICAS: {
       //Estadisticas del juego
-      pantalla_puntaje(jugadores);
+     pantalla_estadistica( jugadores );
     }
       break;
     case OPCIONES::CREDITOS: {
@@ -97,11 +100,8 @@ void menuInicial(){
     }
   }while(eleccion != OPCIONES::SALIR);
 
-  rlutil::cls();
-  cout << "Saliendo del juego..." << endl;
-  Sleep(1000);
-  rlutil::cls();
-
+  // pantalla de salida
+  pantalla_salida();
 }
 
 

@@ -141,6 +141,14 @@ void imprimir_titulo(){
  }
 
 
+// separador de texto
+void separador(int COLUMNA, int FILA, int CANTIDAD){
+  for (int i = 0; i < CANTIDAD; i++){
+   colorTexto(COLOR::TEXTO); rlutil::locate(COLUMNA + i, FILA); cout << "-";
+  }
+}
+
+
  /* Funcion que a�ade el decorado de lineas a cada pantalla*/
  void lines(){
 
@@ -165,7 +173,8 @@ void imprimir_titulo(){
     int dado_2_total = sumar_dados(dados_2, 2);
     rlutil::locate(10, 6); cout << nombre_jugador_1 << ": " << dado_1_total <<  " " << texto << " ( " << dados_1[0] << ", " << dados_1[1] << " )";
     cout << "\t\t\t\t" << nombre_jugador_2 << ": " << dado_2_total << " " << texto << " ( " << dados_2[0] << ", " << dados_2[1] << " )" << endl;
-    rlutil::locate(9, 7); cout << "-------------------------------------------------------------------------------" << endl;
+    separador(9, 7, 70);
+
  }
 
 
@@ -175,7 +184,7 @@ void imprimir_titulo(){
    int FILA = 4;
     rlutil::locate(COLUMNA, FILA); cout << "\t" << nombre_jugador_1 << ": " << puntos_jugador_1 <<  " " << texto;
     cout << "\t\t\t" << nombre_jugador_2 << ": " << puntos_jugador_2 << " " << texto  << endl;
-    rlutil::locate(COLUMNA, FILA + 1);cout << "     ------------------------------------------------------------------------" << endl;
+    separador(COLUMNA, FILA + 1, 70);
  }
 
 
@@ -338,5 +347,19 @@ void mostrar_reglas(){
   endLines(1);
   cout << "5. El jugador que obtenga la mayor cantidad de puntos en un lanzamiento gana el lanzamiento." << endl;
   rlutil::anykey();
+
+}
+
+void pantalla_salida(){
+  system("cls");
+  lines();
+  rlutil::locate(35, 15);
+  colorTexto(COLOR::TEXTO);
+  cout << "GRACIAS POR JUGAR";
+  rlutil::locate(34, 18);
+  colorTexto(COLOR::CONTINUAR);
+  cout << "SALIENDO DEL JUEGO...";
+  Sleep(1500);
+  system("cls");
 
 }
