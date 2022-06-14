@@ -173,17 +173,17 @@ void separador(int COLUMNA, int FILA, int CANTIDAD){
     int dado_2_total = sumar_dados(dados_2, 2);
     rlutil::locate(10, 6); cout << nombre_jugador_1 << ": " << dado_1_total <<  " " << texto << " ( " << dados_1[0] << ", " << dados_1[1] << " )";
     cout << "\t\t\t\t" << nombre_jugador_2 << ": " << dado_2_total << " " << texto << " ( " << dados_2[0] << ", " << dados_2[1] << " )" << endl;
-    separador(9, 7, 70);
+    separador(9, 7, 75);
  }
 
 
   /* Funcion que imprime puntaje de jugadores */
  void puntaje_rondas(string nombre_jugador_1, string nombre_jugador_2, int puntos_jugador_1, int puntos_jugador_2,  string texto){
-   int COLUMNA = 5;
+   int COLUMNA = 7;
    int FILA = 4;
     rlutil::locate(COLUMNA, FILA); cout << "\t" << nombre_jugador_1 << ": " << puntos_jugador_1 <<  " " << texto;
     cout << "\t\t\t" << nombre_jugador_2 << ": " << puntos_jugador_2 << " " << texto  << endl;
-    separador(COLUMNA, FILA + 1, 70);
+    separador(COLUMNA, FILA + 1, 72);
  }
 
 
