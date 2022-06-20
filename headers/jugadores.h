@@ -1,9 +1,12 @@
 #pragma once
+#ifndef JUGADORES_H
+#define JUGADORES_H
 #include <string>
 #include <iostream>
 #include <Windows.h>
 #include <algorithm>
 #include "graficas.h"
+#include "../jugadores.cpp"
 using namespace std;
 
 // Estructura de jugadores
@@ -18,6 +21,7 @@ struct Jugadores{
   int juego_ganado;
   bool iniicializado;
 };
+
 
 // inicializar jugadores
 Jugadores inicializar_estructura(){
@@ -34,7 +38,12 @@ Jugadores inicializar_estructura(){
   iniciar_vector(jugador.dados_jugadores, 3);
 
   return jugador;
-}
+};
+
+void pedir_nombre(Jugadores & jugadores, int x);
+void continuar_jugando(Jugadores & jugadores);
+
+#endif // JUGADORES_H
 
 
 // Funcion que pide los nombres de los jugadores

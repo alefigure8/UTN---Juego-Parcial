@@ -23,5 +23,7 @@ void pantalla_generica_2(int i, string texto, string dialogo, string nombre_1, s
 void imprimir_datos_ronda (int contadorRondas, int totalRonda, int lanzamientos);
 void pantalla_salida();
 int flecha_del_menu();
+void mostar_bienvenida();
+void mostrar_reglas();
 
 #endif // GRAFICAS_H

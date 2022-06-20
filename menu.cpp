@@ -69,6 +69,9 @@ void menuInicial(){
 
       // pide nombre la primera vez que se juega
       if(jugadores[0].iniicializado != true){
+        
+        mostar_bienvenida();
+
         for (int i = 0; i < 2; i++)
         {
           pedir_nombre( jugadores[i], i );

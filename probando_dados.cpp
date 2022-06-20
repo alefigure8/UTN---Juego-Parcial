@@ -4,53 +4,28 @@
 #include <algorithm>
 using namespace std;
 
-bool dados_iguales(int *vec_1, int *vec_2);
+
 
 int main(){
   system("cls");
 
-  int vec_1[5] = {1,2};
-  int vec_2[5] = {2,1};
+  struct jugador{
+     string nombre;
+    
+  };
+ jugador jugadores[2];
 
-  if(dados_iguales(vec_1, vec_2)){
-    cout << "Los dados son iguales" << endl;
-  } else {
-    cout << "Los dados no son iguales" << endl;
-  }
+  jugadores[0].nombre = "Uno";
+  jugadores[1].nombre = "Dos";
 
+  int actual = 1;
+
+  cout << jugadores[actual].nombre << endl << (actual == 0 ? jugadores[1].nombre : jugadores[0].nombre) << endl;
   return 1;
 }
 
 
-bool dados_iguales(int *vec_1, int *vec_2){
-  bool iguales = true;
-
-  // ordenarlos de menor a mayor
-    if(vec_1[0] > vec_1[1]){
-    int aux = vec_1[0];
-    vec_1[0] = vec_1[1];
-    vec_1[1] = aux;
-  }
-  
-  if(vec_2[0] > vec_2[1]){
-    int aux = vec_2[0];
-    vec_2[0] = vec_2[1];
-    vec_2[1] = aux;
-  }
-
-  // comparar
-  for(int i = 0; i < 5; i++){
-    if(vec_1[i] != vec_2[i]){
-      return iguales = false;
-    }
-  }
-
-  return iguales;
-}
-
-
-
-// /* Funcion para imprimir los dados*/ 
+// /* Funcion para imprimir los dados*/
 // string imprimirDados(int num){
 //   string resultado_dado;
 //   int dado[5][9];

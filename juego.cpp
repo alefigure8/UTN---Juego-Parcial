@@ -199,14 +199,7 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
         string dialogo_1 = "SUMASTE " + to_string(jugador[jugadorActual].suma_dados) + " TRUFAS!";
         rlutil::locate(COLUMNA - (dialogo_1.length() / 2), 23); colorTexto(COLOR::EXITO); cout << dialogo_1 << endl;
 
-        // Si superamos los 50 puntos, sumamos un dado más
-        if(jugador[jugadorActual].puntaje + totalRonda > 50 && CANT_DADOS == 2){
-        CANT_DADOS++;
-        string dialogo_2 = "SUMASTE MAS DE 50 TRUFAS. AHORA JUGAMOS CON TRES DADOS";
-        rlutil::locate(COLUMNA - (dialogo_2.length() / 2), 24); colorTexto(COLOR::TEXTO); cout << dialogo_2;
-        }
-
-         // Preguntar si se desea continuar
+        // Preguntar si se desea continuar
          do
          {
           if(jugadorActual == JugadorActualLanzando){
@@ -236,12 +229,17 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
     } // fin del while de la tirada
 
     // Agregamos el maximo numero de lanzamientos
-    if(lanzamientos > jugador[jugadorActual].total_lanzamientos){
-      jugador[jugadorActual].total_lanzamientos = lanzamientos;
+    if(lanzamientos > jugador[JugadorActualLanzando].total_lanzamientos){
+      jugador[JugadorActualLanzando].total_lanzamientos = lanzamientos;
     }
 
     // Sumar los puntos de la ronda al jugador al terminar
     jugador[JugadorActualLanzando].puntaje += totalRonda;
+
+    // Si ambos superar los 50 puntos, se juega con tres dados
+    if(jugador[0].puntaje > 50 && jugador[1].puntaje > 50 && CANT_DADOS == 2){
+      CANT_DADOS++;
+    }
 
     // Contador de rondas
     if(JugadorActualLanzando != primero_en_lanzar){

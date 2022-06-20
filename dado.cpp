@@ -145,7 +145,7 @@ void dibujar_dados(int *num, int cant_dados, int pantalla){
 
 /* Funcion que simula los dados y devuelve numeros random */
 void dados(int a[], int b){
-  srand(time(0));
+  srand(time(NULL));
   for (int i = 0; i < b; i++){
     a[i] = rand() % 6 + 1;
   }
