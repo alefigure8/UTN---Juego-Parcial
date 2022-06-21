@@ -5,11 +5,15 @@
 #include "headers/rlutil.h"
 using namespace std;
 
+
+// Color de los dados
 enum COLOR_DADO {
   BLANCO = 240,
   NEGRO = 1,
 };
 
+
+// Funcion que genera el dibujo de los dados y los ubuca uno al lado del otro
 void dibujar_dados(int *num, int cant_dados, int pantalla){
 
   int dado_1 = num[0];
@@ -143,7 +147,8 @@ void dibujar_dados(int *num, int cant_dados, int pantalla){
   SetConsoleTextAttribute(handle, 15);
  }
 
-/* Funcion que simula los dados y devuelve numeros random */
+
+// Funcion que simula los dados y devuelve numeros random
 void dados(int a[], int b){
   srand(time(NULL));
   for (int i = 0; i < b; i++){
@@ -151,6 +156,7 @@ void dados(int a[], int b){
   }
 }
 
+// Funcion que determina si las caras de los dados de un mismo jugador son iguales
 bool dados_iguales (int * dados, int cantidad){
   for (int i = 0; i < cantidad - 1; i++){
     if (dados[i] != dados[i + 1]){
@@ -172,6 +178,7 @@ int dado_lado_uno(int * dados, int cantidad){
   return total;
 }
 
+// Funcion para determinar si las caras de los dados de ambos jugadores son iguales
 bool dados_coinciden(int *vec_1, int *vec_2){
   bool iguales = true;
 
@@ -188,7 +195,7 @@ bool dados_coinciden(int *vec_1, int *vec_2){
     vec_2[1] = aux;
   }
 
-  // comparar
+  // comparar las caras de los dados
   for(int i = 0; i < 5; i++){
     if(vec_1[i] != vec_2[i]){
       return iguales = false;
@@ -196,4 +203,14 @@ bool dados_coinciden(int *vec_1, int *vec_2){
   }
 
   return iguales;
+}
+
+
+// Funcion para sumar los dados de un solo jugador
+int sumar_dados(int vec[3], int CANT_DADOS){
+  int total = 0;
+   for (int j = 0; j < CANT_DADOS; j++){
+      total += vec[j];
+    }
+  return total;
 }

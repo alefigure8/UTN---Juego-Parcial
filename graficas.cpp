@@ -1,5 +1,5 @@
 #include <Windows.h>
-#include <iostream> 
+#include <iostream>
 #include <string>
 #include <map>
 #include "headers/rlutil.h"
@@ -8,7 +8,7 @@
 using namespace std;
 
 
-/* Colores */
+// Colores que se utilizan en todo el juego
 enum COLOR {
   JUGADOR_1 = 159,
   JUGADOR_2 = 207,
@@ -24,7 +24,7 @@ enum COLOR {
   EXITO = 10,
 };
 
-/* Funcion que imprimi el titulo del jeugo */
+// Funcion que imprime el titulo del jeugo
 void imprimir_titulo(){
  colorTexto(COLOR::TITULO); rlutil::locate(20, 3); cout << R"(
 
@@ -38,7 +38,7 @@ void imprimir_titulo(){
 }
 
 
-/* Funcion para enmarcar los textos */
+// Funcion para enmarcar los textos dependiendo el color de cada jugador
  void enmarcar_texto(int jugador, string nombre, string dialogo){
 
    int color;
@@ -96,7 +96,7 @@ void imprimir_titulo(){
  }
 
 
- /* Funcon que dibuja al cerdo 1*/
+ // Funcion que dibuja al cerdo numero 1
  void cerdo(int x, string dialogo, string nombre){
  colorTexto(COLOR::CERDO); rlutil::locate(30, 3); cout << R"(
                                  _                           _
@@ -118,7 +118,7 @@ void imprimir_titulo(){
   enmarcar_texto(x, dialogo, nombre);
  }
 
-  /* Funcion que dibuja al cerdp 2*/
+  // Funcion que dibuja al cerdp numero 2
   void cerdo2(int x, string dialogo, string nombre){
   colorTexto(COLOR::CERDO); rlutil::locate(30, 3); cout << R"(
                                   _                           _
@@ -135,13 +135,13 @@ void imprimir_titulo(){
                                        `.    \__,.__/   ,'
                                          `-._  \__/   _,'
                                              `------')";
-  
+
   endLines(3);
   enmarcar_texto(x, dialogo, nombre);
  }
 
 
-// separador de texto
+// Funcion que separa el texto con un linea de puntos
 void separador(int COLUMNA, int FILA, int CANTIDAD){
   for (int i = 0; i < CANTIDAD; i++){
    colorTexto(COLOR::TEXTO); rlutil::locate(COLUMNA + i, FILA); cout << "-";
@@ -149,7 +149,7 @@ void separador(int COLUMNA, int FILA, int CANTIDAD){
 }
 
 
- /* Funcion que aï¿½ade el decorado de lineas a cada pantalla*/
+ // Funcion que imprime las lineas superiores e inferiores de la pantalla del juego
  void lines(){
 
     rlutil::locate(1, 1);
@@ -165,9 +165,9 @@ void separador(int COLUMNA, int FILA, int CANTIDAD){
     }
     colorTexto(COLOR::TEXTO);
  }
- 
 
- /* Funcion que imprime puntaje de jugadores */
+
+ // Funcion que imprime puntaje de jugadores en la ronda que detemina quien empieza
  void puntaje(string nombre_jugador_1, string nombre_jugador_2, int *dados_1, int *dados_2,  string texto){
     int dado_1_total = sumar_dados(dados_1, 2);
     int dado_2_total = sumar_dados(dados_2, 2);
@@ -177,7 +177,7 @@ void separador(int COLUMNA, int FILA, int CANTIDAD){
  }
 
 
-  /* Funcion que imprime puntaje de jugadores */
+  // Funcion que imprime puntaje de jugadores en las rondas del juego
  void puntaje_rondas(string nombre_jugador_1, string nombre_jugador_2, int puntos_jugador_1, int puntos_jugador_2,  string texto){
    int COLUMNA = 7;
    int FILA = 4;
@@ -187,7 +187,7 @@ void separador(int COLUMNA, int FILA, int CANTIDAD){
  }
 
 
- /* Funcion que imprime la pantalla de cerdo 1 o 2*/
+ // Funcion de pantalla generica para el juego
  void pantalla_generica(int i, int pantalla_cerdo, string dialogo, string nombre){
     system("cls"); // Limpiar pantalla
     lines();
@@ -212,24 +212,12 @@ void separador(int COLUMNA, int FILA, int CANTIDAD){
  }
 
 
-/* Funcion que imprime una pantalla generica*/
-void pantalla_generica_2(int i, string texto, string dialogo, string nombre_jugador_1, string nombre_jugador_2, int puntos_jugador_1, int puntos_jugador_2){
-  system("cls"); // Limpiar pantalla
-  lines();
-  endLines(4);
-  cout << texto << endl; // Texto principal
-  endLines(4);
-  cout << dialogo << endl; // Instruccion
-  endLines(4);
-  rlutil::anykey();
-}
-
-/* Pantalla que marca rondas, lanzamientos, y puntos */
+// Pantalla que marca rondas, lanzamientos, y puntos de los jugadores
 void imprimir_datos_ronda (int contadorRondas, int totalRonda, int lanzamientos){
   int COLUMNA = 3;
-  string ronda_texto = "  RONDA # " + to_string (contadorRondas);
+  string ronda_texto = "  RONDA #" + to_string (contadorRondas);
   string trufas_texto = "  TRUFAS DE LA RONDA: " + to_string (totalRonda);
-  string lanzamientos_texto = "  LANZAMIENTO # " + to_string (lanzamientos);
+  string lanzamientos_texto = "  LANZAMIENTOS: " + to_string (lanzamientos);
 
   colorTexto(COLOR::RECUADRO);
 
@@ -276,7 +264,7 @@ void imprimir_datos_ronda (int contadorRondas, int totalRonda, int lanzamientos)
   colorTexto(COLOR::TEXTO);
 }
 
-/* Funcion que muestra la flecha en la pantalla inicial*/
+// Funcion que muestra la flecha en la pantalla inicial para seleccionar opciones
 int flecha_del_menu(){
     int key ;
     int eleccion;
@@ -314,12 +302,83 @@ int flecha_del_menu(){
 }
 
 
+// Funcion que muestra una pantalla generica para las reglas del juego
+void mostrar_reglas_pantalla_generica(int regla, string texto, string texto_2, int *dado, int cant_dados){
+
+  int largo_1 = texto.length();
+  int largo_2 = texto.length();
+  int COLUMNA_1 = 45 - (largo_1 / 2);
+  int COLUMNA_2 = 45 - (largo_2 / 2);
+
+  system("cls");
+  lines();
+
+  colorTexto(COLOR::TEXTO);
+  rlutil::locate(36, 7); cout << "REGLAS DEL JUEGO" << endl;
+
+  rlutil::locate(COLUMNA_1, 10);
+  colorTexto(COLOR::CONTINUAR);
+  cout << regla;
+  cout <<  texto;
+
+  dibujar_dados(dado, cant_dados, 1);
+
+  colorTexto(COLOR::TEXTO);
+  rlutil::locate(COLUMNA_1, 22);
+  cout << texto_2 << endl;
+
+  rlutil::locate(1, 28);
+  colorTexto(COLOR::CONTINUAR);
+  cout << "PRESIONA CUALQUIER TECLA PARA PASAR A LA SIGUIENTE REGLA" << endl;
+  rlutil::anykey();
+}
+
+
+// Funcion que muestra la tabla de los puntos en las reglas
+void tabla_de_puntos(){
+
+  int COLUMNA_JUGADOR_1 = 30;
+  int COLUMNA_JUGADOR_2 = 55;
+  int FILA_JUGADORES = 8;
+  int FILA_PUNTOS = 11;
+  string JUGADOR_1 =  "HITO" ;
+  string JUGADOR_2 ="PUNTOS DE VIDA";
+  string TITULO = "ESTADISTICAS";
+
+  rlutil::cls();
+  lines();
+  colorTexto(COLOR::TEXTO);
+  rlutil::locate(36, 4); cout << "REGLAS DEL JUEGO" << endl;
+  separador(10, 7, 80);
+  colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_JUGADOR_1, FILA_JUGADORES); cout << JUGADOR_1;
+  colorTexto(COLOR::TURNO_JUGADOR_2); rlutil::locate(COLUMNA_JUGADOR_2, FILA_JUGADORES); cout << JUGADOR_2;
+  separador(10, 9, 80);
+  colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_JUGADOR_1, FILA_PUNTOS + 1); cout << "Mas trufas en total";
+  colorTexto(COLOR::TURNO_JUGADOR_2); rlutil::locate(COLUMNA_JUGADOR_2, FILA_PUNTOS + 1); cout << "5 PDV";
+  colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_JUGADOR_1, FILA_PUNTOS + 3); cout << "Cada 50 trufas";
+  colorTexto(COLOR::TURNO_JUGADOR_2); rlutil::locate(COLUMNA_JUGADOR_2, FILA_PUNTOS + 3); cout << "1 PDV";
+  colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_JUGADOR_1, FILA_PUNTOS + 5); cout << "Oink";
+  colorTexto(COLOR::TURNO_JUGADOR_2); rlutil::locate(COLUMNA_JUGADOR_2, FILA_PUNTOS + 5); cout << "2 PDV * Cantidad de Oinks";
+  colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_JUGADOR_1, FILA_PUNTOS + 7); cout << "Cerdo codicioso";
+  colorTexto(COLOR::TURNO_JUGADOR_2); rlutil::locate(COLUMNA_JUGADOR_2, FILA_PUNTOS + 7); cout << "3 PDV";
+
+  rlutil::locate(1, 28);
+  colorTexto(COLOR::CONTINUAR);
+  cout << "PRESIONAR CUALQUIER TECLA PARA EMPEZAR A JUGAR" << endl;
+  rlutil::anykey();
+}
+
+
 // Funcion que muestra las reglas del juego
 void mostrar_reglas(){
   system("cls");
   lines();
 
-  rlutil::locate(1, 4);
+  rlutil::locate(1, 28);
+  colorTexto(COLOR::CONTINUAR);
+  cout << "PRESIONA CUALQUIER TECLA PARA PASAR A LA SIGUIENTE REGLA" << endl;
+
+  rlutil::locate(36, 6);
   colorTexto(COLOR::TEXTO);
   cout << "REGLAS DEL JUEGO" << endl;
 
@@ -340,59 +399,57 @@ void mostrar_reglas(){
   rlutil::anykey();
 
   endLines(1);
-  colorTexto(COLOR::CONTINUAR);
-  cout << "5.  Si las caras son distintas y ninguna de ellas es un as. ";
-  colorTexto(COLOR::TEXTO);
-  cout << "El cerdo acumula trufas según la suma de las caras." << endl;
+  cout << "5. El juego utiliza dos dados hasta que ambos cerdos superen las 50 trufas o alguno se HUNDA EN EL BARRO." << endl;
   rlutil::anykey();
 
-  endLines(1);
-  colorTexto(COLOR::CONTINUAR);
-  cout << "6. Si las caras son iguales entre sí y no son ases.";
-  colorTexto(COLOR::TEXTO);
-  cout << "El cerdo hizo un OINK y acumula trufas por el doble de la suma de las caras." << endl;
-  rlutil::anykey();
+  // Regla 5
+  string texto_1 = ".  Si las caras son distintas y ninguna de ellas es un as. ";
+  string texto_2 = "El cerdo acumula trufas según la suma de las caras." ;
+  int dado_ejemplo[2] = {4, 5};
 
-  endLines(1);
-  colorTexto(COLOR::MENSAJE);
-  cout << "7. Si las caras son distintas entre sí y hay un as. ";
-  colorTexto(COLOR::TEXTO);
-  cout << "Pierde todas las trufas de la ronda actual." << endl;
-  rlutil::anykey();
+  mostrar_reglas_pantalla_generica(6, texto_1, texto_2, dado_ejemplo, 2);
 
-  endLines(1);
-  colorTexto(COLOR::MENSAJE);
-  cout << "8. Si dos de las caras son iguales entre sí y son ases. ";
-  colorTexto(COLOR::TEXTO);
-  cout << "El cerdo se HUNDE EN EL BARRO y pierde todas las trufas." << endl;
-  rlutil::anykey();
+  // Regla 6
+  texto_1 = ". Si las caras son iguales entre sí y no son ases.";
+  texto_2 = "El cerdo hizo un OINK y acumula trufas por el doble de la suma de las caras." ;
+  int dado_ejemplo_2[2] = {3, 3};
 
-  endLines(1);
-  colorTexto(COLOR::MENSAJE);
-  cout << "9. Si se está lanzando con tres dados y son ases.";
-  colorTexto(COLOR::TEXTO);
-  cout << "Todos los puntos pasan al otro cerdo." << endl;
-  rlutil::anykey();
+  mostrar_reglas_pantalla_generica(7, texto_1, texto_2, dado_ejemplo_2, 2);
 
-  endLines(1);
-  cout << "10. El juego utiliza dos dados hasta que ambos cerdos superen las 50 trufas o alguno se HUNDA EN EL BARRO." << endl;
-  rlutil::anykey();
+  // Regla 7
+  texto_1 = ". Si las caras son distintas entre sí y hay un as.";
+  texto_2 = "Pierde todas las trufas de la ronda actual." ;
+  int dado_ejemplo_3[2] = {4, 1};
 
-  rlutil::locate(1, 28);
-  colorTexto(COLOR::CONTINUAR);
-  cout << "¿ESTAS LISTO PARA EMPEZAR A JUGAR?" << endl;
-  rlutil::anykey();
+  mostrar_reglas_pantalla_generica(8, texto_1, texto_2, dado_ejemplo_3, 2);
 
+  // Regla 8
+  texto_1 = ". Si dos de las caras son iguales entre sí y son ases.";
+  texto_2 = "El cerdo se HUNDE EN EL BARRO y pierde todas las trufas." ;
+  int dado_ejemplo_4[2] = {1, 1};
+
+  mostrar_reglas_pantalla_generica(9, texto_1, texto_2, dado_ejemplo_4, 2);
+
+  // Regla 9
+  texto_1 = ". Si se está lanzando con tres dados y son ases.";
+  texto_2 = "Todos los puntos pasan al otro cerdo." ;
+  int dado_ejemplo_5[3] = {1, 1, 1};
+
+  mostrar_reglas_pantalla_generica(10, texto_1, texto_2, dado_ejemplo_5, 3);
+
+  // pantalla de puntos
+  tabla_de_puntos();
 }
 
-// Bienvenida
+
+// Pantalla de Bienvenida
 void mostar_bienvenida(){
   int COLUMNA = 5;
   char eleccion;
   string dialogo = "BIENVENIDOS A GRAN CERDO";
   pantalla_generica(1, 2, dialogo, "");
 
-  dialogo = "Antes de empezar a jugar, ¿quieren conocer las reglas del juego? (S/N)";
+  dialogo = "ANTES DE COMENZAR. ¿QUIERES CONOCER LAS REGLAS DEL JUEGO? (S/N)";
 
    do{
     system("cls"); // Limpiar pantalla
@@ -426,6 +483,7 @@ void pantalla_salida(){
 
 }
 
+// Funcion que muestra la pantalla con los créditos del juego
 void pantalla_creditos(){
   int COLUMNA_1 = 20;
   int COLUMNA_2 = 42;
@@ -448,5 +506,3 @@ void pantalla_creditos(){
   colorTexto(COLOR::CONTINUAR); rlutil::locate(1, 28); cout << "PRESIONA CUALQUIER TECLA PARA REGRESAL AL MENÚ" << endl;
   rlutil::anykey();
 }
-
-// TODO hacer pantalla de inicio en el que pregunte si se quiere leer las reglas

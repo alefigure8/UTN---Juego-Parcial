@@ -9,7 +9,7 @@
 #include "headers/estadisticas.h"
 using namespace std;
 
-// Funcion principal
+// Funcion principal del programa
 void comenzar_juego(Jugadores *jugador, int jugadorActual){
 
   int CANT_DADOS = 2;
@@ -65,7 +65,7 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
       rlutil::locate(3, 7); colorTexto(TURNO); cout << "TUTRNO DE " << jugador[jugadorActual].jugador << endl;
 
       // imprimimos los datos de la ronda
-      imprimir_datos_ronda(contadorRondas, totalRonda, lanzamientos);
+      imprimir_datos_ronda(contadorRondas, totalRonda, lanzamientos - 1);
 
       rlutil::locate(3, 15);cout << "LANZAMIENTO #" << lanzamientos << endl;
 
@@ -82,7 +82,8 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
       // buscamos si hay ases
       buscarUno = dado_lado_uno(jugador[jugadorActual].dados_jugadores, CANT_DADOS);
 
-      // Analisis lanzamiento de dados
+      /* ANALISIS DEL LANZAMIENTO */
+      // si los dados son iguales y son ases
       if(buscarUno == 3){
 
         // Sumamos los puntos del juego al otro jugador
@@ -92,11 +93,11 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
           jugador[0].puntaje += jugador[jugadorActual].puntaje;
         }
 
-        // Reiniciamos el contador de puntajes general
+        // Reiniciamos el contador de puntajes general del jugador
         jugador[jugadorActual].puntaje = 0;
         totalRonda = 0;
 
-        // Reiniciamos el contador de puntaje de la ronda
+        // Reiniciamos el contador de puntaje de la ronda del juagador
         jugador[jugadorActual].suma_dados = 0;
 
         // Cede el turno al otro jugador
@@ -115,9 +116,9 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
         rlutil::locate(1, 28); colorTexto(COLOR::CONTINUAR); rlutil::locate(1, 28); cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR" << endl;
         rlutil::anykey();
 
-      } else if(buscarUno == 2){
+      } else if(buscarUno == 2){ // si los dados son iguales y son ases
 
-        // Sumamos un dado mas
+        // Sumamos un dado mas en el caso de que jueguen solo con dos dados
         if( CANT_DADOS == 2 ){
           CANT_DADOS++;
           string dialogo_3 = "AHORA JUGAMOS CON TRES DADOS";
@@ -147,7 +148,7 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
         rlutil::locate(1, 28); colorTexto(COLOR::CONTINUAR); cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR" << endl;
         rlutil::anykey();
 
-      } else if (buscarUno == 1){ // HAY UN LADO CON UNO
+      } else if (buscarUno == 1){ // si sale un as
 
         // Reiniciamos el contador de puntajes de la ronda
         totalRonda = 0;
@@ -169,7 +170,7 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
         rlutil::locate(1, 28); colorTexto(COLOR::CONTINUAR); cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR..." << endl;
         rlutil::anykey();
 
-      } else if (sonIguales == 1){ // OINK
+      } else if (sonIguales == 1){ // si hacemos OINK
 
         // Suma x 2
         totalRonda += jugador[jugadorActual].suma_dados * 2;
@@ -190,7 +191,7 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
         rlutil::locate(1, 28); colorTexto(COLOR::CONTINUAR); cout << "PRESIONA CUALQUIER TECLA PARA CONTINUAR..."  << endl;
         rlutil::anykey();
 
-      } else { // SUMA NORMAL
+      } else { // suma normal de trufas
 
         // sumamos al total de la ronda la suma de los dados
         totalRonda += jugador[jugadorActual].suma_dados;

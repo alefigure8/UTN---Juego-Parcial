@@ -38,15 +38,6 @@ void iniciar_vector(int *vector, int filas){
   }
 }
 
-/* Funcion para sumar los dados*/
-int sumar_dados(int vec[3], int CANT_DADOS){
-  int total = 0;
-   for (int j = 0; j < CANT_DADOS; j++){
-      total += vec[j];
-    }
-  return total;
-}
-
 void obtener_maximo(int total, int &maximo, int i, int &jugadorMaximo){
   if(total > maximo){
     maximo = total;
