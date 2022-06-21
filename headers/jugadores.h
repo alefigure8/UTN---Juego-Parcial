@@ -42,7 +42,7 @@ using namespace std;
 
 struct Jugadores;
 Jugadores inicializar_estructura();
-void pedir_nombre(Jugadores &jugadores, int x);
+void pedir_nombre(Jugadores *jugadores);
 void continuar_jugando(Jugadores &jugadores);
 
 #endif // JUGADORES_H

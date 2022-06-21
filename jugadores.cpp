@@ -39,26 +39,29 @@ Jugadores inicializar_estructura(){
 
 
 // Funcion que pide los nombres de los jugadores
- void pedir_nombre(Jugadores &jugadores, int x){
-
-    // segun el turno cambia el dialogo
+ void pedir_nombre(Jugadores *jugadores){
+  for (int i = 0; i < 2; i++){
+       // segun el turno cambia el dialogo
     string dialog = "";
-    if(x == 0){
+    if(i == 0){
       dialog = "¿CUAL ES TU NOMBRE, CERDO UNO?";
     } else {
       dialog =  "TU TURNO,  CERDO DOS. ¿CUAL ES TU NOMBRE?";
     }
 
     // Imprime pantalla
-    pantalla_generica(x, 1, dialog, "");
+    pantalla_generica(i, 1, dialog, "");
     rlutil::locate(1, 28); cout << ">> ";
-    rlutil::locate(5, 28); cin >> jugadores.jugador;
+    rlutil::locate(5, 28); cin >> jugadores[i].jugador;
 
     // Pasa los nombres a mayusculas
-    transform(jugadores.jugador.begin(), jugadores.jugador.end(), jugadores.jugador.begin(), ::toupper);
+    transform(jugadores[i].jugador.begin(), jugadores[i].jugador.end(), jugadores[i].jugador.begin(), ::toupper);
 
     // Inicializa la estructura
-    jugadores.iniicializado = true;
+    jugadores[i].iniicializado = true;
+  }
+  
+
  }
 
 
