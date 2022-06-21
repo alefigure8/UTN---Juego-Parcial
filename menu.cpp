@@ -14,7 +14,7 @@
 using namespace std;
 
 void quien_empieza(Jugadores *jugador, int &jugadorActual);
-void obtener_quien_empieza(Jugadores *jugador, int &jugadorActual, int &jugadorDadoMaximo, int &jugadorSumaMaxima);
+void obtener_quien_empieza(Jugadores *jugador, int &jugadorActual, int jugadorDadoMaximo, int jugadorSumaMaxima);
 
 enum OPCIONES {
   SALIR = 0,
@@ -69,7 +69,7 @@ void menuInicial(){
 
       // pide nombre la primera vez que se juega
       if(jugadores[0].iniicializado != true){
-        
+
         mostar_bienvenida();
 
         for (int i = 0; i < 2; i++)
@@ -176,7 +176,7 @@ void quien_empieza(Jugadores *jugador, int &jugadorActual){
 
 
 /* Funcion que determina cual jugador empieza */
-void obtener_quien_empieza(Jugadores *jugador, int &jugadorActual, int &jugadorDadoMaximo, int &jugadorSumaMaxima){
+void obtener_quien_empieza(Jugadores *jugador, int &jugadorActual, int jugadorDadoMaximo, int jugadorSumaMaxima){
    if(jugador[0].suma_dados != jugador[1].suma_dados){ // si no hay empate
         if (jugadorSumaMaxima == 1){
         jugadorActual = 0;
