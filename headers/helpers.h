@@ -2,12 +2,7 @@
 #ifndef HELPERS_H
 #define HELPERS_H
 
-#include <Windows.h>
-#include <iostream>
-#include <string>
 #include "../helpers.cpp"
-#include "jugadores.h"
-using namespace std;
 
 void ResizeConsole(int width, int height);
 void colorTexto (int x);

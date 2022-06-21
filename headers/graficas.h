@@ -22,6 +22,8 @@ void pantalla_generica(int i, int pantalla_cerdo, string dialogo, string nombre)
 void imprimir_datos_ronda (int contadorRondas, int totalRonda, int lanzamientos);
 void pantalla_salida();
 int flecha_del_menu();
+void tabla_de_puntos();
+void mostrar_reglas_pantalla_generica(int regla, string texto, string texto_2, int *dado, int cant_dados);
 void mostar_bienvenida();
 void mostrar_reglas();
 
