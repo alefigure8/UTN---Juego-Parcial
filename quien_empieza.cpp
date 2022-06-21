@@ -14,7 +14,7 @@
 #include "headers/estadisticas.h"
 using namespace std;
 
-// Funcion que determina cual jugador empieza
+// Funcion que determina cual jugador empieza. Verifica si no hay empate, si lo hay y quien tiene el mayor dado
 void obtener_quien_empieza(Jugadores *jugador, int &jugadorActual, int jugadorDadoMaximo, int jugadorSumaMaxima){
    if(jugador[0].suma_dados != jugador[1].suma_dados){ // si no hay empate
         if (jugadorSumaMaxima == 1){
@@ -85,13 +85,13 @@ void quien_empieza(Jugadores *jugador, int &jugadorActual){
 
   // Pantalla 3
   if(dados_coinciden(jugador[0].dados_jugadores, jugador[1].dados_jugadores)){
-    dialogo = "HAN EMPATADO EN LOS DADOS";
+    dialogo = "HAN EMPATADO EN LOS DADOS. LANZAN OTRA VEZ";
     pantalla_generica(jugadorActual, 2, dialogo, jugador[jugadorActual].jugador);
     quien_empieza(jugador, jugadorActual);
   } else {
     // buscamos el jugador con mayor suma o el lado del dado mas alto
     obtener_quien_empieza(jugador, jugadorActual, jugadorDadoMaximo, jugadorSumaMaxima);
-    dialogo = "HAS GANADO. ¡COMIENZA A JUGAR!" ;
+    dialogo = "HAS GANADO. ¡COMIENZA A JUGAR!";
     pantalla_generica(jugadorActual, 2, dialogo, jugador[jugadorActual].jugador);
   }
 }

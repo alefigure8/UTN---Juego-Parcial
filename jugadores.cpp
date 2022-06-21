@@ -60,7 +60,6 @@ Jugadores inicializar_estructura(){
     // Inicializa la estructura
     jugadores[i].iniicializado = true;
   }
-  
 
  }
 

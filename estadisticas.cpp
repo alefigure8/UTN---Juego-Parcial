@@ -17,7 +17,7 @@ void pdv_trufas_total(int a, int b, int &a_1, int &b_2);
 void sumar_punto_historico(int total_jugador_1, int total_jugador_2, int & historico_jugador_1, int & historico_jugador_2);
 
 
-// Funcion que muestra la pantalla con el puntaje final
+// Funcion que muestra la pantalla con el puntaje final de ambos jugadores
 void pantalla_puntaje(Jugadores *jugador){
   string eleccion, opcion = "salir";
 
@@ -139,7 +139,7 @@ void pantalla_estadistica(Jugadores *jugadores){
 }
 
 
-// Funcion otorga puntos de vida a partir de la cantidad de lanzamientos que realiza el jugador
+// Funcion que otorga puntos de vida a partir de la cantidad de lanzamientos que realiza el jugador
 void pdv_lanzamientos(int a, int b, int & lanzamientos_jugador_1, int & lanzamientos_jugador_2){
   if(a > b){
     lanzamientos_jugador_1 = 2;
@@ -155,7 +155,7 @@ void pdv_lanzamientos(int a, int b, int & lanzamientos_jugador_1, int & lanzamie
 }
 
 
-// Funcion otorga puntos de vida a partir de la cantidad de Oinks que realiza el jugador
+// Funcion que otorga puntos de vida a partir de la cantidad de Oinks que realiza el jugador
 void pdv_oink(int a, int b, int & oinks_jugador_1, int & oinks_jugador_2){
   oinks_jugador_1 = a * 2;
   oinks_jugador_2 = b * 2;
@@ -170,7 +170,6 @@ int pdv_cada_50_trufas(int a){
 
 // Funcion que otorga puntos de vida al que mas puntos consiguio
 void pdv_trufas_total(int a, int b, int &a_1, int &b_2){
-
   if(a > b){
     a_1 = 5;
   } else if(a < b){
@@ -182,15 +181,13 @@ void pdv_trufas_total(int a, int b, int &a_1, int &b_2){
     a_1 = 5;
     b_2 = 5;
   }
-
 }
 
+// Funcion que suma los puntos totales de las distintas partidas y las guarda en la estructura de datos de cada jugador
 void sumar_punto_historico(int total_jugador_1, int total_jugador_2, int & historico_jugador_1, int & historico_jugador_2){
-
   if(total_jugador_1 > total_jugador_2){
     historico_jugador_1++;
   } else if (total_jugador_2 > total_jugador_1){
     historico_jugador_2++;
   }
-
 }

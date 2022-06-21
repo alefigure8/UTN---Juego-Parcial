@@ -1,9 +1,9 @@
 #ifndef ESTADISTICAS_H
 #define ESTADISTICAS_H
 
-#include <iostream>
-#include <string>
-#include "jugadores.h"
+// #include <iostream>
+// #include <string>
+// #include "jugadores.h"
 #include "../estadisticas.cpp"
 
 void pantalla_puntaje( Jugadores *jugador );
