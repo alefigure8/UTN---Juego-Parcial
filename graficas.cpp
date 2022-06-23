@@ -470,6 +470,22 @@ void mostar_bienvenida(){
 
 // Funcion que muestra la pantalla de salida del juego
 void pantalla_salida(){
+  char eleccion;
+
+ do{
+  system("cls");
+  lines();
+
+  rlutil::locate(35, 15);
+  colorTexto(COLOR::TEXTO);
+  cout << "¿SEGURO DESEAS SALIR DEL JUEGO? (S/N)";
+  colorTexto(COLOR::CONTINUAR);
+  rlutil::locate(35, 17);
+  cout << ">>";
+  rlutil::locate(39, 17);
+  cin >> eleccion;
+ } while (eleccion != 's' && eleccion != 'S');
+
   system("cls");
   lines();
   rlutil::locate(35, 15);

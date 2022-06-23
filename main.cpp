@@ -5,6 +5,7 @@
 #include <string>
 #include "headers/rlutil.h"
 #include "headers/jugadores.h"
+#include "headers/jugadores_estadistica.h"
 #include "headers/dado.h"
 #include "headers/helpers.h"
 #include "headers/graficas.h"

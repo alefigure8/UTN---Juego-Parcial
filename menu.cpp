@@ -5,6 +5,7 @@
 #include <string>
 #include "headers/rlutil.h"
 #include "headers/jugadores.h"
+#include "headers/jugadores_estadistica.h"
 #include "headers/dado.h"
 #include "headers/helpers.h"
 #include "headers/graficas.h"
@@ -32,6 +33,9 @@ void menuInicial(){
   // Inicializar Struct de Jugadores
   Jugadores jugadores[2];
 
+  // Inicializar Struct de Jugadores Estadistica
+  Jugadores_estadistica jugadores_estadistica[15];
+
   // Pantalla de inicio
   do{
 
@@ -53,7 +57,7 @@ void menuInicial(){
     colorTexto(10); rlutil::locate(40, 18); cout << "ESTADISTICA" << endl;
     colorTexto(10); rlutil::locate(40, 19); cout << "CERDITOS" << endl;
     colorTexto(10); rlutil::locate(40, 20); cout << "SALIR" << endl;
-    colorTexto(9);  rlutil::locate(80, 22); cout << "V1.0.0" << endl;
+    colorTexto(9);  rlutil::locate(80, 22); cout << "V1.1.0" << endl;
     colorTexto(15); rlutil::locate(38, 17); cout << (char)187 << endl;
     colorTexto(7); rlutil::locate(30, 26); cout << "PRESIONE 'ENTER' PARA SELECCIONAR" << endl;
     endLines(4);
@@ -78,12 +82,12 @@ void menuInicial(){
       comenzar_juego( jugadores, jugadorActual );
 
       // Mostrar puntaje final
-      pantalla_puntaje( jugadores );
+      pantalla_puntaje( jugadores, jugadores_estadistica );
     }
       break;
     case OPCIONES::ESTADISTICAS: {
       // pantalla de stadisticas del juego
-     pantalla_estadistica( jugadores );
+     pantalla_estadistica( jugadores_estadistica );
     }
       break;
     case OPCIONES::CREDITOS: {
