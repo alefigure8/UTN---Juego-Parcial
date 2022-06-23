@@ -147,7 +147,7 @@ void pantalla_estadistica(Jugadores_estadistica *jugadores){
   for (int i = 0; i < 15; i++){
     colorTexto(COLOR::CONTINUAR); rlutil::locate(COLUMNA_JUGADOR - 5, FILA + i); cout << "#" << i + 1;
     (jugadores[i].inicializado == true ? colorTexto(COLOR::TURNO_JUGADOR_1) : colorTexto(COLOR::TEXTO)); rlutil::locate(COLUMNA_JUGADOR, FILA + i); cout << (jugadores[i].inicializado == true ? jugadores[i].jugador : "VACIO");
-    (jugadores[i].inicializado == true ? colorTexto(COLOR::TURNO_JUGADOR_2) : colorTexto(COLOR::TEXTO));; rlutil::locate(COLUMNA_PDV, FILA + i); cout << (jugadores[i].inicializado == true ? jugadores[i].pdv : 0);
+    (jugadores[i].inicializado == true ? colorTexto(COLOR::TURNO_JUGADOR_2) : colorTexto(COLOR::TEXTO));; rlutil::locate(COLUMNA_PDV, FILA + i); cout << (jugadores[i].inicializado == true ? jugadores[i].pdv : 0) << " PDV";
   }
 
   colorTexto(COLOR::CONTINUAR); rlutil::locate(1, 28); cout << "PRESIONA CUALQUIER TECLA PARA REGRESAL AL MENÚ" << endl;
