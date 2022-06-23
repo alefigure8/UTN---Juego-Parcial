@@ -468,8 +468,8 @@ void mostar_bienvenida(){
 }
 
 
-// Funcion que muestra la pantalla de salida del juego
-void pantalla_salida(){
+// Funcion que pregunta al usuario si quiere salir del juego
+int preguntar_salida(){
   char eleccion;
 
  do{
@@ -484,8 +484,18 @@ void pantalla_salida(){
   cout << ">>";
   rlutil::locate(39, 17);
   cin >> eleccion;
- } while (eleccion != 's' && eleccion != 'S');
+ } while (eleccion != 's' && eleccion != 'S' && eleccion != 'n' && eleccion != 'N');
 
+  if( eleccion == 's' || eleccion == 'S'){
+    return 0;
+  }
+
+  return 5;
+}
+
+
+// Funcion que muestra la pantalla de salida del juego
+void pantalla_salida(){
   system("cls");
   lines();
   rlutil::locate(35, 15);

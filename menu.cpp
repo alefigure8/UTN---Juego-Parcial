@@ -19,13 +19,13 @@ enum OPCIONES {
   SALIR = 0,
   INICIAR_JUEGO = 1,
   ESTADISTICAS = 2,
-  CREDITOS = 3
+  CREDITOS = 3,
 };
 
 
 /* Funcion para el munnu de inicio */
 void menuInicial(){
-  int jugadorActual, eleccion;
+  int jugadorActual, eleccion, eleccion_salida = 1;
 
   // Ocultar cursor
   rlutil::hidecursor();
@@ -95,11 +95,15 @@ void menuInicial(){
       pantalla_creditos();
     }
       break;
+    case OPCIONES::SALIR: {
+      eleccion_salida = preguntar_salida();
+    }
+      break;
     default:
       rlutil::locate(1, 28); colorTexto(COLOR::MENSAJE); cout << "OPCION NO VALIDA";
       break;
     }
-  }while(eleccion != OPCIONES::SALIR);
+  }while(eleccion_salida != OPCIONES::SALIR);
 
   // pantalla de salida
   pantalla_salida();

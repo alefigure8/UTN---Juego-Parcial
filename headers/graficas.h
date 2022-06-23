@@ -26,5 +26,6 @@ void tabla_de_puntos();
 void mostrar_reglas_pantalla_generica(int regla, string texto, string texto_2, int *dado, int cant_dados);
 void mostar_bienvenida();
 void mostrar_reglas();
+int preguntar_salida();
 
 #endif // GRAFICAS_H
