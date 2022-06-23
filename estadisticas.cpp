@@ -81,10 +81,20 @@ void pantalla_puntaje(Jugadores *jugador){
     colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_JUGADOR_1, 19); cout << total_jugador_1 << " PDV";
     colorTexto(COLOR::TURNO_JUGADOR_2); rlutil::locate(COLUMNA_JUGADOR_2, 19); cout << total_jugador_2 << " PDV";
 
+    // Imprimimos el jugador que gana
+    if(total_jugador_1 > total_jugador_2){
+      colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_JUGADOR_1, 21); cout << "Gana " << jugador[0].jugador << " con " << total_jugador_1 << " PDV";
+      // generar un jugador con nombre y pdv para la pantalla estadisticas
+    } else if(total_jugador_1 < total_jugador_2){
+      colorTexto(COLOR::TURNO_JUGADOR_2); rlutil::locate(COLUMNA_JUGADOR_2, 21); cout << "Gana " << jugador[1].jugador << " con " << total_jugador_2 << " PDV";
+    } else {
+      colorTexto(COLOR::CONTINUAR); rlutil::locate(COLUMNA_JUGADOR_1, 21); cout << "Empate";
+    }
+
     // Puntos historicos jugados
     colorTexto(COLOR::TEXTO);  rlutil::locate(COLUMNA, 22); cout << "HISTORICO";
-    colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_JUGADOR_1, 22); cout << jugador[0].juego_ganado;
-    colorTexto(COLOR::TURNO_JUGADOR_2); rlutil::locate(COLUMNA_JUGADOR_2, 22); cout << jugador[1].juego_ganado;
+    colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_JUGADOR_1, 23); cout << jugador[0].juego_ganado;
+    colorTexto(COLOR::TURNO_JUGADOR_2); rlutil::locate(COLUMNA_JUGADOR_2, 23); cout << jugador[1].juego_ganado;
 
     // Pregunta si desea volver a jugar
     colorTexto(COLOR::TEXTO); rlutil::locate(COLUMNA, 26); cout << "Ingrese ";
