@@ -55,9 +55,9 @@ void menuInicial(){
     colorTexto(15); imprimir_titulo();
     colorTexto(12); rlutil::locate(40, 17); cout << "JUGAR" << endl;
     colorTexto(10); rlutil::locate(40, 18); cout << "ESTADISTICA" << endl;
-    colorTexto(10); rlutil::locate(40, 19); cout << "CERDITOS" << endl;
+    colorTexto(10); rlutil::locate(40, 19); cout << "CRÉDITOS" << endl;
     colorTexto(10); rlutil::locate(40, 20); cout << "SALIR" << endl;
-    colorTexto(9);  rlutil::locate(80, 22); cout << "V1.1.0" << endl;
+    colorTexto(9);  rlutil::locate(80, 23); cout << "V1.1.0" << endl;
     colorTexto(15); rlutil::locate(38, 17); cout << (char)187 << endl;
     colorTexto(7); rlutil::locate(30, 26); cout << "PRESIONE 'ENTER' PARA SELECCIONAR" << endl;
     endLines(4);

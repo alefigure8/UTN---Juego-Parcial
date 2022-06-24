@@ -181,7 +181,7 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
         // Mensaje
         string dialogo_1 = "OINK";
         rlutil::locate(COLUMNA - (dialogo_1.length() / 2), 23); colorTexto(COLOR::MENSAJE); cout << dialogo_1 << endl;
-        string dialogo_2 = "ESTAS OBLIGADO A TIRAR LOS DADOS DE NUEVO";
+        string dialogo_2 = "DUPLICAS LOS PUNTOS Y ESTÁS OBLIGADO A TIRAR LOS DADOS DE NUEVO";
         rlutil::locate(COLUMNA - (dialogo_2.length() / 2), 24); colorTexto(COLOR::TEXTO); cout << dialogo_2 << endl;
 
         // Mensaje del lanzamiento
