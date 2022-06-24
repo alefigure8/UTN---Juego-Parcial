@@ -306,17 +306,17 @@ int flecha_del_menu(){
 void mostrar_reglas_pantalla_generica(int regla, string texto, string texto_2, int *dado, int cant_dados){
 
   int largo_1 = texto.length();
-  int largo_2 = texto.length();
+  int largo_2 = texto_2.length();
   int COLUMNA_1 = 45 - (largo_1 / 2);
   int COLUMNA_2 = 45 - (largo_2 / 2);
 
   system("cls");
   lines();
 
-  colorTexto(COLOR::TEXTO);
+  colorTexto(COLOR::MENSAJE);
   rlutil::locate(36, 7); cout << "REGLAS DEL JUEGO" << endl;
 
-  rlutil::locate(COLUMNA_1, 10);
+  rlutil::locate(COLUMNA_1, 11);
   colorTexto(COLOR::CONTINUAR);
   cout << regla;
   cout <<  texto;
@@ -324,12 +324,12 @@ void mostrar_reglas_pantalla_generica(int regla, string texto, string texto_2, i
   dibujar_dados(dado, cant_dados, 1);
 
   colorTexto(COLOR::TEXTO);
-  rlutil::locate(COLUMNA_1, 22);
+  rlutil::locate(COLUMNA_2, 23);
   cout << texto_2 << endl;
 
   rlutil::locate(1, 28);
   colorTexto(COLOR::CONTINUAR);
-  cout << "PRESIONA CUALQUIER TECLA PARA PASAR A LA SIGUIENTE REGLA" << endl;
+  cout << "PRESIONA CUALQUIER TECLA PARA PASAR A LA SIGUIENTE PANTALLA >>" << endl;
   rlutil::anykey();
 }
 
@@ -339,20 +339,20 @@ void tabla_de_puntos(){
 
   int COLUMNA_JUGADOR_1 = 30;
   int COLUMNA_JUGADOR_2 = 55;
-  int FILA_JUGADORES = 8;
-  int FILA_PUNTOS = 11;
+  int FILA_JUGADORES = 11;
+  int FILA_PUNTOS = 14;
   string JUGADOR_1 =  "HITO" ;
   string JUGADOR_2 ="PUNTOS DE VIDA";
   string TITULO = "ESTADISTICAS";
 
   rlutil::cls();
   lines();
-  colorTexto(COLOR::TEXTO);
-  rlutil::locate(36, 4); cout << "REGLAS DEL JUEGO" << endl;
-  separador(10, 7, 80);
+  colorTexto(COLOR::MENSAJE);rlutil::locate(36, 4); cout << "REGLAS DEL JUEGO" << endl;
+  colorTexto(COLOR::TEXTO);rlutil::locate(32, 7); cout << "TABLA DE PUNTOS DE VIDA" << endl;
+  separador(10, 10, 80);
   colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_JUGADOR_1, FILA_JUGADORES); cout << JUGADOR_1;
   colorTexto(COLOR::TURNO_JUGADOR_2); rlutil::locate(COLUMNA_JUGADOR_2, FILA_JUGADORES); cout << JUGADOR_2;
-  separador(10, 9, 80);
+  separador(10, 12, 80);
   colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_JUGADOR_1, FILA_PUNTOS + 1); cout << "Mas trufas en total";
   colorTexto(COLOR::TURNO_JUGADOR_2); rlutil::locate(COLUMNA_JUGADOR_2, FILA_PUNTOS + 1); cout << "5 PDV";
   colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_JUGADOR_1, FILA_PUNTOS + 3); cout << "Cada 50 trufas";
@@ -379,15 +379,16 @@ void mostrar_reglas(){
   cout << "PRESIONA CUALQUIER TECLA PARA PASAR A LA SIGUIENTE REGLA" << endl;
 
   rlutil::locate(36, 6);
-  colorTexto(COLOR::TEXTO);
+  colorTexto(COLOR::MENSAJE);
   cout << "REGLAS DEL JUEGO" << endl;
 
+  colorTexto(COLOR::TEXTO);
   endLines(2);
   cout << "1. Gran Cerdo es un juego de dados de dos jugadores en el que intervienen el azar y la codicia." << endl;
   rlutil::anykey();
 
   endLines(1);
-  cout << "2. El objetivo del juego es sumar la mayor cantidad de puntos de victoria (PDV) en un total de 5 rondas." << endl;
+  cout << "2. El objetivo del juego es sumar la mayor cantidad de puntos de victoria en un total de 5 rondas." << endl;
   rlutil::anykey();
 
   endLines(1);
@@ -395,44 +396,49 @@ void mostrar_reglas(){
   rlutil::anykey();
 
   endLines(1);
-  cout << "4. Se juegan cinco rondas por jugador y en cada ronda el jugador dispone de ilimitados lanzamientos." << endl;
+  cout << "4. Se juegan cinco rondas por jugador y en cada una se dispone de ilimitados lanzamientos." << endl;
   rlutil::anykey();
 
   endLines(1);
-  cout << "5. El juego utiliza dos dados hasta que ambos cerdos superen las 50 trufas o alguno se HUNDA EN EL BARRO." << endl;
+  cout << "5. El juego utiliza dos dados hasta que ambos cerdos superen las 50 trufas o saque dos ases." << endl;
+  rlutil::anykey();
+
+  endLines(1);
+  colorTexto(COLOR::CONTINUAR);
+  cout << "SEGUIR A LA SIGUIENTE PANTALLA >>" << endl;
   rlutil::anykey();
 
   // Regla 5
   string texto_1 = ".  Si las caras son distintas y ninguna de ellas es un as. ";
-  string texto_2 = "El cerdo acumula trufas según la suma de las caras." ;
+  string texto_2 = "El cerdo acumula trufas según la suma de las caras. Por ejemplo: 9 trufas." ;
   int dado_ejemplo[2] = {4, 5};
 
   mostrar_reglas_pantalla_generica(6, texto_1, texto_2, dado_ejemplo, 2);
 
   // Regla 6
   texto_1 = ". Si las caras son iguales entre sí y no son ases.";
-  texto_2 = "El cerdo hizo un OINK y acumula trufas por el doble de la suma de las caras." ;
+  texto_2 = "El cerdo hizo un OINK y duplicas las suma de las caras. Por ejemplo: 12 trufas." ;
   int dado_ejemplo_2[2] = {3, 3};
 
   mostrar_reglas_pantalla_generica(7, texto_1, texto_2, dado_ejemplo_2, 2);
 
   // Regla 7
   texto_1 = ". Si las caras son distintas entre sí y hay un as.";
-  texto_2 = "Pierde todas las trufas de la ronda actual." ;
+  texto_2 = "Pierde todas las trufas acumuladas de la ronda actual." ;
   int dado_ejemplo_3[2] = {4, 1};
 
   mostrar_reglas_pantalla_generica(8, texto_1, texto_2, dado_ejemplo_3, 2);
 
   // Regla 8
   texto_1 = ". Si dos de las caras son iguales entre sí y son ases.";
-  texto_2 = "El cerdo se HUNDE EN EL BARRO y pierde todas las trufas." ;
+  texto_2 = "El cerdo se HUNDE EN EL BARRO y pierde todas las trufas acumuladas en el juego." ;
   int dado_ejemplo_4[2] = {1, 1};
 
   mostrar_reglas_pantalla_generica(9, texto_1, texto_2, dado_ejemplo_4, 2);
 
   // Regla 9
   texto_1 = ". Si se está lanzando con tres dados y son ases.";
-  texto_2 = "Todos los puntos pasan al otro cerdo." ;
+  texto_2 = "El cerdo pierde todo las trufas del juego y se les pasa al otro jugador." ;
   int dado_ejemplo_5[3] = {1, 1, 1};
 
   mostrar_reglas_pantalla_generica(10, texto_1, texto_2, dado_ejemplo_5, 3);
@@ -465,6 +471,32 @@ void mostar_bienvenida(){
    if( eleccion == 's' || eleccion == 'S'){
     mostrar_reglas();
    }
+}
+
+
+// Funcion que pregunta al usuario si quiere salir del juego
+int preguntar_salida(){
+  char eleccion;
+
+ do{
+  system("cls");
+  lines();
+
+  rlutil::locate(35, 15);
+  colorTexto(COLOR::TEXTO);
+  cout << "¿SEGURO DESEAS SALIR DEL JUEGO? (S/N)";
+  colorTexto(COLOR::CONTINUAR);
+  rlutil::locate(35, 17);
+  cout << ">>";
+  rlutil::locate(39, 17);
+  cin >> eleccion;
+ } while (eleccion != 's' && eleccion != 'S' && eleccion != 'n' && eleccion != 'N');
+
+  if( eleccion == 's' || eleccion == 'S'){
+    return 0;
+  }
+
+  return 5;
 }
 
 

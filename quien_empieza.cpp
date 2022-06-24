@@ -52,9 +52,9 @@ void quien_empieza(Jugadores *jugador, int &jugadorActual){
 
     // Pantalla 1
     if(i == 0){
-      dialogo = ", ES TU TURNO PARA LANAZAR LOS DADOS.";
+      dialogo = ", LANZA TUS DADOS PARA SABER QUIÉN COMIENZA A JUGAR.";
     } else {
-      dialogo = ", AHORA ES TU TURNO PARA LANZAR LOS DADOS.";
+      dialogo = ", ES TU TURNO. ¡LANZAR LOS DADOS!";
     }
     pantalla_generica(i, 2, dialogo, jugador[i].jugador);
     // fin pantalla 1
@@ -91,7 +91,7 @@ void quien_empieza(Jugadores *jugador, int &jugadorActual){
   } else {
     // buscamos el jugador con mayor suma o el lado del dado mas alto
     obtener_quien_empieza(jugador, jugadorActual, jugadorDadoMaximo, jugadorSumaMaxima);
-    dialogo = "HAS GANADO. ¡COMIENZA A JUGAR!";
+    dialogo = "COMIENZA A JUGAR";
     pantalla_generica(jugadorActual, 2, dialogo, jugador[jugadorActual].jugador);
   }
 }
