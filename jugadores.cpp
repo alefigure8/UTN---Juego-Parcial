@@ -17,6 +17,8 @@ struct Jugadores{
   int suma_dados;
   int juego_ganado;
   bool iniicializado;
+  bool primo;
+  int dados_primos;
 };
 
 
@@ -32,6 +34,8 @@ Jugadores inicializar_estructura(){
   jugador.suma_dados = 0;
   jugador.juego_ganado = 0;
   jugador.iniicializado = false;
+  jugador.primo = false;
+  jugador.dados_primos = 0;
   iniciar_vector(jugador.dados_jugadores, 3);
 
   return jugador;

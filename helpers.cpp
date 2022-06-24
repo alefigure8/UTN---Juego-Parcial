@@ -45,3 +45,31 @@ void obtener_maximo(int total, int &maximo, int i, int &jugadorMaximo){
     jugadorMaximo = i + 1;
   }
 }
+
+// Funcion para imprimir si los dados son primos
+
+void es_primo(Jugadores jugador,int *vector, int CANT_DADOS){
+
+  int cont_dados_primos = 0;
+
+  for (int i = 0; i < CANT_DADOS; i++){
+    int numero = vector[i];
+    int cont = 0;
+
+    for (int j = 1; j <= numero; j++){
+      if(numero % j == 0){
+        cont ++;
+      }
+    }
+
+    if(cont == 2){
+      cont_dados_primos++;
+    }
+  }
+
+  if(cont_dados_primos == CANT_DADOS){
+    jugador.primo = true;
+    jugador.dados_primos = CANT_DADOS;
+  }
+
+}

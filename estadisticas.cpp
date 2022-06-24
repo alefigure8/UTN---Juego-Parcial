@@ -16,6 +16,7 @@ void pdv_oink(int a, int b, int & oinks_jugador_1, int & oinks_jugador_2);
 int pdv_cada_50_trufas(int a);
 void pdv_trufas_total(int a, int b, int &a_1, int &b_2);
 void sumar_punto_historico(int total_jugador_1, int total_jugador_2, int & historico_jugador_1, int & historico_jugador_2);
+void pdv_primos(int &a, int &b, bool primo_1, bool primo_2, int cant_dados_1, int cant_dados_2);
 
 
 // Funcion que muestra la pantalla con el puntaje final de ambos jugadores
@@ -30,6 +31,8 @@ void pantalla_puntaje(Jugadores *jugador, Jugadores_estadistica *jugador_estadis
   int pdv_lanzamientos_jugador_2 = 0;
   int pdv_50_trufas_jugador_1 = pdv_cada_50_trufas(jugador[0].puntaje);
   int pdv_50_trufas_jugador_2 = pdv_cada_50_trufas(jugador[1].puntaje);
+  int pdv_primos_jugador_1 = 0;
+  int pdv_primos_jugador_2 = 0;
   int COLUMNA = 5;
   int COLUMNA_JUGADOR_1 = 40;
   int COLUMNA_JUGADOR_2 = 75;
@@ -38,6 +41,7 @@ void pantalla_puntaje(Jugadores *jugador, Jugadores_estadistica *jugador_estadis
   pdv_trufas_total(jugador[0].puntaje, jugador[1].puntaje, pdv_trufas_jugador_1, pdv_trufas_jugador_2);
   pdv_oink(jugador[0].oink, jugador[1].oink, pdv_oinks_jugador_1, pdv_oinks_jugador_2);
   pdv_lanzamientos(jugador[0].total_lanzamientos, jugador[1].total_lanzamientos, pdv_lanzamientos_jugador_1, pdv_lanzamientos_jugador_2);
+  pdv_primos(pdv_primos_jugador_1, pdv_primos_jugador_2, jugador[0].primo, jugador[1].primo, jugador[0].dados_primos, jugador[1].dados_primos);
 
   int total_jugador_1 = pdv_trufas_jugador_1 + pdv_oinks_jugador_1 + pdv_lanzamientos_jugador_1 + pdv_50_trufas_jugador_1;
   int total_jugador_2 = pdv_trufas_jugador_2 + pdv_oinks_jugador_2 + pdv_lanzamientos_jugador_2 + pdv_50_trufas_jugador_2;
@@ -75,7 +79,12 @@ void pantalla_puntaje(Jugadores *jugador, Jugadores_estadistica *jugador_estadis
     colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_JUGADOR_1, 16); cout << pdv_lanzamientos_jugador_1 << " PDV ("<< jugador[0].total_lanzamientos << " Lanzamientos) ";
     colorTexto(COLOR::TURNO_JUGADOR_2); rlutil::locate(COLUMNA_JUGADOR_2, 16); cout << pdv_lanzamientos_jugador_2 << " PDV ("<< jugador[1].total_lanzamientos << " Lanzamientos) ";
 
-    separador(COLUMNA, 17, 85);
+    // lanzamientos realizados
+    colorTexto(COLOR::TEXTO); rlutil::locate(COLUMNA, 16); cout << "Humcerdo Primo";
+    colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_JUGADOR_1, 16); cout << pdv_primos_jugador_1 << " PDV";
+    colorTexto(COLOR::TURNO_JUGADOR_2); rlutil::locate(COLUMNA_JUGADOR_2, 16); cout << pdv_primos_jugador_2 << " PDV";
+
+    separador(COLUMNA, 18, 85);
 
     // Suma total de puntos de vida
     colorTexto(COLOR::TEXTO);  rlutil::locate(COLUMNA, 19); cout << "TOTAL";
@@ -153,6 +162,22 @@ void pantalla_estadistica(Jugadores_estadistica *jugadores){
   colorTexto(COLOR::CONTINUAR); rlutil::locate(1, 28); cout << "PRESIONA CUALQUIER TECLA PARA REGRESAL AL MENÚ" << endl;
   rlutil::anykey();
 
+}
+
+
+// Funciona que calcula el puntaje si salieron dados primos
+void pdv_primos(int &a, int &b, bool primo_1, bool primo_2, int cant_dados_1, int cant_dados_2){
+  if(primo_1 == true){
+    a = 3;
+    if(cant_dados_1 == 3){
+      a = +2;
+    }
+  } else if(primo_2 == true){
+    b = 3;
+    if(cant_dados_2 == 3){
+      b = +2;
+    }
+  }
 }
 
 

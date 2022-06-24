@@ -20,6 +20,7 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
   int RONDAS = 5;
   int contadorRondas = 1;
   char eleccion;
+  bool salieron_primos = false;
 
   // Si las rondas son menores o iguales a 5, se puede seguir jugando
   while(contadorRondas <= RONDAS){
@@ -81,6 +82,11 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
 
       // buscamos si hay ases
       buscarUno = dado_lado_uno(jugador[jugadorActual].dados_jugadores, CANT_DADOS);
+
+      // Buscamos sin son primos
+      if(salieron_primos == false){
+        es_primo(jugador[jugadorActual], jugador[jugadorActual].dados_jugadores, CANT_DADOS);
+      }
 
       /* ANALISIS DEL LANZAMIENTO */
       // si los dados son iguales y son ases
