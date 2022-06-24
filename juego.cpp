@@ -9,6 +9,9 @@
 #include "headers/estadisticas.h"
 using namespace std;
 
+// Funciones parcial
+void es_primo(Jugadores &jugador,int *vector, int CANT_DADOS);
+
 // Funcion principal del programa
 void comenzar_juego(Jugadores *jugador, int jugadorActual){
 
@@ -255,3 +258,31 @@ void comenzar_juego(Jugadores *jugador, int jugadorActual){
 
   } // fin del while de la ronda
 } // fin del juego
+
+
+//Funcion para imprimir si los dados son primos
+void es_primo(Jugadores &jugador, int *vector , int CANT_DADOS){
+
+  int cont_dados_primos = 0;
+
+  for (int i = 0; i < CANT_DADOS; i++){
+    int numero = vector[i];
+    int cont = 0;
+
+    for (int j = 1; j <= numero; j++){
+      if(numero % j == 0){
+        cont ++;
+      }
+    }
+
+    if(cont == 2){
+      cont_dados_primos++;
+    }
+  }
+
+  if(cont_dados_primos == CANT_DADOS){
+    jugador.primo = true;
+    jugador.dados_primos = CANT_DADOS;
+  }
+
+}

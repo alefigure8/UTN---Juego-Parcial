@@ -11,5 +11,6 @@ void pdv_trufas_total(int a, int b, int &a_1, int &b_2);
 void sumar_punto_historico(int total_jugador_1, int total_jugador_2, int & historico_jugador_1, int & historico_jugador_2);
 void separador(int COLUMNA, int FILA);
 void pantalla_puntaje(Jugadores *jugador, Jugadores_estadistica *jugador_estadistica);
+void pdv_primos(int &a, int &b, bool primo_1, bool primo_2, int cant_dados_1, int cant_dados_2);
 
 #endif // ESTADISTICAS_H

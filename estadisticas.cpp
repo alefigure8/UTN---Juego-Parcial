@@ -81,15 +81,15 @@ void pantalla_puntaje(Jugadores *jugador, Jugadores_estadistica *jugador_estadis
 
     // lanzamientos realizados
     colorTexto(COLOR::TEXTO); rlutil::locate(COLUMNA, 16); cout << "Humcerdo Primo";
-    colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_JUGADOR_1, 16); cout << pdv_primos_jugador_1 << " PDV";
-    colorTexto(COLOR::TURNO_JUGADOR_2); rlutil::locate(COLUMNA_JUGADOR_2, 16); cout << pdv_primos_jugador_2 << " PDV";
+    colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_JUGADOR_1, 18); cout << pdv_primos_jugador_1 << " PDV";
+    colorTexto(COLOR::TURNO_JUGADOR_2); rlutil::locate(COLUMNA_JUGADOR_2, 18); cout << pdv_primos_jugador_2 << " PDV";
 
-    separador(COLUMNA, 18, 85);
+    separador(COLUMNA, 19, 85);
 
     // Suma total de puntos de vida
-    colorTexto(COLOR::TEXTO);  rlutil::locate(COLUMNA, 19); cout << "TOTAL";
-    colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_JUGADOR_1, 19); cout << total_jugador_1 << " PDV";
-    colorTexto(COLOR::TURNO_JUGADOR_2); rlutil::locate(COLUMNA_JUGADOR_2, 19); cout << total_jugador_2 << " PDV";
+    colorTexto(COLOR::TEXTO);  rlutil::locate(COLUMNA, 20); cout << "TOTAL";
+    colorTexto(COLOR::TURNO_JUGADOR_1); rlutil::locate(COLUMNA_JUGADOR_1, 20); cout << total_jugador_1 << " PDV";
+    colorTexto(COLOR::TURNO_JUGADOR_2); rlutil::locate(COLUMNA_JUGADOR_2, 20); cout << total_jugador_2 << " PDV";
 
     // Imprimimos el jugador que gana y lo cargamos en la estructura de jugadores que ganaron
     if(total_jugador_1 > total_jugador_2){
