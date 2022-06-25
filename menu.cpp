@@ -57,7 +57,7 @@ void menuInicial(){
     colorTexto(10); rlutil::locate(40, 18); cout << "ESTADISTICA" << endl;
     colorTexto(10); rlutil::locate(40, 19); cout << "CRÉDITOS" << endl;
     colorTexto(10); rlutil::locate(40, 20); cout << "SALIR" << endl;
-    colorTexto(9);  rlutil::locate(80, 23); cout << "V1.1.0" << endl;
+    colorTexto(9);  rlutil::locate(80, 23); cout << "SUBURBIA games" << endl;
     colorTexto(15); rlutil::locate(38, 17); cout << (char)187 << endl;
     colorTexto(7); rlutil::locate(30, 26); cout << "PRESIONE 'ENTER' PARA SELECCIONAR" << endl;
     endLines(4);
